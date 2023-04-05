@@ -48,7 +48,7 @@ postNews.post("/postNews", async(req,res)=>{       //tener cuidado, si en el ind
 module.exports = postNews;
 
 /*
-POST http://localhost:3001/postNews/postNews
+POST http://localhost:3001/postNews
 Va SIN ID Y CON LA CATEGORIA CON EL ID QUE LE ASIGNO MONGODB EN LA COLECCION
 
 {   
@@ -69,6 +69,4 @@ Va SIN ID Y CON LA CATEGORIA CON EL ID QUE LE ASIGNO MONGODB EN LA COLECCION
     "source": null,
     "read_time": null
 }
-
 */
-

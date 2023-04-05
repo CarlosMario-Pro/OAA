@@ -3,9 +3,9 @@ const route = Router();
 
 
 const getNews = require("../routes/News/GetNews");          //La ruta para traer todas las noticias
-const postNews = require("../routes/News/PostNews");        //La ruta para PostNews
-const deleteNews = require("../routes/News/DeleteNews");    //La ruta para PostNews
-const putNews = require("../routes/News/PutNews");          //La ruta para PostNews
+const postNews = require("../routes/News/PostNews");        //La ruta para crear las noticias
+const deleteNews = require("../routes/News/DeleteNews");    //La ruta para eliminar las noticias
+// const putNews = require("../routes/News/PutNews");          //La ruta para modificar las noticias
 
 const getUsers = require("../routes/User/GetUser");
 const postUsers = require("../routes/User/PostUser");
@@ -13,10 +13,10 @@ const postUsers = require("../routes/User/PostUser");
 
 
 /*--------------Rutas--------------*/
-route.use("/", getNews);
-route.use("/", postNews);
-route.use("/", getUsers);
-route.use("/", postUsers);
+route.use("/getNews", getNews);
+route.use("/postNews", postNews);
+route.use("/deleteNews", deleteNews);
+// route.use("/putNews", putNews);
 
 
 
