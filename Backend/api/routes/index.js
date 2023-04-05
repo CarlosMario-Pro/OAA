@@ -10,6 +10,7 @@ const restoreNews = require("../routes/News/RestoreNews");          //La ruta pa
 
 const getUsers = require("../routes/User/GetUser");
 const postUsers = require("../routes/User/PostUser");
+const newsletterRouter = require("../routes/Newsletter/newletterRoutes")
 
 
 
@@ -19,6 +20,7 @@ route.use("/postNews", postNews);
 route.use("/deleteNews", deleteNews);
 route.use("/putNews", putNews);
 route.use("/restoreNews", restoreNews);
+route.use("/newsletter", newsletterRouter);
 
 
 
