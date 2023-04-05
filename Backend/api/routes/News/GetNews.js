@@ -4,7 +4,7 @@ const News = require("../../models/News");
 const mongoose = require("mongoose");
 
 
-getNews.get("/getNews",async(req,res)=>{        //--> http://localhost:3001/getNews/getNews AVERIGUAR POR QUÉ es doble /getNews/getNews
+getNews.get("/", async(req,res)=>{        //--> http://localhost:3001/getNews
     const session = await mongoose.startSession();
     try {
         await session.withTransaction(async (session) => {
