@@ -4,7 +4,7 @@ const News = require("../../models/News");
 const mongoose = require("mongoose");
 
 
-postNews.post("/postNews", async(req,res)=>{       //tener cuidado, si en el index creo la ruta 'postUsers' no la puedo pasar de nuevo aquí
+postNews.post("/", async(req,res)=>{
     const {titleMain, category, date, author, introduction, description, image, location, video, source, read_time } = req.body;
     console.log(req.body);
     const session = await mongoose.startSession();
