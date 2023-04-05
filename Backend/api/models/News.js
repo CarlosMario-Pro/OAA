@@ -21,7 +21,6 @@ const newsSchema = new Schema(
         },
         description: [{
             type: String,
-            // required: true
         }],
         image: [{
             type: String,
@@ -38,7 +37,10 @@ const newsSchema = new Schema(
         read_time: {
             type: String,
         },
-        isDeleted: { type: Boolean, default: false },
+        isDeleted: { 
+            type: Boolean,
+            default: false
+        },
         comments: [{ type: Schema.Types.ObjectId, ref: "Comments" }],
         category: { type: Schema.Types.ObjectId, ref: "Categories", required: true },
     },

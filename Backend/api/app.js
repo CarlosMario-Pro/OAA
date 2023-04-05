@@ -1,3 +1,4 @@
+//Configuración del servidor con Express
 require("dotenv").config();                         //Requerimos el .env
 const express = require("express");                 //Requerimos Express
 const cors = require("cors");                       //Requerimos 'cors
