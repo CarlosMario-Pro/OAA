@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 
 postNews.post("/", async(req,res)=>{
-    const {titleMain, category, date, author, introduction, description, image, location, video, source, read_time } = req.body;
+    const { titleMain, category, date, author, introduction, description, image, location, video, source, read_time } = req.body;
     console.log(req.body);
     const session = await mongoose.startSession();
     try {
