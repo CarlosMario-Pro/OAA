@@ -1,20 +1,22 @@
 //Creación e inicialización del servidor
+require("dotenv").config();
 const app = require("./app.js");
-let dotenv = require('dotenv');
-dotenv.config();
 const { connection } = require("./db.js");
 const { loadedCategories, loadedNews } = require("./addDB");
-const PORT = process.env.PORT
+const { transport } = require("./utils/email.utils.js");
+const { PORT } = process.env;
 
-
-connection.syncIndexes({ force: true })
-    .then(async () => {
-        await loadedCategories();
-        await loadedNews();
-    })
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Servidor ejecutado en puerto: ${PORT}`);
-        });
-    }
-);
+connection
+  .syncIndexes({ force: true })
+  .then(async () => {
+    await loadedCategories();
+    await loadedNews();
+    await transport.verify();
+    console.log("nodemailer conectado exitosamente");
+  })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Servidor ejecutado en puerto: ${PORT}`);
+    });
+  })
+  .catch((error) => console.log("Algo salió mal: ", error));
