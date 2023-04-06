@@ -1,15 +1,14 @@
 const { Router } = require("express");
 const route = Router();
 
-const getNews = require("../routes/News/GetNews"); //La ruta para traer todas las noticias
-const postNews = require("../routes/News/PostNews"); //La ruta para crear las noticias
-const deleteNews = require("../routes/News/DeleteNews"); //La ruta para eliminar las noticias
-const putNews = require("../routes/News/PutNews"); //La ruta para modificar las noticias
-const restoreNews = require("../routes/News/RestoreNews"); //La ruta para modificar las noticias
+
+const newsRouter = require("../routes/News/NewsRoutes");                        //Ruta para las News
+const newsletterRouter = require("../routes/Newsletter/newsletterRoutes");      //Ruta para las Newsletter
+
 
 const getUsers = require("../routes/User/GetUser");
 const postUsers = require("../routes/User/PostUser");
-const newsletterRouter = require("../routes/Newsletter/newletterRoutes")
+
 
 const getAdmin = require("./Admin/GetAdmin"); //La ruta para traer todos los administradores
 const deleteAdmin = require("./Admin/DeleteAdmin"); //La ruta para eliminar a un administrador
@@ -18,14 +17,12 @@ const postAdmin = require("./Admin/PostAdmin"); //La ruta para crear un nuevo ad
 const passwordAdmin = require("./Admin/PasswordAdmin"); //La ruta para reestablecer una contraseña
 const logAdmin = require("./Admin/LogAdmin"); //La verificar los datos de inicio de sesión
 
+
 /*--------------Rutas--------------*/
-//noticias
-route.use("/getNews", getNews);
-route.use("/postNews", postNews);
-route.use("/deleteNews", deleteNews);
-route.use("/putNews", putNews);
-route.use("/restoreNews", restoreNews);
-route.use("/newsletter", newsletterRouter);
+route.use("/news", newsRouter);                                                 //Endpoint para las News
+route.use("/newsletter", newsletterRouter);                                     //Endpoint para las Newsletter
+
+
 
 //administrador
 route.use("/getAdmin", getAdmin);
@@ -34,5 +31,6 @@ route.use("/putAdmin", putAdmin);
 route.use("/deleteAdmin", deleteAdmin);
 route.use("/logAdmin", logAdmin);
 route.use("/passwordAdmin", passwordAdmin);
+
 
 module.exports = route;

@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './LandingPage.module.css';
 
 
-export default function LandingPage () {
+export default function PanelAdmin () {
     
   return (
     <div>
-        <h1>LandingPage</h1>
+        <h1>PanelAdmin</h1>
     </div>
   );
 };
