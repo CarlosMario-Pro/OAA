@@ -12,7 +12,7 @@ connection
     await loadedCategories();
     await loadedNews();
     await transport.verify();
-    console.log("nodemailer conectado exitosamente");
+    console.log("nodemailer conectado exitosamente.");
   })
   .then(() => {
     app.listen(PORT, () => {

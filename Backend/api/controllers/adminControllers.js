@@ -15,7 +15,7 @@ const getAdmin = async (req, res) => {
     console.error(error);
     const status = error.status || 500;
     const message =
-      error.message || "Ocurrió un error al obtener a los administradores";
+      error.message || "Ocurrió un error al obtener a los administradores.";
     return res.status(status).json({ message });
   } finally {
     await session.endSession();

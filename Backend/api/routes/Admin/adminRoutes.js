@@ -2,7 +2,7 @@ const { Router } = require("express");
 const adminRouter = Router();
 const admin = require("../../controllers/adminControllers");
 
-// ---- GET **
+// ---- GET *
 adminRouter.get("/", admin.getAdmin); //----->  Trae a todos los administradores  | http://localhost:3001/admin/
 
 adminRouter.get("/data/:id", admin.getAdminsById); //----->  Trae a un administrador por id  | http://localhost:3001/admin/get-one/:id
