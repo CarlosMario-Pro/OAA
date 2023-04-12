@@ -12,14 +12,19 @@ export default function LoginAdmin() {
         />
         <form className={`${styles["form"]}`}>
           <label htmlFor='email'>Correo electrónico</label>
-          <input id='email' type='text' name='email' />
+          <input className='text-input' id='email' type='text' name='email' />
 
           <label htmlFor='password'>Contraseña</label>
-          <input id='password' type='password' name='password' />
+          <input
+            className='text-input'
+            id='password'
+            type='password'
+            name='password'
+          />
           <button className={`${styles["password"]}`}>
             He olvidado mi contraseña
           </button>
-          <button className='button button-green'>Iniciar Sesión</button>
+          <button className='button green-button'>Iniciar Sesión</button>
         </form>
       </div>
     </div>

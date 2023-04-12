@@ -26,44 +26,62 @@ export default function PanelAdmin() {
       <nav className={`${styles["navbar"]}`}>
         <ul className={`${styles["ul-sections"]}`}>
           <li
-            className={currentSection === "donations" && styles["active"]}
+            className={
+              currentSection === "donations" ? styles["active"] : "undefined"
+            }
             onClick={() => setCurrentSection("donations")}
           >
             Donaciones
           </li>
           <li
-            className={currentSection === "subscriptions" && styles["active"]}
+            className={
+              currentSection === "subscriptions"
+                ? styles["active"]
+                : "undefined"
+            }
             onClick={() => setCurrentSection("subscriptions")}
           >
             Suscripciones
           </li>
           <li
-            className={currentSection === "publications" && styles["active"]}
+            className={
+              currentSection === "publications" ? styles["active"] : "undefined"
+            }
             onClick={() => setCurrentSection("publications")}
           >
             Publicaciones
           </li>
           <li
-            className={currentSection === "our-projects" && styles["active"]}
+            className={
+              currentSection === "our-projects" ? styles["active"] : "undefined"
+            }
             onClick={() => setCurrentSection("our-projects")}
           >
             Nuestro trabajo
           </li>
           <li
-            className={currentSection === "radio-program" && styles["active"]}
+            className={
+              currentSection === "radio-program"
+                ? styles["active"]
+                : "undefined"
+            }
             onClick={() => setCurrentSection("radio-program")}
           >
             Programa de Radio
           </li>
           <li
-            className={currentSection === "gallery" && styles["active"]}
+            className={
+              currentSection === "gallery" ? styles["active"] : "undefined"
+            }
             onClick={() => setCurrentSection("gallery")}
           >
             Galería
           </li>
           <li
             className={
-              currentSection === "administrators" && `${styles["active"]}`
+              currentSection === "administrators"
+                ? `${styles["active"]}`
+                : "undefined"
             }
             onClick={() => setCurrentSection("administrators")}
           >

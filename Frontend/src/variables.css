@@ -16,4 +16,9 @@
   --light-blue: #bbe7fe;
   /* Border radius: */
   --border-radius: 0.25rem;
+  /* Icons filters: */
+  --white-filter: invert(95%) sepia(21%) saturate(179%) hue-rotate(0deg)
+    brightness(110%) contrast(98%);
+  --blue-filter: invert(25%) sepia(19%) saturate(3679%) hue-rotate(173deg)
+    brightness(86%) contrast(94%);
 }
