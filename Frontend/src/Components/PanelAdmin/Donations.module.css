@@ -4,17 +4,16 @@
   width: max(55rem, 60vw);
 }
 
+.actions .delete-button {
+  font-size: 1.1rem;
+  padding: 0.35rem 1rem;
+}
+
 .button {
   background: none;
   cursor: pointer;
 }
 
-.button-left {
-  margin-right: 0.4rem;
-}
-.button-right {
-  margin-left: 0.4rem;
-}
 @media (pointer: fine) {
   .button:hover {
     transform: scale(1.15);

@@ -93,14 +93,9 @@ export default function Donations() {
             </td>
             <td className={`${styles["actions"]}`}>
               <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
+                className={`button yellow-button ${styles["delete-button"]}`}
               >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
+                Eliminar
               </button>
             </td>
           </tr>
@@ -119,14 +114,9 @@ export default function Donations() {
             </td>
             <td className={`${styles["actions"]}`}>
               <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
+                className={`button yellow-button ${styles["delete-button"]}`}
               >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
+                Eliminar
               </button>
             </td>
           </tr>
@@ -145,14 +135,9 @@ export default function Donations() {
             </td>
             <td className={`${styles["actions"]}`}>
               <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
+                className={`button yellow-button ${styles["delete-button"]}`}
               >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
+                Eliminar
               </button>
             </td>
           </tr>
@@ -171,14 +156,30 @@ export default function Donations() {
             </td>
             <td className={`${styles["actions"]}`}>
               <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
+                className={`button yellow-button ${styles["delete-button"]}`}
               >
-                <MdEdit className='blue-icon' size='1.5rem' />
+                Eliminar
               </button>
+            </td>
+          </tr>
+          <tr>
+            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
+              642d9426474720c74082f3c5
+            </td>
+            <td className={`${styles["date"]}`} title='01/02/23'>
+              01/02/23
+            </td>
+            <td className={`${styles["amount"]}`} title='1.000'>
+              1.000
+            </td>
+            <td className={`${styles["iso"]}`} title='ARS'>
+              ARS
+            </td>
+            <td className={`${styles["actions"]}`}>
               <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
+                className={`button yellow-button ${styles["delete-button"]}`}
               >
-                <MdDelete className='blue-icon' size='1.5rem' />
+                Eliminar
               </button>
             </td>
           </tr>

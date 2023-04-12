@@ -42,7 +42,7 @@ export default function Administrators() {
                 <FiChevronDown className='white-icon' size='1.45rem' />
               </button>
             </th>
-            <th>Mail</th>
+            <th>Correo electrónico</th>
             <th>Acciones</th>
           </tr>
         </thead>
