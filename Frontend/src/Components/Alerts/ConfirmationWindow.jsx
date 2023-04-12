@@ -1,0 +1,33 @@
+import { useDispatch, useSelector } from "react-redux";
+import { confirmationClose } from "../../stateManagement/actions/alerts/confirmationWindow.actions";
+import styles from "./ConfirmationWindow.module.css";
+
+export default function ConfirmationWindow({ message, handler }) {
+  const dispatch = useDispatch(),
+    confirmationState = useSelector((state) => state.confirmation),
+    { confirmationWindow } = confirmationState;
+
+  const cancelHandler = (event) => {
+    event.preventDefault();
+    dispatch(confirmationClose());
+  };
+  const acceptHandler = (event) => {
+    event.preventDefault();
+    handler();
+    dispatch(confirmationClose());
+  };
+  return (
+    <div className={`${styles["container"]} ${styles[confirmationWindow]}`}>
+      <p>{message}</p>
+      <button className='button button-red button-left' onClick={cancelHandler}>
+        Cancelar
+      </button>
+      <button
+        className='button button-green button-right'
+        onClick={acceptHandler}
+      >
+        Aceptar
+      </button>
+    </div>
+  );
+}
