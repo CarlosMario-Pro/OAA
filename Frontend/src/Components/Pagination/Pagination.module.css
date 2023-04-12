@@ -29,23 +29,26 @@
   border: 0.15rem solid #1d649434;
   border-left: none;
 }
+.text-container {
+  display: flex;
+  padding: 0.53rem 0;
+  padding-bottom: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 0.15rem solid #1d649434;
+}
 .text {
   cursor: default;
-  padding: 0.45rem 0;
-  padding-bottom: 0.75rem;
   padding-right: 1rem;
-  border-top: 0.15rem solid #1d649434;
-  border-bottom: 0.15rem solid #1d649434;
-}
-.text-end {
-  border-right: 0.15rem solid #1d649434;
 }
 
 .number-input {
-  padding: 0.75rem 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 0;
+  padding-top: 0.3rem;
   text-align: center;
-  border: 0.15rem solid #1d649434;
-  border-right: none;
 }
 
 .paged input[type="number"]::-webkit-inner-spin-button,

@@ -31,19 +31,20 @@ export default function Pagination({
           {"<"}
         </button>
       )}
+      <div className={`${styles["text-container"]}`}>
+        <input
+          className={`${styles["number-input"]}`}
+          type='number'
+          name='currentPage'
+          value={currentPage}
+          min={1}
+          max={lastPage}
+          onChange={clickHandler}
+        />
 
-      <input
-        className={`${styles["number-input"]}`}
-        type='number'
-        name='currentPage'
-        value={currentPage}
-        min={1}
-        max={lastPage}
-        onChange={clickHandler}
-      />
-
-      <p className={styles["text"]}>de</p>
-      <p className={`${styles["text"]} ${styles["text-end"]}`}>{lastPage}</p>
+        <p className={styles["text"]}>de</p>
+        <p className={`${styles["text"]}`}>{lastPage}</p>
+      </div>
       {parseInt(currentPage) < lastPage && (
         <button
           className={`${styles["button"]} ${styles["button-next"]}`}
