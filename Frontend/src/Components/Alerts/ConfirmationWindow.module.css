@@ -1,0 +1,41 @@
+@import "../../variables.css";
+
+@keyframes animationShow {
+  from {
+    transform: translateY(-150%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.container {
+  position: fixed;
+  z-index: 910;
+  top: 1.5rem;
+  left: 5vw;
+  padding: 1rem;
+  width: 90vw;
+  height: auto;
+  transform: translateY(-150%);
+  font-size: 1.3rem;
+  cursor: default;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 1.5rem 0 #4742375e;
+  background-color: var(--white);
+}
+.container > p {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+.visible {
+  animation: animationShow 1s ease forwards;
+  transition: transform 1s;
+}
+@media screen and (min-width: 60em) {
+  .container {
+    left: 25vw;
+    width: 50vw;
+    font-size: 1.5rem;
+  }
+}
