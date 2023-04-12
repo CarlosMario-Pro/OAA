@@ -71,8 +71,13 @@ textarea {
   background: none;
 }
 
-textarea {
-  height: 8rem;
+.introduction-textarea {
+  height: 10rem;
+  resize: none;
+}
+
+.description-textarea {
+  height: 35rem;
   resize: none;
 }
 
@@ -105,7 +110,8 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
+  width: 100%;
 }
 .red-button {
   background-color: var(--red);

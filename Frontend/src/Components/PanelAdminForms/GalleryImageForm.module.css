@@ -1,0 +1,17 @@
+@import "../../variables.css";
+
+.container {
+  padding: 5rem 0 3rem;
+}
+
+.header {
+  position: absolute;
+  top: 8rem;
+  left: 0;
+  color: var(--white);
+  width: 100vw;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 1.5rem;
+  background-color: var(--blue);
+}
