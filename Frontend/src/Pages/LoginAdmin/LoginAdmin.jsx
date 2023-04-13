@@ -3,12 +3,8 @@ import styles from "./LoginAdmin.module.css";
 import logo from "../../assets/logo-temporal.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useForm from "../../../utils/customHooks/useForm";
-import validationsLogin from "../../../utils/helpers/validationsLogin";
-import {
-  loaderOff,
-  loaderOn,
-} from "../../stateManagement/actions/loader/loader.actions";
+import useForm from "../../utils/customHooks/useForm";
+import validationsLogin from "../../utils/helpers/validationsLogin";
 import {
   loginAdmin,
   resetPassword,

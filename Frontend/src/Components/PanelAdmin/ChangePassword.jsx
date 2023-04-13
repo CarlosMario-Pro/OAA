@@ -1,11 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useForm from "../../../utils/customHooks/useForm";
-import {
-  loaderOff,
-  loaderOn,
-} from "../../stateManagement/actions/loader/loader.actions";
-import validationsChangePassword from "../../../utils/helpers/validationsChangePassword";
+import useForm from "../../utils/customHooks/useForm";
+import validationsChangePassword from "../../utils/helpers/validationsChangePassword";
 import styles from "./ChangePassword.module.css";
 import { editPassword } from "../../stateManagement/actions/panelAdmin/admin.actions";
 

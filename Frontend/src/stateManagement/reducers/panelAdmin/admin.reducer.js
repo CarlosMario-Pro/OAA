@@ -1,7 +1,4 @@
-import {
-  getItem,
-  setItem,
-} from "../../../../utils/customHooks/useLocalStorage";
+import { getItem, setItem } from "../../../utils/customHooks/useLocalStorage";
 import { ADMIN_LOGIN, ADMIN_LOGOUT } from "../../types/panelAdmin";
 
 const initialState = {
