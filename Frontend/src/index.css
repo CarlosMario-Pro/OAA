@@ -46,16 +46,48 @@ label {
   display: block;
   font-size: 1.25rem;
   color: var(--blue);
-  margin: 0.5rem auto;
+  margin: 0.5rem auto 0.25rem;
   width: 100%;
 }
 
-input {
+input::placeholder,
+textarea::placeholder {
+  color: #12537eb0;
+}
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  color: #12537eb0;
+}
+
+.text-input,
+textarea {
   display: block;
   margin: 0.5rem auto;
   padding: 0.5rem;
   font-size: 1.25rem;
   width: 100%;
+  border: 0.18rem solid var(--blue);
+  border-radius: var(--border-radius);
+  background: none;
+}
+
+.introduction-textarea {
+  height: 10rem;
+  resize: none;
+}
+
+.description-textarea {
+  height: 35rem;
+  resize: none;
+}
+
+.search-input {
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  font-size: 1.25rem;
+  border-bottom: 0.18rem solid var(--blue);
+  background: none;
 }
 
 .button {
@@ -64,32 +96,36 @@ input {
   padding: 0.5rem 1.5rem;
   font-size: max(1.25rem, 1.25vw);
   font-weight: bold;
+  text-align: center;
   border-radius: var(--border-radius);
   cursor: pointer;
 }
 
-.button:hover {
-  transform: scale(1.15);
+@media (pointer: fine) {
+  .button:hover {
+    transform: scale(1.05);
+  }
 }
 .button-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
+  width: 100%;
 }
-.button-red {
+.red-button {
   background-color: var(--red);
   color: var(--white);
 }
-.button-blue {
+.blue-button {
   background-color: var(--blue);
   color: var(--white);
 }
-.button-green {
+.green-button {
   background-color: var(--dark-green);
   color: var(--white);
 }
-.button-yellow {
+.yellow-button {
   color: var(--blue);
   background-color: var(--yellow);
 }
@@ -103,6 +139,14 @@ input {
 }
 .error::before {
   content: "⚠️";
+}
+
+.blue-icon {
+  filter: var(--blue-filter);
+}
+
+.white-icon {
+  filter: var(--white-filter);
 }
 
 .invisible {
