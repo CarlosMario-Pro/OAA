@@ -19,12 +19,14 @@ export default function ConfirmationWindow({ message, handler }) {
   return (
     <div className={`${styles["container"]} ${styles[confirmationWindow]}`}>
       <p>{message}</p>
-      <button className='button red-button' onClick={cancelHandler}>
-        Cancelar
-      </button>
-      <button className='button green-button' onClick={acceptHandler}>
-        Aceptar
-      </button>
+      <div className='button-container'>
+        <button className='button red-button' onClick={cancelHandler}>
+          Cancelar
+        </button>
+        <button className='button green-button' onClick={acceptHandler}>
+          Aceptar
+        </button>
+      </div>
     </div>
   );
 }

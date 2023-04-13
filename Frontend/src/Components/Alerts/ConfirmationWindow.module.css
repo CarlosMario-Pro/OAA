@@ -18,7 +18,6 @@
   width: 90vw;
   height: auto;
   transform: translateY(-150%);
-  font-size: 1.3rem;
   cursor: default;
   border-radius: var(--border-radius);
   box-shadow: 0 0 1.5rem 0 #4742375e;
@@ -26,7 +25,6 @@
 }
 .container > p {
   text-align: center;
-  padding-bottom: 1.5rem;
 }
 .visible {
   animation: animationShow 1s ease forwards;
@@ -36,6 +34,6 @@
   .container {
     left: 25vw;
     width: 50vw;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
