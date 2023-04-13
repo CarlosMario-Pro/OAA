@@ -11,7 +11,7 @@ import Administrators from "../../Components/PanelAdmin/Administrators";
 import ChangePassword from "../../Components/PanelAdmin/ChangePassword";
 import logo from "../../assets/logo-temporal-2.png";
 import styles from "./PanelAdmin.module.css";
-import useModal from "../../../utils/customHooks/useModal";
+import useModal from "../../utils/customHooks/useModal";
 import {
   loaderOff,
   loaderOn,
