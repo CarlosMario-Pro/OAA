@@ -1,8 +1,8 @@
 import { useState } from "react";
 import useSessionStorage from "./useLocalStorage";
 
-const useForm = (initialForm, validationForm) => {
-  const [form, setForm] = useSessionStorage("form", initialForm);
+const useForm = (name, initialForm, validationForm) => {
+  const [form, setForm] = useSessionStorage(name, initialForm);
   const [errors, setErrors] = useState({});
 
   const changeHandler = (event) => {

@@ -18,9 +18,9 @@ const initialForm = {
 export default function LoginAdmin() {
   const dispatch = useDispatch(),
     navigate = useNavigate(),
-    adminState = useSelector((state) => state.admin),
-    { admin } = adminState,
+    { admin } = useSelector((state) => state.admin),
     { form, errors, changeHandler, validationsHandler } = useForm(
+      "LoginAdmin",
       initialForm,
       validationsLogin
     ),
