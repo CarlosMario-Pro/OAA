@@ -156,19 +156,19 @@ const logAdmin = async (req, res) => {
       const admin = await User.findOne({ email }).session(session);
       if (!admin) {
         return res.status(404).json({
-          message: `Email incorrecto`,
+          message: `Email incorrecto.`,
         });
       }
       const match = await bcrypt.compare(password, admin.password);
       if (!match) {
-        return res.status(404).json({ message: `Contraseña incorrecta` });
+        return res.status(404).json({ message: `Contraseña incorrecta.` });
       }
       return res.status(200).json(admin);
     });
   } catch (error) {
     console.error(error);
     const status = error.status || 500;
-    const message = error.message || "Ocurrió un error al iniciar sesión";
+    const message = error.message || "Ocurrió un error al iniciar sesión.";
     return res.status(status).json({ message });
   } finally {
     await session.endSession();
@@ -239,10 +239,9 @@ const resetPassword = async (req, res) => {
         },
         { session }
       );
-
       if (!updatedAdmin) {
         return res.status(404).json({
-          message: `El administrador con el email ${email} no fue encontrado`,
+          message: `El administrador con el email ${email} no fue encontrado.`,
         });
       }
       await sendEmail(
@@ -328,7 +327,7 @@ const editPassword = async (req, res) => {
 
       if (!updatedAdmin) {
         return res.status(404).json({
-          message: `El administrador con el email ${email} no fue encontrado`,
+          message: `El administrador con el ID ${id} no fue encontrado.`,
         });
       }
       await sendEmail(
