@@ -1,28 +1,125 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdministratorsForm from "./AdministratorsForm";
-import { BiSearch } from "react-icons/bi";
-import { FiChevronDown } from "react-icons/fi";
-import { MdDelete, MdEdit } from "react-icons/md";
+import {
+  MdDelete,
+  MdEdit,
+  MdSearch,
+  MdOutlineKeyboardArrowDown,
+  MdCached,
+} from "react-icons/md";
 import Pagination from "../Pagination/Pagination";
 import styles from "./Administrators.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  administratorsFilters,
+  clearOneAdministrator,
+  deleteAdministrator,
+  getAllAdministrators,
+  getOneAdministrator,
+} from "../../stateManagement/actions/panelAdmin/administrators.actions";
+import useForm from "../../utils/customHooks/useForm";
+import ConfirmationWindow from "../Alerts/ConfirmationWindow";
+import { confirmationOpen } from "../../stateManagement/actions/alerts/confirmationWindow.actions";
+
+const initialForm = {
+  search: "",
+};
 
 export default function Administrators() {
-  const [currentPage, setCurrentPage] = useState(1);
+  //variables de estados y formularios
+  const dispatch = useDispatch(),
+    [edit, setEdit] = useState(false),
+    [currentPage, setCurrentPage] = useState(1),
+    { admin } = useSelector((state) => state.admin),
+    { administrators, oneAdministrator, idOneAdministrator, filters } =
+      useSelector((state) => state.administrators),
+    { form, changeHandler, resetHandler } = useForm(
+      "searchAdmin",
+      initialForm,
+      () => {}
+    ),
+    { search } = form;
+
+  //variables de paginación
+  const numberPerPage = 7,
+    initialIndex = numberPerPage * (currentPage - 1),
+    finalIndex = initialIndex + numberPerPage;
+
+  //elementos a mostar en cada paginacion
+  const itemsPerPage = administrators.slice(initialIndex, finalIndex);
+
+  // Se ejecuta cuando se monta el componente
+  useEffect(() => {
+    dispatch(getAllAdministrators());
+  }, []);
+
+  // Funciones de filtrado:
+  const orderDateHandler = (event) => {
+    event.preventDefault();
+    if (filters.order === "latest") {
+      dispatch(administratorsFilters({ order: "oldest", search }));
+    } else {
+      dispatch(administratorsFilters({ order: "latest", search }));
+    }
+  };
+  const orderNameHandler = (event) => {
+    event.preventDefault();
+    if (filters.order === "a-z") {
+      dispatch(administratorsFilters({ order: "z-a", search }));
+    } else {
+      dispatch(administratorsFilters({ order: "a-z", search }));
+    }
+  };
+  const searchHandler = (event) => {
+    event.preventDefault();
+    dispatch(administratorsFilters({ order: filters.order, search: search }));
+  };
+  const clearHandler = (event) => {
+    event.preventDefault();
+    dispatch(administratorsFilters({ order: "latest", search: false }));
+    resetHandler();
+  };
+
+  //Funcion para eliminar un elemento:
+  const deleteHandler = (id) => {
+    dispatch(deleteAdministrator(id));
+    dispatch(clearOneAdministrator());
+  };
+  const cancelHandler = () => {
+    dispatch(clearOneAdministrator());
+  };
 
   return (
     <div className={`${styles["container"]}`}>
+      <ConfirmationWindow
+        aceptParams={idOneAdministrator}
+        text={`¿Seguro que quieres eliminar a ${
+          oneAdministrator && oneAdministrator.name
+        } de administradores? Esta acción no es reversible y este usuario no tendrá acceso al Panel de Administrador.`}
+      />
       <div className={`${styles["forms-container"]}`}>
-        <AdministratorsForm />
+        <AdministratorsForm edit={edit} setEdit={setEdit} />
         <form className={`${styles["form"]}`}>
           <input
             className='search-input'
-            type='search'
+            type='text'
             name='search'
             placeholder='Buscar...'
             autoComplete='off'
+            value={search}
+            onBlur={changeHandler}
+            onChange={changeHandler}
           />
-          <button className={`${styles["button"]}`}>
-            <BiSearch size='1.25rem' />
+          {filters.search && (
+            <button
+              className={`${styles["button"]} ${styles["clear-button"]}`}
+              onClick={clearHandler}
+            >
+              <MdCached className='blue-icon' size='1.25rem' />
+            </button>
+          )}
+          <button className={`${styles["button"]}`} onClick={searchHandler}>
+            <MdSearch className='blue-icon' size='1.25rem' />
           </button>
         </form>
       </div>
@@ -32,14 +129,26 @@ export default function Administrators() {
             <th>ID</th>
             <th>
               Fecha{" "}
-              <button className={`${styles["button"]} ${styles["arrow"]}`}>
-                <FiChevronDown className='white-icon' size='1.45rem' />
+              <button
+                className={`${styles["button"]} ${styles["arrow"]}`}
+                onClick={orderDateHandler}
+              >
+                <MdOutlineKeyboardArrowDown
+                  className='white-icon'
+                  size='1.45rem'
+                />
               </button>
             </th>
             <th>
               Nombre{" "}
-              <button className={`${styles["button"]} ${styles["arrow"]}`}>
-                <FiChevronDown className='white-icon' size='1.45rem' />
+              <button
+                className={`${styles["button"]} ${styles["arrow"]}`}
+                onClick={orderNameHandler}
+              >
+                <MdOutlineKeyboardArrowDown
+                  className='white-icon'
+                  size='1.45rem'
+                />
               </button>
             </th>
             <th>Correo electrónico</th>
@@ -47,196 +156,73 @@ export default function Administrators() {
           </tr>
         </thead>
         <tbody className={`${styles["tbody"]}`}>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`${styles["button"]} ${styles["button-left"]}`}
-              >
-                <MdEdit className='blue-icon' size='1.5rem' />
-              </button>
-              <button
-                className={`${styles["button"]} ${styles["button-right"]}`}
-              >
-                <MdDelete className='blue-icon' size='1.5rem' />
-              </button>
-            </td>
-          </tr>
+          {administrators.length !== 0 ? (
+            <>
+              {itemsPerPage.map(({ _id, name, email, createdAt }) => {
+                const date = new Date(createdAt).toLocaleDateString();
+                return (
+                  <tr key={`admin-${_id}`}>
+                    <td className={`${styles["id"]}`} title={_id}>
+                      {_id}
+                    </td>
+                    <td className={`${styles["date"]}`} title={date}>
+                      {date}
+                    </td>
+                    <td className={`${styles["name"]}`} title={name}>
+                      {name}
+                    </td>
+                    <td className={`${styles["email"]}`} title={email}>
+                      {email}
+                    </td>
+                    <td className={`${styles["actions"]}`}>
+                      <button
+                        className={`${styles["button"]} ${styles["button-left"]}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          dispatch(getOneAdministrator(_id));
+                          setEdit(true);
+                        }}
+                      >
+                        <MdEdit className='blue-icon' size='1.5rem' />
+                      </button>
+                      {_id !== admin._id && (
+                        <button
+                          className={`${styles["button"]} ${styles["button-right"]}`}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            dispatch(getOneAdministrator(_id));
+                            dispatch(
+                              confirmationOpen({
+                                message: false,
+                                acept: deleteHandler,
+                                cancel: cancelHandler,
+                              })
+                            );
+                          }}
+                        >
+                          <MdDelete className='blue-icon' size='1.5rem' />
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </>
+          ) : (
+            <tr>
+              <td colspan='5'>No se encontró ningún dato.</td>
+            </tr>
+          )}
         </tbody>
       </table>
-      <Pagination
-        numberOfItems='30'
-        numberPerPage='7'
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {administrators.length > numberPerPage && (
+        <Pagination
+          numberOfItems={administrators.length}
+          numberPerPage={numberPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

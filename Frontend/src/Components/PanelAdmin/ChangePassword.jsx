@@ -12,9 +12,9 @@ const initialForm = {
 
 export default function ChangePassword({ isOpen, close }) {
   const dispatch = useDispatch(),
-    adminState = useSelector((state) => state.admin),
-    { admin } = adminState,
+    { admin } = useSelector((state) => state.admin),
     { form, errors, changeHandler, resetHandler, validationsHandler } = useForm(
+      "ChangePassword",
       initialForm,
       validationsChangePassword
     ),

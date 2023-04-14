@@ -25,8 +25,7 @@ export default function PanelAdmin() {
     navigate = useNavigate(),
     [isOpen, open, close] = useModal(),
     [currentSection, setCurrentSection] = useState("donations"),
-    adminState = useSelector((state) => state.admin),
-    { admin } = adminState;
+    { admin } = useSelector((state) => state.admin);
 
   const logoutHandler = () => {
     dispatch(loaderOn());
@@ -37,15 +36,17 @@ export default function PanelAdmin() {
 
   const confirmationHandler = (event) => {
     event.preventDefault();
-    dispatch(confirmationOpen());
+    dispatch(
+      confirmationOpen({
+        message: `¿Seguro que quieres cerrar la sesión?`,
+        acept: logoutHandler,
+      })
+    );
   };
 
   return (
     <div className={`${styles["container"]}`}>
-      <ConfirmationWindow
-        message={`¿Seguro que quieres cerrar la sesión?`}
-        handler={logoutHandler}
-      />
+      <ConfirmationWindow />
       <ChangePassword isOpen={isOpen} close={close} />
       <header className={`${styles["header"]}`}>
         <div>
