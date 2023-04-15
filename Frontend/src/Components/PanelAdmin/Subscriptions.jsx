@@ -55,7 +55,7 @@ export default function Subscriptions() {
     { search } = form;
 
   //variables de paginación
-  const numberPerPage = 6,
+  const numberPerPage = 7,
     initialIndex = numberPerPage * (currentPage - 1),
     finalIndex = initialIndex + numberPerPage;
 
@@ -95,22 +95,22 @@ export default function Subscriptions() {
   const orderDateHandler = (event) => {
     event.preventDefault();
     if (filters.order === "latest") {
-      dispatch(subscriptionsFilters({ order: "oldest", search }));
+      dispatch(subscriptionsFilters({ ...filters, order: "oldest" }));
     } else {
-      dispatch(subscriptionsFilters({ order: "latest", search }));
+      dispatch(subscriptionsFilters({ ...filters, order: "latest" }));
     }
   };
   const orderNameHandler = (event) => {
     event.preventDefault();
     if (filters.order === "a-z") {
-      dispatch(subscriptionsFilters({ order: "z-a", search }));
+      dispatch(subscriptionsFilters({ ...filters, order: "z-a" }));
     } else {
-      dispatch(subscriptionsFilters({ order: "a-z", search }));
+      dispatch(subscriptionsFilters({ ...filters, order: "a-z" }));
     }
   };
   const searchHandler = (event) => {
     event.preventDefault();
-    dispatch(subscriptionsFilters({ order: filters.order, search: search }));
+    dispatch(subscriptionsFilters({ ...filters, search }));
   };
   const clearHandler = (event) => {
     event.preventDefault();

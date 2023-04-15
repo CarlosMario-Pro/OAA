@@ -57,22 +57,22 @@ export default function Administrators() {
   const orderDateHandler = (event) => {
     event.preventDefault();
     if (filters.order === "latest") {
-      dispatch(administratorsFilters({ order: "oldest", search }));
+      dispatch(administratorsFilters({ ...filters, order: "oldest" }));
     } else {
-      dispatch(administratorsFilters({ order: "latest", search }));
+      dispatch(administratorsFilters({ ...filters, order: "latest" }));
     }
   };
   const orderNameHandler = (event) => {
     event.preventDefault();
     if (filters.order === "a-z") {
-      dispatch(administratorsFilters({ order: "z-a", search }));
+      dispatch(administratorsFilters({ ...filters, order: "z-a" }));
     } else {
-      dispatch(administratorsFilters({ order: "a-z", search }));
+      dispatch(administratorsFilters({ ...filters, order: "a-z" }));
     }
   };
   const searchHandler = (event) => {
     event.preventDefault();
-    dispatch(administratorsFilters({ order: filters.order, search: search }));
+    dispatch(administratorsFilters({ ...filters, search }));
   };
   const clearHandler = (event) => {
     event.preventDefault();
