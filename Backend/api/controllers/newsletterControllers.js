@@ -7,12 +7,32 @@ const getNewsletters = async (req, res) => {
   try {
     await session.withTransaction(async (session) => {
       const newsletter = await Newsletter.find({}).session(session);
-      return res.status(200).json(newsletter);
+      return res.status(200).json(newsletter.reverse());
     });
   } catch (error) {
     console.error(error);
     const status = error.status || 500;
     const message = error.message || "Ocurrió un error al obtener Newsletter";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+const getNewsletterById = async (req, res) => {
+  const session = await mongoose.startSession();
+  try {
+    await session.withTransaction(async (session) => {
+      const newsletter = await Newsletter.findById(req.params.id).session(
+        session
+      );
+      return res.status(200).json(newsletter);
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message =
+      error.message || "Ocurrió un error al obtener al un suscriptor.";
     return res.status(status).json({ message });
   } finally {
     await session.endSession();
@@ -71,6 +91,7 @@ const deleteNewsletter = async (req, res) => {
 
 module.exports = {
   getNewsletters,
+  getNewsletterById,
   postNewsletter,
   deleteNewsletter,
 };

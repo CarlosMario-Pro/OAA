@@ -9,7 +9,7 @@ const getAdmin = async (req, res) => {
   try {
     await session.withTransaction(async (session) => {
       const admins = await User.find({}).session(session);
-      return res.status(200).json(admins);
+      return res.status(200).json(admins.reverse());
     });
   } catch (error) {
     console.error(error);
@@ -108,12 +108,7 @@ const postAdmin = async (req, res) => {
           ser compartido ni reenviado. No responda esta correo.**
         </p>`
       );
-      res.status(200).json({
-        id: createdAdmin._id,
-        name: createdAdmin.name,
-        email: createdAdmin.email,
-        password: createdAdmin.password,
-      });
+      res.status(200).json(createdAdmin);
     });
   } catch (error) {
     console.error(error);
@@ -156,19 +151,19 @@ const logAdmin = async (req, res) => {
       const admin = await User.findOne({ email }).session(session);
       if (!admin) {
         return res.status(404).json({
-          message: `Email incorrecto`,
+          message: `Email incorrecto.`,
         });
       }
       const match = await bcrypt.compare(password, admin.password);
       if (!match) {
-        return res.status(404).json({ message: `Contraseña incorrecta` });
+        return res.status(404).json({ message: `Contraseña incorrecta.` });
       }
       return res.status(200).json(admin);
     });
   } catch (error) {
     console.error(error);
     const status = error.status || 500;
-    const message = error.message || "Ocurrió un error al iniciar sesión";
+    const message = error.message || "Ocurrió un error al iniciar sesión.";
     return res.status(status).json({ message });
   } finally {
     await session.endSession();
@@ -205,11 +200,11 @@ const putAdmin = async (req, res) => {
         });
       }
 
-      res.status(200).json({
-        id: updatedAdmin._id,
-        name: name ? name : updatedAdmin.name,
-        email: email ? email : updatedAdmin.email,
-        password: updatedAdmin.password,
+      return res.status(200).json({
+        _id: updatedAdmin._id,
+        name,
+        email,
+        createdAt: updatedAdmin.createdAt,
       });
     });
   } catch (error) {
@@ -239,10 +234,9 @@ const resetPassword = async (req, res) => {
         },
         { session }
       );
-
       if (!updatedAdmin) {
         return res.status(404).json({
-          message: `El administrador con el email ${email} no fue encontrado`,
+          message: `El administrador con el email ${email} no fue encontrado.`,
         });
       }
       await sendEmail(
@@ -328,7 +322,7 @@ const editPassword = async (req, res) => {
 
       if (!updatedAdmin) {
         return res.status(404).json({
-          message: `El administrador con el email ${email} no fue encontrado`,
+          message: `El administrador con el ID ${id} no fue encontrado.`,
         });
       }
       await sendEmail(

@@ -2,13 +2,18 @@ import {
   SUBSCRIPTIONS,
   SUBSCRIPTIONS_FILTERS,
   DELETE_SUBSCRIPTION,
+  ONE_SUBSCRIPTION,
+  CLEAR_ONE_SUBSCRIPTION,
 } from "../../types/panelAdmin";
 
 const initialState = {
   allSubscriptions: [],
   subscriptions: [],
+  oneSubscriptor: {},
+  idOneSubscriptor: null,
   filters: {
-    orderDate: "latest",
+    order: "latest",
+    search: false,
   },
 };
 
@@ -22,59 +27,54 @@ export default function subscriptionsReducer(state = initialState, action) {
         allSubscriptions: [...payload],
         subscriptions: [...payload],
       };
+    case ONE_SUBSCRIPTION: // Get ID
+      return {
+        ...state,
+        oneSubscriptor: { ...payload },
+        idOneSubscriptor: payload._id,
+      };
+    case CLEAR_ONE_SUBSCRIPTION: //Clear get ID
+      return { ...state, oneSubscriptor: {} };
     case SUBSCRIPTIONS_FILTERS: // Filters
-      const { status, orderName, orderDate, search } = payload;
+      const { order, search } = payload;
       let filteredSubscriptions = [...state.allSubscriptions];
-
-      if (status === "active") {
-        filteredSubscriptions = filteredSubscriptions.filter(
-          (a) => a["isDeleted"] === false
-        );
-      } else if (status === "inactive") {
-        filteredSubscriptions = filteredSubscriptions.filter(
-          (a) => a["isDeleted"] === true
-        );
-      }
-
-      if (orderName) {
-        if (orderName === "az") {
-          filteredSubscriptions.sort((a, b) => a.name.localeCompare(b.name));
-        } else {
-          filteredSubscriptions
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .reverse();
-        }
-      }
-
-      if (orderDate) {
-        if (orderDate === "latest") {
-          filteredSubscriptions.sort(
-            (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-          );
-        } else {
-          filteredSubscriptions
-            .sort(
-              (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-            )
-            .reverse();
-        }
-      }
 
       if (search) {
         filteredSubscriptions = filteredSubscriptions.filter((a) => {
+          const searchLowerCase = search.toLowerCase();
           const name = a["name"].toLowerCase();
-          const email = a["email"].toLowerCase();
           return (
-            a["id"].includes(search) ||
-            name.includes(search) ||
-            email.includes(search)
+            a["_id"].includes(searchLowerCase) ||
+            name.includes(searchLowerCase) ||
+            a["email"].includes(searchLowerCase)
           );
         });
       }
+
+      if (order === "a-z") {
+        filteredSubscriptions.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (order === "z-a") {
+        filteredSubscriptions
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .reverse();
+      } else if (order === "latest") {
+        filteredSubscriptions.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+        );
+      } else if (order === "oldest") {
+        filteredSubscriptions
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+          )
+          .reverse();
+      }
+
       return {
         ...state,
         subscriptions: [...filteredSubscriptions],
-        filters: [...payload],
+        filters: { ...payload },
       };
     case DELETE_SUBSCRIPTION: // Delete
       const deletedAllSubscriptions = state.allSubscriptions.filter(

@@ -135,10 +135,11 @@ textarea {
   padding: 0.25rem 0.7rem;
   font-weight: 500;
   border-radius: 0.3rem;
+  width: 100%;
   background-color: var(--yellow);
 }
 .error::before {
-  content: "⚠️";
+  content: "⚠️ ";
 }
 
 .blue-icon {
@@ -151,4 +152,8 @@ textarea {
 
 .invisible {
   display: none;
+}
+
+.visible {
+  display: inline-block;
 }
