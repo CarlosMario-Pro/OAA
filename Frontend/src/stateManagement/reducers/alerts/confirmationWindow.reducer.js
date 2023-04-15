@@ -5,14 +5,18 @@ import {
 
 const initialState = {
   confirmationWindow: "invisible",
+  message: "",
+  acept: () => {},
+  cancel: null,
 };
 
 export default function confirmationReducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case CONFIMATION_WINDOW_OPEN:
-      return { ...state, confirmationWindow: "visible" };
+      return { ...state, confirmationWindow: "visible", ...payload };
     case CONFIMATION_WINDOW_CLOSE:
-      return { ...state, confirmationWindow: "invisible" };
+      return initialState;
     default:
       return state;
   }

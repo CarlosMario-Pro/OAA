@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { hiddenMessage } from "../../stateManagement/actions/alerts/alertWindow.actions";
 import { FcCheckmark, FcHighPriority } from "react-icons/fc";
 import styles from "./AlertWindow.module.css";
+
 export default function AlertWindow() {
   const dispatch = useDispatch(),
     messageState = useSelector((state) => state.alert),
