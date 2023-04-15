@@ -44,6 +44,29 @@ const getOneNews = async (req, res) => {
     }
 };
 
+const getThreeNewsByCategory = async (req, res) => {
+    const { category } = req.params;
+    const session = await mongoose.startSession();
+    try {
+      await session.withTransaction(async (session) => {
+        const news = await News.find({ category: category })
+          .sort({ date: -1 })
+          .limit(3)
+          .session(session);
+        return res.status(200).json(news);
+      });
+    } catch (error) {
+      console.error(error);
+      const status = error.status || 500;
+      const message =
+        error.message || "Ocurrió un error al obtener las noticias";
+      return res.status(status).json({ message });
+    } finally {
+      await session.endSession();
+    }
+  };
+  
+
 
 const postNews = async (req, res) => {
     const { titleMain, category, date, author, introduction, description, image, location, video, source, read_time } = req.body;
@@ -181,6 +204,7 @@ const deleteNews = async (req, res) => {
 module.exports = {
     getNews,
     getOneNews,
+    getThreeNewsByCategory,
     postNews,
     putNews,
     restoreNews,
