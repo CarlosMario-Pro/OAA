@@ -41,6 +41,27 @@ const getOneNews = async (req, res) => {
   }
 };
 
+const getThreeNews = async (req, res) => {
+    const session = await mongoose.startSession();
+  
+    try {
+      await session.withTransaction(async (session) => {
+        const news = await News.find({})
+          .sort({date: -1}) // ordenar por fecha de creación descendente
+          .limit(3) // limitar a 3 resultados
+          .session(session);
+        return res.status(200).json(news);
+      });
+    } catch (error) {
+      console.error(error);
+      const status = error.status || 500;
+      const message = error.message || "Ocurrió un error al obtener las noticias";
+      return res.status(status).json({ message });
+    } finally {
+      await session.endSession();
+    }
+  };
+  
 const postNews = async (req, res) => {
   const {
     titleMain,
@@ -225,6 +246,7 @@ const deleteNews = async (req, res) => {
 module.exports = {
   getNews,
   getOneNews,
+  getThreeNews,
   postNews,
   putNews,
   removeNews,
