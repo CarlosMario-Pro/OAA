@@ -210,7 +210,7 @@ export default function Administrators() {
             </>
           ) : (
             <tr>
-              <td colspan='5'>No se encontró ningún dato.</td>
+              <td colSpan='5'>No se encontró ningún dato.</td>
             </tr>
           )}
         </tbody>

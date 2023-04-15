@@ -3,28 +3,64 @@ import {
   SUBSCRIPTIONS,
   SUBSCRIPTIONS_FILTERS,
   DELETE_SUBSCRIPTION,
+  CLEAR_ONE_SUBSCRIPTION,
+  ONE_SUBSCRIPTION,
 } from "../../types/panelAdmin";
+import { LOADER_OFF, LOADER_ON } from "../../types/loader";
+import { NEW_MESSAGE } from "../../types/alerts";
 
 export const getSubscriptions = () => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
       .get("/newsletter")
       .then((res) => {
         dispatch({ type: SUBSCRIPTIONS, payload: res.data });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en subscriptions.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar obtener los suscriptores de la newsletter.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
+
+export const getOneSubscription = (id) => {
+  return function (dispatch) {
+    dispatch({ type: LOADER_ON });
+    axios
+      .get(`/newsletter/${id}`)
+      .then((res) => {
+        dispatch({ type: ONE_SUBSCRIPTION, payload: res.data });
+      })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
+      .catch((error) => {
+        console.log("Error en subscriptions.actions: ", error);
+        dispatch({
+          type: NEW_MESSAGE,
+          payload: {
+            message: "Ha ocurrido un error al intentar obtener un suscriptor.",
+            state: "error",
+          },
+        });
+        dispatch({ type: LOADER_OFF });
+      });
+  };
+};
+
+export const clearOneSubscription = () => ({ type: CLEAR_ONE_SUBSCRIPTION });
 
 export const subscriptionsFilters = (filters) => ({
   type: SUBSCRIPTIONS_FILTERS,
@@ -33,6 +69,7 @@ export const subscriptionsFilters = (filters) => ({
 
 export const deleteSubscription = (id) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
       .delete(`/newsletter/${id}`)
       .then(() => {
@@ -48,16 +85,20 @@ export const deleteSubscription = (id) => {
           },
         });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en subscriptions.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar eliminar a un suscriptor de la newsletter.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };

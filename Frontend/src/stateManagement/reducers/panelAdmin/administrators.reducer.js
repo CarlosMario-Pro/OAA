@@ -11,7 +11,7 @@ import {
 const initialState = {
   allAdministrators: [],
   administrators: [],
-  oneAdministrator: null,
+  oneAdministrator: {},
   idOneAdministrator: null,
   filters: {
     order: "latest",
@@ -38,7 +38,7 @@ export default function administratorsReducer(state = initialState, action) {
     case CLEAR_ONE_ADMINISTRATOR: // Clear get ID
       return {
         ...state,
-        oneAdministrator: null,
+        oneAdministrator: {},
       };
     case ADMINISTRATORS_FILTERS: //Filter
       const { order, search } = payload;
@@ -46,11 +46,12 @@ export default function administratorsReducer(state = initialState, action) {
 
       if (search) {
         filteredAdministrators = filteredAdministrators.filter((a) => {
+          const searchLowerCase = search.toLowerCase();
           const name = a["name"].toLowerCase();
           return (
-            a["_id"].includes(search) ||
-            name.includes(search) ||
-            a["email"].includes(search)
+            a["_id"].includes(searchLowerCase) ||
+            name.includes(searchLowerCase) ||
+            a["email"].includes(searchLowerCase)
           );
         });
       }
