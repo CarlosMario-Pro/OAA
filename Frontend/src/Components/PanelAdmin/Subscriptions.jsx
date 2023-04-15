@@ -1,42 +1,189 @@
-import React, { useState } from "react";
-import { BiSearch } from "react-icons/bi";
-import { FiChevronDown } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import { MdSearch, MdOutlineKeyboardArrowDown, MdCached } from "react-icons/md";
 import styles from "./Subscriptions.module.css";
 import Pagination from "../Pagination/Pagination";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearOneSubscription,
+  deleteSubscription,
+  getOneSubscription,
+  getSubscriptions,
+  subscriptionsFilters,
+} from "../../stateManagement/actions/panelAdmin/subscriptions.actions";
+import ConfirmationWindow from "../Alerts/ConfirmationWindow";
+import useForm from "../../utils/customHooks/useForm";
+import { confirmationOpen } from "../../stateManagement/actions/alerts/confirmationWindow.actions";
+
+const monthNames = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+const today = new Date(),
+  lastMonth = new Date(today.getFullYear(), today.getMonth() - 1),
+  twoMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 2);
+
+const initialForm = {
+  search: "",
+};
 
 export default function Subscriptions() {
-  const [currentPage, setCurrentPage] = useState(1);
+  //variables de estados y formularios
+  const dispatch = useDispatch(),
+    [currentPage, setCurrentPage] = useState(1),
+    {
+      allSubscriptions,
+      subscriptions,
+      oneSubscriptor,
+      idOneSubscriptor,
+      filters,
+    } = useSelector((state) => state.subscriptions),
+    { form, changeHandler, resetHandler } = useForm(
+      "searchSuscription",
+      initialForm,
+      () => {}
+    ),
+    { search } = form;
+
+  //variables de paginación
+  const numberPerPage = 6,
+    initialIndex = numberPerPage * (currentPage - 1),
+    finalIndex = initialIndex + numberPerPage;
+
+  //elementos a mostar en cada paginacion
+  const itemsPerPage = subscriptions.slice(initialIndex, finalIndex);
+
+  //variables de estadísticas
+  const totalSubscriptions = allSubscriptions.length;
+  const currentMonthSubscriptions = allSubscriptions.filter((subscriptor) => {
+    const createdAt = new Date(subscriptor.createdAt);
+    return (
+      createdAt.getMonth() === today.getMonth() &&
+      createdAt.getFullYear() === today.getFullYear()
+    );
+  });
+  const lastMonthSubscriptions = allSubscriptions.filter((subscriptor) => {
+    const createdAt = new Date(subscriptor.createdAt);
+    return (
+      createdAt.getMonth() === lastMonth.getMonth() &&
+      createdAt.getFullYear() === lastMonth.getFullYear()
+    );
+  });
+  const twoMonthsAgoSubscriptions = allSubscriptions.filter((subscriptor) => {
+    const createdAt = new Date(subscriptor.createdAt);
+    return (
+      createdAt.getMonth() === twoMonthsAgo.getMonth() &&
+      createdAt.getFullYear() === twoMonthsAgo.getFullYear()
+    );
+  });
+
+  // Se ejecuta cuando se monta el componente
+  useEffect(() => {
+    dispatch(getSubscriptions());
+  }, []);
+
+  // Funciones de filtrado:
+  const orderDateHandler = (event) => {
+    event.preventDefault();
+    if (filters.order === "latest") {
+      dispatch(subscriptionsFilters({ order: "oldest", search }));
+    } else {
+      dispatch(subscriptionsFilters({ order: "latest", search }));
+    }
+  };
+  const orderNameHandler = (event) => {
+    event.preventDefault();
+    if (filters.order === "a-z") {
+      dispatch(subscriptionsFilters({ order: "z-a", search }));
+    } else {
+      dispatch(subscriptionsFilters({ order: "a-z", search }));
+    }
+  };
+  const searchHandler = (event) => {
+    event.preventDefault();
+    dispatch(subscriptionsFilters({ order: filters.order, search: search }));
+  };
+  const clearHandler = (event) => {
+    event.preventDefault();
+    dispatch(subscriptionsFilters({ order: "latest", search: false }));
+    resetHandler();
+  };
+
+  //Funcion para eliminar un elemento:
+  const deleteHandler = (id) => {
+    dispatch(deleteSubscription(id));
+    dispatch(clearOneSubscription());
+  };
+  const cancelHandler = () => {
+    dispatch(clearOneSubscription());
+  };
 
   return (
     <div className={`${styles["container"]}`}>
+      <ConfirmationWindow
+        aceptParams={idOneSubscriptor}
+        text={`¿Seguro que quieres eliminar a ${oneSubscriptor.name} del newsletter? Esta acción es irreversible.`}
+      />
       <section className={`${styles["data-container"]}`}>
         <div className={`${styles["data"]}`}>
-          <p className={`${styles["value"]}`}>140</p>
+          <p className={`${styles["value"]}`}>{totalSubscriptions}</p>
           <p className={`${styles["text"]}`}>Total suscripciones</p>
         </div>
         <div className={`${styles["data"]}`}>
-          <p className={`${styles["value"]}`}>50</p>
-          <p className={`${styles["text"]}`}>Total suscripciones de Marzo</p>
+          <p className={`${styles["value"]}`}>
+            {currentMonthSubscriptions.length}
+          </p>
+          <p className={`${styles["text"]}`}>
+            Total suscripciones de {monthNames[today.getMonth()]}
+          </p>
         </div>
         <div className={`${styles["data"]}`}>
-          <p className={`${styles["value"]}`}>50</p>
-          <p className={`${styles["text"]}`}>Total suscripciones de Febrero</p>
+          <p className={`${styles["value"]}`}>
+            {lastMonthSubscriptions.length}
+          </p>
+          <p className={`${styles["text"]}`}>
+            Total suscripciones de {monthNames[lastMonth.getMonth()]}
+          </p>
         </div>
         <div className={`${styles["data"]}`}>
-          <p className={`${styles["value"]}`}>40</p>
-          <p className={`${styles["text"]}`}>Total suscripciones de Abril</p>
+          <p className={`${styles["value"]}`}>
+            {twoMonthsAgoSubscriptions.length}
+          </p>
+          <p className={`${styles["text"]}`}>
+            Total suscripciones de {monthNames[twoMonthsAgo.getMonth()]}
+          </p>
         </div>
       </section>
       <form className={`${styles["form"]}`}>
         <input
           className='search-input'
-          type='search'
+          type='text'
           name='search'
           placeholder='Buscar...'
           autoComplete='off'
+          value={search}
+          onBlur={changeHandler}
+          onChange={changeHandler}
         />
-        <button className={`${styles["button"]}`}>
-          <BiSearch className='blue-icon' size='1.25rem' />
+        {filters.search && (
+          <button
+            className={`${styles["button"]} ${styles["clear-button"]}`}
+            onClick={clearHandler}
+          >
+            <MdCached className='blue-icon' size='1.25rem' />
+          </button>
+        )}
+        <button className={`${styles["button"]}`} onClick={searchHandler}>
+          <MdSearch className='blue-icon' size='1.25rem' />
         </button>
       </form>
       <table className={`${styles["table"]}`}>
@@ -45,14 +192,26 @@ export default function Subscriptions() {
             <th>ID</th>
             <th>
               Fecha{" "}
-              <button className={`${styles["button"]} ${styles["arrow"]}`}>
-                <FiChevronDown className='white-icon' size='1.45rem' />
+              <button
+                className={`${styles["button"]} ${styles["arrow"]}`}
+                onClick={orderDateHandler}
+              >
+                <MdOutlineKeyboardArrowDown
+                  className='white-icon'
+                  size='1.45rem'
+                />
               </button>
             </th>
             <th>
               Nombre{" "}
-              <button className={`${styles["button"]} ${styles["arrow"]}`}>
-                <FiChevronDown className='white-icon' size='1.45rem' />
+              <button
+                className={`${styles["button"]} ${styles["arrow"]}`}
+                onClick={orderNameHandler}
+              >
+                <MdOutlineKeyboardArrowDown
+                  className='white-icon'
+                  size='1.45rem'
+                />
               </button>
             </th>
             <th>Correo electrónico</th>
@@ -60,98 +219,61 @@ export default function Subscriptions() {
           </tr>
         </thead>
         <tbody className={`${styles["tbody"]}`}>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`button yellow-button ${styles["delete-button"]}`}
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`button yellow-button ${styles["delete-button"]}`}
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`button yellow-button ${styles["delete-button"]}`}
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className={`${styles["id"]}`} title='642d9426474720c74082f3c5'>
-              642d9426474720c74082f3c5
-            </td>
-            <td className={`${styles["date"]}`} title='01/02/23'>
-              01/02/23
-            </td>
-            <td className={`${styles["name"]}`} title='Maria Perez'>
-              Maria Perez
-            </td>
-            <td className={`${styles["email"]}`} title='mariaperez@gmail.com'>
-              mariaperez@gmail.com
-            </td>
-            <td className={`${styles["actions"]}`}>
-              <button
-                className={`button yellow-button ${styles["delete-button"]}`}
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
+          {subscriptions.length !== 0 ? (
+            <>
+              {itemsPerPage.map(({ _id, name, email, createdAt }) => {
+                const date = new Date(createdAt).toLocaleDateString();
+                return (
+                  <tr key={`subscription-${_id}`}>
+                    <td className={`${styles["id"]}`} title={_id}>
+                      {_id}
+                    </td>
+                    <td className={`${styles["date"]}`} title={date}>
+                      {date}
+                    </td>
+                    <td className={`${styles["name"]}`} title={name}>
+                      {name}
+                    </td>
+                    <td className={`${styles["email"]}`} title={email}>
+                      {email}
+                    </td>
+                    <td className={`${styles["actions"]}`}>
+                      <button
+                        className={`button yellow-button ${styles["delete-button"]}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          dispatch(getOneSubscription(_id));
+                          dispatch(
+                            confirmationOpen({
+                              message: false,
+                              acept: deleteHandler,
+                              cancel: cancelHandler,
+                            })
+                          );
+                        }}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </>
+          ) : (
+            <tr>
+              <td colSpan='5'>No se encontró ningún dato.</td>
+            </tr>
+          )}
         </tbody>
       </table>
-      <Pagination
-        numberOfItems='30'
-        numberPerPage='7'
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {subscriptions.length > numberPerPage && (
+        <Pagination
+          numberOfItems={subscriptions.length}
+          numberPerPage={numberPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

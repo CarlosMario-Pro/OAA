@@ -2,6 +2,7 @@ import {
   ADMINISTRATORS,
   ADMINISTRATORS_FILTERS,
   ONE_ADMINISTRATOR,
+  CLEAR_ONE_ADMINISTRATOR,
   CREATE_ADMINISTRATOR,
   EDIT_ADMINISTRATOR,
   DELETE_ADMINISTRATOR,
@@ -11,8 +12,10 @@ const initialState = {
   allAdministrators: [],
   administrators: [],
   oneAdministrator: {},
+  idOneAdministrator: null,
   filters: {
-    orderDate: "latest",
+    order: "latest",
+    search: false,
   },
 };
 
@@ -30,43 +33,49 @@ export default function administratorsReducer(state = initialState, action) {
       return {
         ...state,
         oneAdministrator: { ...payload },
+        idOneAdministrator: payload._id,
+      };
+    case CLEAR_ONE_ADMINISTRATOR: // Clear get ID
+      return {
+        ...state,
+        oneAdministrator: {},
       };
     case ADMINISTRATORS_FILTERS: //Filter
-      const { orderName, orderDate, search } = payload;
+      const { order, search } = payload;
       let filteredAdministrators = [...state.allAdministrators];
 
-      if (orderName) {
-        if (orderName === "az") {
-          filteredAdministrators.sort((a, b) => a.name.localeCompare(b.name));
-        } else {
-          filteredAdministrators
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .reverse();
-        }
-      }
-      if (orderDate) {
-        if (orderDate === "latest") {
-          filteredAdministrators.sort(
-            (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-          );
-        } else {
-          filteredAdministrators
-            .sort(
-              (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-            )
-            .reverse();
-        }
-      }
       if (search) {
         filteredAdministrators = filteredAdministrators.filter((a) => {
+          const searchLowerCase = search.toLowerCase();
           const name = a["name"].toLowerCase();
           return (
-            a["id"].includes(search) ||
-            name.includes(search) ||
-            a["email"].includes(search)
+            a["_id"].includes(searchLowerCase) ||
+            name.includes(searchLowerCase) ||
+            a["email"].includes(searchLowerCase)
           );
         });
       }
+
+      if (order === "a-z") {
+        filteredAdministrators.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (order === "z-a") {
+        filteredAdministrators
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .reverse();
+      } else if (order === "latest") {
+        filteredAdministrators.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+        );
+      } else if (order === "oldest") {
+        filteredAdministrators
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+          )
+          .reverse();
+      }
+
       return {
         ...state,
         administrators: [...filteredAdministrators],
@@ -79,17 +88,18 @@ export default function administratorsReducer(state = initialState, action) {
         administrators: [payload, ...state.administrators],
       };
     case EDIT_ADMINISTRATOR: // Put
-      const updatedAllAdministrator = state.allAdministrators.filter(
-        (admin) => admin._id !== payload._id
+      const updatedAllAdministrator = state.allAdministrators.find(
+        (admin) => admin._id === payload._id
       );
-      const updatedAdministrator = state.administrators.filter(
-        (admin) => admin._id !== payload._id
+      updatedAllAdministrator.name = payload.name;
+      updatedAllAdministrator.email = payload.email;
+      const updatedAdministrator = state.administrators.find(
+        (admin) => admin._id === payload._id
       );
+      updatedAdministrator && (updatedAdministrator.name = payload.name);
+      updatedAdministrator && (updatedAdministrator.email = payload.email);
       return {
         ...state,
-        allAdministrators: [payload, ...updatedAllAdministrator],
-        administrators: [payload, ...updatedAdministrator],
-        oneAdministrator: {},
       };
     case DELETE_ADMINISTRATOR: // Delete
       const deletedAllAdministrator = state.allAdministrators.filter(
