@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const categories = ["Novedades", "Comunidades", "Agroecología"];
 const newsSchema = new Schema(
   {
     titleMain: {
@@ -11,48 +12,43 @@ const newsSchema = new Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+      enum: categories,
+    },
     author: {
       type: String,
       required: true,
     },
-    introduction: {
+    urlAuthor: {
       type: String,
     },
-    description: [
-      {
-        type: String,
-      },
-    ],
+    location: {
+      type: String,
+    },
+    introduction: {
+      type: String,
+      required: true,
+    },
     image: [
       {
         type: String,
       },
     ],
-    location: {
+    description: {
       type: String,
-    },
-    video: {
-      type: String,
-    },
-    source: {
-      type: String,
-    },
-    read_time: {
-      type: String,
+      required: true,
     },
     isDeleted: {
       type: Boolean,
       default: false,
     },
+    labels: [{ type: String }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comments" }],
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "Categories",
-      required: true,
-    },
   },
-  { versionKey: false },
-  { timestamps: true }
+  { timestamps: true },
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("News", newsSchema);
