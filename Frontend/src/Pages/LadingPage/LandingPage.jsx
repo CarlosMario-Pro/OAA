@@ -6,7 +6,7 @@ export default function LandingPage () {
     
   return (
     <div>
-        <h1>Hola</h1>
+        <h1>LandingPage</h1>
     </div>
   );
 };
