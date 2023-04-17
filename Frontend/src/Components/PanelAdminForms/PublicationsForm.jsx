@@ -9,8 +9,13 @@ import {
   editNew,
   reactiveNew,
 } from "../../stateManagement/actions/panelAdmin/news.actions";
+import ImageUrl from "./MultimediaFiles/ImageUrl";
+import ViewImages from "./MultimediaFiles/ViewImages";
 import styles from "./PublicationsForm.module.css";
 import "quill/dist/quill.snow.css";
+import validationsPublications from "../../utils/helpers/validationsPublications";
+import ImageCloudinary from "./MultimediaFiles/ImageCloudinary";
+import useSessionStorage from "../../utils/customHooks/useLocalStorage";
 
 const toolbar = [
   ["bold", "italic", "underline", "strike"],
@@ -28,7 +33,6 @@ const initialForm = {
   urlAuthor: "https://ambientalistas.org.ar/contenido/83/nosotrxs",
   location: "",
   introduction: "",
-  image: [],
   label: "",
 };
 
@@ -36,13 +40,16 @@ export default function PublicationsForm() {
   //variables de estados y formularios
   const navigate = useNavigate(),
     dispatch = useDispatch(),
-    [labels, setLabels] = useState([]),
+    [labels, setLabels] = useSessionStorage("labelsPublications", []),
+    [image, setImage] = useSessionStorage("imagesPublications", []),
+    [urlOpen, setUrlOpen] = useState(false),
+    [cloudinaryOpen, setCloudinaryOpen] = useState(false),
     { quill, quillRef } = useQuill({ modules: { toolbar } }),
     { newDetail, idNewDetail, edit } = useSelector((state) => state.news),
-    { form, setForm, changeHandler, resetHandler } = useForm(
-      "searchPublications",
+    { form, errors, setForm, setErrors, changeHandler, resetHandler } = useForm(
+      "publicationsForm",
       initialForm,
-      () => {}
+      validationsPublications
     ),
     {
       titleMain,
@@ -52,7 +59,6 @@ export default function PublicationsForm() {
       urlAuthor,
       location,
       introduction,
-      image,
       label,
     } = form;
 
@@ -81,6 +87,9 @@ export default function PublicationsForm() {
   // Función para regresar a la pantalla anterior
   const backHandler = (event) => {
     event.preventDefault();
+    resetHandler();
+    setImage([]);
+    setLabels([]);
     dispatch(clearNewDetail());
     navigate("/panel-admin");
   };
@@ -99,42 +108,63 @@ export default function PublicationsForm() {
   };
 
   // Función para publicar un nuevo elemento:
-  const createHandler = (event) => {
-    event.preventDefault();
-    dispatch(
-      createNew({
-        ...form,
-        labels,
-        description: JSON.stringify(quill.getContents()),
-      })
-    );
-    navigate("/panel-admin");
+  const createHandler = () => {
+    if (Object.keys(errors).length === 0) {
+      dispatch(
+        createNew({
+          ...form,
+          labels,
+          image,
+          description: JSON.stringify(quill.getContents()),
+        })
+      );
+      resetHandler();
+      setImage([]);
+      setLabels([]);
+      navigate("/panel-admin");
+    }
   };
 
   // Función para editar un elemento:
-  const editHandler = (event) => {
-    event.preventDefault();
-    if (!newDetail.isDeleted) {
-      dispatch(reactiveNew(idNewDetail));
+  const editHandler = () => {
+    if (Object.keys(errors).length === 0) {
+      if (newDetail.isDeleted) {
+        dispatch(reactiveNew(idNewDetail));
+      }
+      dispatch(
+        editNew(idNewDetail, {
+          ...form,
+          labels,
+          image,
+          description: JSON.stringify(quill.getContents()),
+        })
+      );
+      dispatch(clearNewDetail());
+      resetHandler();
+      setImage([]);
+      setLabels([]);
+      navigate("/panel-admin");
     }
-    dispatch(
-      editNew(idNewDetail, {
-        ...form,
-        labels,
-        description: JSON.stringify(quill.getContents()),
-      })
-    );
-    dispatch(clearNewDetail());
-    navigate("/panel-admin");
   };
 
+  //Función para abrir el selector de imagen Cloudinary
+  const openCludinary = (event) => {
+    event.preventDefault();
+    setCloudinaryOpen(true);
+  };
+
+  //Función para abrir el selector de imagen URL
+  const openUrl = (event) => {
+    event.preventDefault();
+    setUrlOpen(true);
+  };
   return (
     <form className={`${styles["container"]}`}>
       <h1 className={`${styles["header"]}`}>
         {edit ? "Editar Publicación" : "Añadir una nueva Publicación"}
       </h1>
 
-      <label htmlFor='titleMain'>Título</label>
+      <label htmlFor='titleMain'>Título *</label>
       <input
         className='text-input'
         id='titleMain'
@@ -146,8 +176,8 @@ export default function PublicationsForm() {
         required
         autoComplete='off'
       />
-
-      <label htmlFor='date'>Fecha del acontecimiento</label>
+      {errors.titleMain && <p className='error'>{errors.titleMain}</p>}
+      <label htmlFor='date'>Fecha del acontecimiento *</label>
       <input
         className='text-input'
         id='date'
@@ -160,12 +190,12 @@ export default function PublicationsForm() {
         required
         autoComplete='off'
       />
-
-      <label htmlFor='status'>Categoría</label>
+      {errors.date && <p className='error'>{errors.date}</p>}
+      <label htmlFor='category'>Categoría *</label>
       <select
         className={`${styles["select"]}`}
-        name='status'
-        id='status'
+        name='category'
+        id='category'
         defaultValue={category}
         onChange={changeHandler}
       >
@@ -173,8 +203,8 @@ export default function PublicationsForm() {
         <option value='Comunidades'>Comunidades</option>
         <option value='Agroecología'>Agroecología</option>
       </select>
-
-      <label htmlFor='author'>Autor</label>
+      {errors.category && <p className='error'>{errors.category}</p>}
+      <label htmlFor='author'>Autor *</label>
       <input
         className='text-input'
         id='author'
@@ -186,8 +216,8 @@ export default function PublicationsForm() {
         required
         autoComplete='off'
       />
-
-      <label htmlFor='urlAuthor'>Autor URL (opcional)</label>
+      {errors.author && <p className='error'>{errors.author}</p>}
+      <label htmlFor='urlAuthor'>Autor URL</label>
       <input
         className='text-input'
         id='urlAuthor'
@@ -213,7 +243,7 @@ export default function PublicationsForm() {
         autoComplete='off'
       />
 
-      <label htmlFor='introduction'>Introducción</label>
+      <label htmlFor='introduction'>Introducción *</label>
       <textarea
         className='introduction-textarea'
         id='introduction'
@@ -222,12 +252,30 @@ export default function PublicationsForm() {
         onChange={changeHandler}
         value={introduction}
       />
-      <label htmlFor='image'>Imágenes</label>
+      {errors.introduction && <p className='error'>{errors.introduction}</p>}
+
+      <label htmlFor='image'>Imágenes *</label>
+      {errors.image && <p className='error'>{errors.image}</p>}
+      <ViewImages images={image} setImages={setImage} />
+      <ImageCloudinary
+        open={cloudinaryOpen}
+        setOpen={setCloudinaryOpen}
+        images={image}
+        setImages={setImage}
+        setError={setErrors}
+      />
+      <ImageUrl
+        open={urlOpen}
+        setOpen={setUrlOpen}
+        images={image}
+        setImages={setImage}
+        setError={setErrors}
+      />
       <div className='button-container'>
-        <button className='button yellow-button'>
+        <button className='button yellow-button' onClick={openCludinary}>
           Añadir archivo multimedia
         </button>
-        <button className='button yellow-button'>
+        <button className='button yellow-button' onClick={openUrl}>
           Añadir URL de multimedia
         </button>
       </div>
@@ -271,7 +319,18 @@ export default function PublicationsForm() {
         </button>
         <button
           className='button green-button'
-          onClick={edit ? editHandler : createHandler}
+          onClick={(event) => {
+            event.preventDefault();
+            validationsPublications(form);
+            if (image.length === 0) {
+              setErrors({
+                ...errors,
+                image: "Por favor, introduce al menos una imagen.",
+              });
+            } else {
+              edit ? editHandler : createHandler;
+            }
+          }}
         >
           Publicar
         </button>
