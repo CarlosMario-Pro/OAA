@@ -1,12 +1,18 @@
 import React from 'react';
 import styles from './Detail.module.css';
+import FormNewsletter from '../../Components/NewDetail/NewsletterForm';
+import SameCategories from '../../Components/NewDetail/SameCategorie';
 
 
 export default function Detail () {
     
   return (
     <div>
-        <h1>Detail</h1>
+        <FormNewsletter />
+        <hr />
+        <hr />
+        <hr />
+        <SameCategories />
     </div>
   );
 };

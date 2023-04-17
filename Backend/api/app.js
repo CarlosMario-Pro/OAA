@@ -12,7 +12,7 @@ app.use(express.json());                            //Parseamos toda la informac
 app.use(express.urlencoded({ extended: true }));
 app.use(                                            //Políticas 'cors'
     cors({
-        origin: CLIENT_URL,
+        origin: CLIENT_URL ,
         methods: "GET, POST, PUT, DELETE",
         credentials: true,
     })
