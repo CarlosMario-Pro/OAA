@@ -10,7 +10,6 @@ const getNews = async (req, res) => {
       return res.status(200).json(news.reverse());
     });
   } catch (error) {
-    console.error(error);
     const status = error.status || 500;
     const message = error.message || "Ocurrió un error al obtener las noticias";
     return res.status(status).json({ message });
@@ -47,9 +46,12 @@ const getThreeNews = async (req, res) => {
     try {
       await session.withTransaction(async (session) => {
         const news = await News.find({})
-          .sort({date: -1}) // ordenar por fecha de creación descendente
-          .limit(3) // limitar a 3 resultados
+          .sort({date: -1})
+          .limit(3)
           .session(session);
+          if (!news.length) {
+            res.status(204)
+          }
         return res.status(200).json(news);
       });
     } catch (error) {
@@ -60,13 +62,15 @@ const getThreeNews = async (req, res) => {
     } finally {
       await session.endSession();
     }
+  }
 
 const getThreeNewsByCategory = async (req, res) => {
     const { category } = req.params;
+    console.log(category)
     const session = await mongoose.startSession();
     try {
       await session.withTransaction(async (session) => {
-        const news = await News.find({ category: category })
+        const news = await News.find({ category })
           .sort({ date: -1 })
           .limit(3)
           .session(session);
@@ -92,7 +96,7 @@ const postNews = async (req, res) => {
     urlAuthor,
     location,
     introduction,
-    images,
+    image,
     description,
     labels,
   } = req.body;
@@ -115,7 +119,7 @@ const postNews = async (req, res) => {
             urlAuthor,
             location,
             introduction,
-            images,
+            image,
             description,
             labels,
           },
@@ -144,7 +148,7 @@ const putNews = async (req, res) => {
     urlAuthor,
     location,
     introduction,
-    images,
+    image,
     description,
     labels,
   } = req.body;
@@ -162,7 +166,7 @@ const putNews = async (req, res) => {
           urlAuthor,
           location,
           introduction,
-          images,
+          image,
           description,
           labels,
         },
