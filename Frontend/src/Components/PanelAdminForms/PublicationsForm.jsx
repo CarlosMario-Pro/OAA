@@ -21,7 +21,7 @@ const toolbar = [
   ["bold", "italic", "underline", "strike"],
   [{ list: "ordered" }, { list: "bullet" }],
   [{ header: [2, 3, false] }],
-  ["link"],
+  ["link", "image", "video"],
   ["clean"],
 ];
 
@@ -328,7 +328,7 @@ export default function PublicationsForm() {
                 image: "Por favor, introduce al menos una imagen.",
               });
             } else {
-              edit ? editHandler : createHandler;
+              edit ? editHandler() : createHandler();
             }
           }}
         >
