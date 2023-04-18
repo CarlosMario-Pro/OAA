@@ -65,9 +65,18 @@ textarea {
   margin: 0.5rem auto;
   padding: 0.5rem;
   font-size: 1.25rem;
+  font-family: var(--font-family);
   width: 100%;
   border: 0.18rem solid var(--blue);
   border-radius: var(--border-radius);
+  background: none;
+}
+
+.file-input {
+  display: block;
+  margin: 0.5rem auto;
+  font-size: 1.25rem;
+  width: 100%;
   background: none;
 }
 

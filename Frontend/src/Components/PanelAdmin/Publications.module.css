@@ -120,6 +120,7 @@
 }
 .title {
   max-width: 18vw;
+  white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
 }

@@ -8,9 +8,11 @@ import PublicationsForm from "../../Components/PanelAdminForms/PublicationsForm"
 import RadioProgramForm from "../../Components/PanelAdminForms/RadioProgramForm";
 import logo from "../../assets/logo-temporal-2.png";
 import styles from "./PanelAdminForm.module.css";
+import { useSelector } from "react-redux";
 
 export default function PanelAdminForm() {
-  const { form } = useParams();
+  const { form } = useParams(),
+    { admin } = useSelector((state) => state.admin);
 
   return (
     <div className={`${styles["container"]}`}>
@@ -22,7 +24,7 @@ export default function PanelAdminForm() {
           />
           <h1>Panel de Administrador</h1>
         </div>
-        <h3>Hola, Nombre</h3>
+        <h3>Hola, {admin.name}</h3>
       </header>
       {form !== "gallery-image-form" &&
         form !== "gallery-video-form" &&
