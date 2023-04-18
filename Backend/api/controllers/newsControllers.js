@@ -10,7 +10,6 @@ const getNews = async (req, res) => {
       return res.status(200).json(news.reverse());
     });
   } catch (error) {
-    console.error(error);
     const status = error.status || 500;
     const message = error.message || "Ocurrió un error al obtener las noticias";
     return res.status(status).json({ message });
