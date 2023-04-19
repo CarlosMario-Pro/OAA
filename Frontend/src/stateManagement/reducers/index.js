@@ -23,6 +23,7 @@ const reducer = combineReducers({
   news: newsReducer,
   radioProgram: radioProgramReducer,
   subscriptions: subscriptionsReducer,
+  UserIncription: newsReducer
 });
 
 export default reducer;

@@ -10,7 +10,6 @@ const getNews = async (req, res) => {
       return res.status(200).json(news.reverse());
     });
   } catch (error) {
-    console.error(error);
     const status = error.status || 500;
     const message = error.message || "Ocurrió un error al obtener las noticias";
     return res.status(status).json({ message });
@@ -41,6 +40,53 @@ const getOneNews = async (req, res) => {
   }
 };
 
+const getThreeNews = async (req, res) => {
+    const session = await mongoose.startSession();
+  
+    try {
+      await session.withTransaction(async (session) => {
+        const news = await News.find({})
+          .sort({date: -1})
+          .limit(3)
+          .session(session);
+          if (!news.length) {
+            res.status(204)
+          }
+        return res.status(200).json(news);
+      });
+    } catch (error) {
+      console.error(error);
+      const status = error.status || 500;
+      const message = error.message || "Ocurrió un error al obtener las noticias";
+      return res.status(status).json({ message });
+    } finally {
+      await session.endSession();
+    }
+  }
+
+const getThreeNewsByCategory = async (req, res) => {
+    const { category } = req.params;
+    console.log(category)
+    const session = await mongoose.startSession();
+    try {
+      await session.withTransaction(async (session) => {
+        const news = await News.find({ category })
+          .sort({ date: -1 })
+          .limit(3)
+          .session(session);
+        return res.status(200).json(news);
+      });
+    } catch (error) {
+      console.error(error);
+      const status = error.status || 500;
+      const message =
+        error.message || "Ocurrió un error al obtener las noticias";
+      return res.status(status).json({ message });
+    } finally {
+      await session.endSession();
+    }
+  };
+  
 const postNews = async (req, res) => {
   const {
     titleMain,
@@ -50,7 +96,7 @@ const postNews = async (req, res) => {
     urlAuthor,
     location,
     introduction,
-    images,
+    image,
     description,
     labels,
   } = req.body;
@@ -73,7 +119,7 @@ const postNews = async (req, res) => {
             urlAuthor,
             location,
             introduction,
-            images,
+            image,
             description,
             labels,
           },
@@ -102,7 +148,7 @@ const putNews = async (req, res) => {
     urlAuthor,
     location,
     introduction,
-    images,
+    image,
     description,
     labels,
   } = req.body;
@@ -120,7 +166,7 @@ const putNews = async (req, res) => {
           urlAuthor,
           location,
           introduction,
-          images,
+          image,
           description,
           labels,
         },
@@ -225,6 +271,8 @@ const deleteNews = async (req, res) => {
 module.exports = {
   getNews,
   getOneNews,
+  getThreeNews,
+  getThreeNewsByCategory,
   postNews,
   putNews,
   removeNews,
