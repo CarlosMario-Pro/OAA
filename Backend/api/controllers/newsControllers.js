@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const News = require("../models/News");
 
+
 const getNews = async (req, res) => {
   const session = await mongoose.startSession();
 
@@ -17,6 +18,7 @@ const getNews = async (req, res) => {
     await session.endSession();
   }
 };
+
 
 const getOneNews = async (req, res) => {
   const { id } = req.params;
@@ -66,7 +68,6 @@ const getThreeNews = async (req, res) => {
 
 const getThreeNewsByCategory = async (req, res) => {
     const { category } = req.params;
-    console.log(category)
     const session = await mongoose.startSession();
     try {
       await session.withTransaction(async (session) => {
@@ -98,6 +99,9 @@ const postNews = async (req, res) => {
     introduction,
     image,
     description,
+    multimedia,
+    visitorCounter,
+    extraData,
     labels,
   } = req.body;
   const session = await mongoose.startSession();
@@ -121,6 +125,9 @@ const postNews = async (req, res) => {
             introduction,
             image,
             description,
+            multimedia,
+            visitorCounter,
+            extraData,
             labels,
           },
         ],
@@ -151,6 +158,9 @@ const putNews = async (req, res) => {
     image,
     description,
     labels,
+    multimedia,
+    visitorCounter,
+    extraData
   } = req.body;
   const session = await mongoose.startSession();
 
@@ -169,6 +179,9 @@ const putNews = async (req, res) => {
           image,
           description,
           labels,
+          multimedia,
+          visitorCounter,
+          extraData
         },
         { new: true, session }
       );

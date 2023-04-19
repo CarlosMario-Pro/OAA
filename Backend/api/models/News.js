@@ -40,6 +40,23 @@ const newsSchema = new Schema(
       type: String,
       required: true,
     },
+    multimedia: [{
+        label: {
+          type: String,
+          required: true
+        },
+        url: {
+          type: String,
+          required: true
+        }
+      }],
+    visitorCounter: {
+      type: Number,
+      default: 0,
+    },
+    extraData: {
+      type: String,
+    },
     isDeleted: {
       type: Boolean,
       default: false,
