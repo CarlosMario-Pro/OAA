@@ -14,13 +14,14 @@ export function addUserToNewsletter(data) {
     }
 };
 
-export function threNewsCategoty(category) {
+export function threNewsCategory(category) {
     return async function (dispatch) {
         try {
             const categoriesThree = await axios.get(`http://localhost:3001/news/category/${category}`)
-            return dispatch({type: constants.THREE_CATEGORIES, payload : categoriesThree })
+            console.log(categoriesThree.data, 'en el action');
+            return dispatch({type: constants.THREE_CATEGORIES, payload : categoriesThree.data })
         } catch (error) {
             console.log(error.message);
         }
     }
-}
+};

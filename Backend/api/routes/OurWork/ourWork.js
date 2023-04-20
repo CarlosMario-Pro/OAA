@@ -15,6 +15,10 @@ ourWorkRouter.post("/", ourWorkController.postOurWork);
 // ---- PUT
 ourWorkRouter.put("/:id", ourWorkController.putOurWork);
 
+// ---- PUT RESTORE
+ourWorkRouter.put("/restore/:id", ourWorkController.restoreOurWork);
+
+
 // ---- DELETE
 ourWorkRouter.delete("/:id", ourWorkController.deleteOurWork)
 

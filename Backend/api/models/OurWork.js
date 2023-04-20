@@ -23,6 +23,14 @@ const ourWorkSchema = new Schema(
         required: true
       }
     }],
+    isDeleted:{
+      type: Boolean,
+      default: false,
+    },
+    isFinished:{
+      type: Boolean,
+      default: true
+    },
     extraData:{
       type: String
     }

@@ -37,13 +37,13 @@ const getOurWorkById = async (req, res) => {
 };
 
 const postOurWork = async (req, res) => {
-  const { title, content, image, information, extraData} = req.body;
+  const { title, content, image, information, extraData, isFinished} = req.body;
   const session = await mongoose.startSession();
 
   try {
     await session.withTransaction(async (session) => {
       const newOurWork = new OurWork({
-        title, content, image, information, extraData
+        title, content, image, information, extraData, isFinished
       });
       await newOurWork.save({ session });
       return res.status(201).json(newOurWork);
@@ -60,14 +60,14 @@ const postOurWork = async (req, res) => {
 
 const putOurWork = async (req, res) => {
   const { id } = req.params;
-  const { title, content, image, information, extraData } = req.body;
+  const { title, content, image, information, extraData, isFinished } = req.body;
   const session = await mongoose.startSession();
 
   try {
     await session.withTransaction(async (session) => {
       const updatedOurWork = await OurWork.findByIdAndUpdate(
         id,
-        { title, content, image, information, extraData },
+        { title, content, image, information, extraData, isFinished },
         { new: true, session }
       );
       if (!updatedOurWork) {
@@ -87,21 +87,47 @@ const putOurWork = async (req, res) => {
 
 
 const deleteOurWork = async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
   const session = await mongoose.startSession();
 
   try {
     await session.withTransaction(async (session) => {
-      const deletedOurWork = await OurWork.findByIdAndDelete(id, { session });
-      if (!deletedOurWork) {
+      const work = await OurWork.findById(id);
+      if (!work) {
         return res.status(404).json({ message: "OurWork no encontrado" });
       }
-      return res.status(200).json({ message: "OurWork eliminado correctamente" });
+      work.isDeleted = true;
+      await work.save();
+      res.status(200).json({ message: " EliminadO exitosamente" });
     });
   } catch (error) {
     console.error(error);
     const status = error.status || 500;
-    const message = error.message || "Ocurrió un error al eliminar OurWork";
+    const message = error.message || "Ocurrió un error al eliminar OURWork";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+const restoreOurWork = async (req, res) => {
+  const id = req.params.id;
+  const session = await mongoose.startSession();
+
+  try {
+    await session.withTransaction(async (session) => {
+      const work = await OurWork.findById(id);
+      if (!work) {
+        return res.status(404).json({ message: "No encontrada" });
+      }
+      work.isDeleted = false;
+      await work.save();
+      res.status(200).json({ message: "Restaurado exitosamente" });
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al Restaurar";
     return res.status(status).json({ message });
   } finally {
     await session.endSession();
@@ -114,5 +140,6 @@ module.exports = {
   getOurWorkById,
   postOurWork,
   putOurWork,
-  deleteOurWork
+  deleteOurWork,
+  restoreOurWork
 };
