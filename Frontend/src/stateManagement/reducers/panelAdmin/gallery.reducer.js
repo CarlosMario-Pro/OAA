@@ -1,21 +1,27 @@
 import {
   GALLERY,
+  ONE_GALLERY,
   GALLERY_FILTERS,
+  CLEAR_ONE_GALLERY,
   CREATE_GALLERY,
   EDIT_GALLERY,
+  EDIT_GALLERY_FORM,
+  REACTIVE_GALLERY,
   REMOVE_GALLERY,
   DELETE_GALLERY,
-  ONE_GALLERY,
 } from "../../types/panelAdmin";
 
 const initialState = {
-  allGallery: [],
-  gallery: [],
+  allGalleries: [],
+  galleries: [],
   oneGallery: {},
+  idOneGallery: null,
+  edit: false,
   filters: {
     status: "active",
-    format: "all",
-    orderDate: "latest",
+    order: "latest",
+    category: "all",
+    search: false,
   },
 };
 
@@ -24,12 +30,18 @@ export default function galleryReducer(state = initialState, action) {
 
   switch (type) {
     case GALLERY: // Get
-      return { ...state, allGallery: [...payload], gallery: [...payload] };
+      return { ...state, allGalleries: [...payload], galleries: [...payload] };
     case ONE_GALLERY: // Get ID
-      return { ...state, oneGallery: { ...payload } };
+      return {
+        ...state,
+        oneGallery: { ...payload },
+        idOneGallery: payload._id,
+      };
+    case CLEAR_ONE_GALLERY: //Clear get ID
+      return { ...state, oneGallery: {} };
     case GALLERY_FILTERS: // Filters
-      const { status, format, orderTitle, orderDate, search } = payload;
-      let filteredGallery = [...state.allGallery];
+      const { status, order, category, search } = payload;
+      let filteredGallery = [...state.allGalleries];
 
       if (status === "active") {
         filteredGallery = filteredGallery.filter(
@@ -41,90 +53,102 @@ export default function galleryReducer(state = initialState, action) {
         );
       }
 
-      if (format !== "all") {
-        if (format === "image") {
-          filteredGallery = filteredGallery.filter(
-            (a) => a["format"] === "image"
-          );
-        } else if (format === "video") {
-          filteredGallery = filteredGallery.filter(
-            (a) => a["format"] === "video"
-          );
-        }
-      }
-
-      if (orderTitle) {
-        if (orderTitle === "az") {
-          filteredGallery.sort((a, b) => a.title.localeCompare(b.title));
-        } else {
-          filteredGallery
-            .sort((a, b) => a.title.localeCompare(b.title))
-            .reverse();
-        }
-      }
-
-      if (orderDate) {
-        if (orderDate === "latest") {
-          filteredGallery.sort(
-            (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-          );
-        } else {
-          filteredGallery
-            .sort(
-              (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-            )
-            .reverse();
-        }
-      }
-
       if (search) {
         filteredGallery = filteredGallery.filter((a) => {
-          const title = a["title"].toLowerCase();
-          return a["id"].includes(search) || title.includes(search);
+          const searchLowerCase = search.toLowerCase();
+          const titleMain = a["titleMain"].toLowerCase();
+          return (
+            a["_id"].includes(searchLowerCase) ||
+            titleMain.includes(searchLowerCase)
+          );
         });
       }
+
+      if (category !== "all") {
+        filteredGallery = filteredGallery.filter(
+          (a) => a["category"] === category
+        );
+      }
+
+      if (order === "a-z") {
+        filteredGallery.sort((a, b) => a.titleMain.localeCompare(b.titleMain));
+      } else if (order === "z-a") {
+        filteredGallery
+          .sort((a, b) => a.titleMain.localeCompare(b.titleMain))
+          .reverse();
+      } else if (order === "latest") {
+        filteredGallery.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+        );
+      } else if (order === "oldest") {
+        filteredGallery
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+          )
+          .reverse();
+      }
+
       return {
         ...state,
-        gallery: [...filteredGallery],
+        galleries: [...filteredGallery],
         filters: { ...payload },
       };
     case CREATE_GALLERY: // Post
       return {
         ...state,
-        allGallery: [payload, state.allGallery],
-        gallery: [payload, state.gallery],
+        allGalleries: [payload, state.allGalleries],
+        galleries: [payload, state.galleries],
       };
+    case EDIT_GALLERY_FORM: // Edit or create form
+      return { ...state, edit: payload };
     case EDIT_GALLERY: // Put
-      const updatedAllGallery = state.allGallery.filter(
-        (a) => a._id !== payload._id
+      const updatedAllGallery = state.allGalleries.find(
+        (a) => a._id === payload._id
       );
-      const updatedGallery = state.gallery.filter((a) => a._id !== payload._id);
+      updatedAllGallery.titleMain = payload.titleMain;
+      updatedAllGallery.category = payload.category;
+      const updatedGallery = state.galleries.find((a) => a._id === payload._id);
+      updatedGallery && (updatedGallery.titleMain = payload.titleMain);
+      updatedGallery && (updatedGallery.category = payload.category);
       return {
         ...state,
-        allGallery: [payload, ...updatedAllGallery],
-        gallery: [payload, ...updatedGallery],
-        oneGallery: {},
       };
     case REMOVE_GALLERY: // Remove
-      const removedAllGallery = state.allGallery.find(
-        (admin) => admin._id === payload
+      const removedAllGalleries = state.allGalleries.find(
+        (gallery) => gallery._id === payload
       );
-      removedAllGallery.isDeleted = true;
-      const removedGallery = state.gallery.filter(
-        (admin) => admin._id !== payload
+      removedAllGalleries.isDeleted = true;
+      const removedGallery = state.galleries.find(
+        (gallery) => gallery._id === payload
       );
-      return { ...state, gallery: [...removedGallery] };
+      removedGallery && (removedGallery.isDeleted = true);
+      const removedGalleries = state.galleries.filter(
+        (gallery) => gallery._id !== payload
+      );
+      return { ...state, galleries: [...removedGalleries] };
+    case REACTIVE_GALLERY: //Reactive
+      const reactiveGalleries = state.allGalleries.find(
+        (gallery) => gallery._id === payload
+      );
+      reactiveGalleries.isDeleted = false;
+      const reactiveGallery = state.galleries.find(
+        (gallery) => gallery._id === payload
+      );
+      reactiveGallery.isDeleted = false;
+      return { ...state };
     case DELETE_GALLERY: // Delete
-      const deletedAllGallery = state.allGallery.filter(
-        (admin) => admin._id !== payload
+      const deletedAllGallery = state.allGalleries.filter(
+        (gallery) => gallery._id !== payload
       );
-      const deletedGallery = state.gallery.filter(
-        (admin) => admin._id !== payload
+      const deletedGallery = state.galleries.filter(
+        (gallery) => gallery._id !== payload
       );
       return {
         ...state,
-        allGallery: [...deletedAllGallery],
-        gallery: [...deletedGallery],
+        allGalleries: [...deletedAllGallery],
+        galleries: [...deletedGallery],
       };
     default:
       return state;
