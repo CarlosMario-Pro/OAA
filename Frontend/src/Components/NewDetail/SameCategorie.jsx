@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Styles from './noticiasExtra.module.css'
 
-export default function SameCategories() {
 
-  const dispatch = useDispatch()
+export default function SameCategories({threeCategories}) {
 
-  const { 
-    newUserCreate,
-    threeCategories 
-} = useSelector((state)=> state?.threeCategories)
-
- console.log(threeCategories, 'reducer');
-
-    
+  
   return (
-    <div>SameCategories.........</div>
+    <div className={Styles.container} >
+      <div>
+        <h4>Te puede interesar</h4>
+        <div className={Styles['map-container']} >
+        {
+          threeCategories?.map((category)=>{
+          return ( 
+          <div key={category?._id} className={Styles['container-extras']} >
+            <Link to={`/news/${category?._id}`} className={Styles['link']} >
+            <div className={Styles['image-container']}>
+              <img src={category?.image[0]?.url} alt="Noticia" className={Styles['image-notiextra']}/>
+              </div>
+              <p className={Styles['introduction-news']} >{category.introduction}</p>
+              </Link>
+            </div>
+            )})
+        }
+        </div>
+      </div>
+    </div>
   )
-}
+};
