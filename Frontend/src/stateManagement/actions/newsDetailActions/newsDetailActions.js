@@ -35,3 +35,28 @@ export function threNewsRecentAction() {
         }
     }
 };
+
+export function getAWorkById(id) {
+    return async function (dispatch) {
+      try {
+        const Awork = await axios.get(`/work/${id}`);
+        return dispatch({ type: constants.GET_A_WORK, payload: Awork.data });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+  
+  export function getAllWorKs() {
+    return async function (dispatch) {
+      try {
+        const Allworks = await axios.get(`/work`);
+        return dispatch({
+          type: constants.GET_ALL_WORKS,
+          payload: Allworks.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }

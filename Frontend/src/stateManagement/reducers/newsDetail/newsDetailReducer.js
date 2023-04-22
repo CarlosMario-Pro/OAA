@@ -3,7 +3,9 @@ import * as constants from '../../types/constActionsDetail'
 const initialState = {
     newUserCreate: [],
     threeCategories : [],
-    threeRecents: []
+    threeRecents: [],
+    allWorks:   [],
+    onlyAWork: []
 }
 
 export default function newsDetailReduce(state = initialState, action) {
@@ -23,6 +25,16 @@ export default function newsDetailReduce(state = initialState, action) {
             ...state,
             threeRecents: action.payload
           }
+          case constants.GET_A_WORK:
+            return {
+              ...state,
+              onlyAWork: action.payload
+            }
+            case constants.GET_ALL_WORKS:
+              return {
+                ...state,
+                allWorks: action.payload
+              }
     
         default:
             return state
