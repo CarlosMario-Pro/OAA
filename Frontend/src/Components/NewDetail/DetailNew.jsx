@@ -20,6 +20,7 @@ export default function DetailNew({newDetail}) {
     }
   }, [newDetail]);
 
+
   return (
     <div>
       <div>

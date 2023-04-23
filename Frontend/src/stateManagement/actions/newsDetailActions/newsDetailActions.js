@@ -18,8 +18,18 @@ export function threNewsCategory(category) {
     return async function (dispatch) {
         try {
             const categoriesThree = await axios.get(`http://localhost:3001/news/category/${category}`)
-            console.log(categoriesThree.data, 'en el action');
             return dispatch({type: constants.THREE_CATEGORIES, payload : categoriesThree.data })
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+};
+
+export function threNewsRecentAction() {
+    return async function (dispatch) {
+        try {
+            const recentThree = await axios.get(`http://localhost:3001/news/news/recent`)
+            return dispatch({type: constants.THREE_RECENTS, payload : recentThree.data })
         } catch (error) {
             console.log(error.message);
         }
