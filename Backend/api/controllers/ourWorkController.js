@@ -42,7 +42,7 @@ const getActiveOurWorks = async (req, res) => {
   }
 };
 
-//Traer a un dato de la seccion "nuestro trabajo"
+//Traer un dato de la seccion "nuestro trabajo"
 const getOurWorkById = async (req, res) => {
   const session = await mongoose.startSession();
   try {
@@ -65,13 +65,13 @@ const getOurWorkById = async (req, res) => {
   }
 };
 
-//Traer a un dato activo de la seccion "nuestro trabajo"
+//Traer un dato activo de la seccion "nuestro trabajo"
 const getActiveOurWorkById = async (req, res) => {
   const session = await mongoose.startSession();
   try {
     await session.withTransaction(async (session) => {
       const work = await OurWorks.findById(req.params.id).session(session);
-      if (!work) {
+      if (!work || work.isDeleted) {
         return res.status(404).json({ message: "Publicación no disponible." });
       }
       return res.status(200).json(work);
