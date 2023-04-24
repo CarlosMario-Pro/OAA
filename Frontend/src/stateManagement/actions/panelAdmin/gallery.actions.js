@@ -14,7 +14,7 @@ import {
 import { NEW_MESSAGE } from "../../types/alerts";
 import { LOADER_OFF, LOADER_ON } from "../../types/loader";
 
-export const getGallery = () => {
+export const getGalleries = () => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
@@ -237,6 +237,9 @@ export const deleteGallery = (id) => {
             state: "success",
           },
         });
+      })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
