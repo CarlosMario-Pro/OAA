@@ -2,14 +2,13 @@
 require("dotenv").config();
 const app = require("./app.js");
 const { connection } = require("./db.js");
-const { loadedCategories, loadedNews } = require("./addDB");
+const { loadedNews } = require("./addDB");
 const { transport } = require("./utils/email.utils.js");
 const { PORT } = process.env;
 
 connection
   .syncIndexes({ force: true })
   .then(async () => {
-    await loadedCategories();
     await loadedNews();
     await transport.verify();
     console.log("nodemailer conectado exitosamente.");

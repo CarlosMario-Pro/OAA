@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const categories = ["Novedades", "Comunidades", "Agroecología"];
 const typeMultimedia = ["Audio", "PDF"];
 
-const newsSchema = new Schema(
+const ourWorksSchema = new Schema(
   {
     titleMain: {
       type: String,
@@ -14,24 +13,11 @@ const newsSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-      enum: categories,
-    },
-    author: {
-      type: String,
-      required: true,
-    },
-    urlAuthor: {
-      type: String,
-    },
     location: {
       type: String,
     },
-    introduction: {
+    content: {
       type: String,
-      required: true,
     },
     image: [
       {
@@ -44,10 +30,6 @@ const newsSchema = new Schema(
         },
       },
     ],
-    description: {
-      type: String,
-      required: true,
-    },
     multimedia: [
       {
         label: {
@@ -65,10 +47,6 @@ const newsSchema = new Schema(
         },
       },
     ],
-    visitorCounter: {
-      type: Number,
-      default: 0,
-    },
     labels: [
       {
         label: {
@@ -84,9 +62,13 @@ const newsSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isFinished: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true },
   { versionKey: false }
 );
 
-module.exports = mongoose.model("News", newsSchema);
+module.exports = mongoose.model("OurWorks", ourWorksSchema);

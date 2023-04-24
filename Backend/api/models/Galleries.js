@@ -67,7 +67,14 @@ const gallerySchema = new Schema(
         },
       },
     ],
-    labels: [{ type: String }],
+    labels: [
+      {
+        label: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     extraData: {
       type: String,
     },
@@ -76,7 +83,8 @@ const gallerySchema = new Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Galleries", gallerySchema);
