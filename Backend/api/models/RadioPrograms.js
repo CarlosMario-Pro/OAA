@@ -44,7 +44,7 @@ const radioProgramsSchema = new Schema(
         },
       },
     ],
-    pdf: [
+    multimedia: [
       {
         label: {
           type: String,
