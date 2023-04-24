@@ -1,5 +1,5 @@
 require("dotenv").config();
-const User = require("../models/User");
+const Admins = require("../models/Admins");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../utils/email.utils");
@@ -8,7 +8,7 @@ const getAdmin = async (req, res) => {
   const session = await mongoose.startSession();
   try {
     await session.withTransaction(async (session) => {
-      const admins = await User.find({}).session(session);
+      const admins = await Admins.find({}).session(session);
       return res.status(200).json(admins.reverse());
     });
   } catch (error) {
@@ -26,7 +26,7 @@ const getAdminsById = async (req, res) => {
   const session = await mongoose.startSession();
   try {
     await session.withTransaction(async (session) => {
-      const admin = await User.findById(req.params.id).session(session);
+      const admin = await Admins.findById(req.params.id).session(session);
       return res.status(200).json(admin);
     });
   } catch (error) {
@@ -52,13 +52,13 @@ const postAdmin = async (req, res) => {
     const passwordHash = bcrypt.hashSync(password, 8);
 
     await session.withTransaction(async (session) => {
-      const existAdmin = await User.findOne({ email }).session(session);
+      const existAdmin = await Admins.findOne({ email }).session(session);
       if (existAdmin) {
         return res.status(409).json({
           message: `Ya existe una cuenta de administrador con el email: ${email}`,
         });
       }
-      const [createdAdmin] = await User.create(
+      const [createdAdmin] = await Admins.create(
         [{ name, email, password: passwordHash }],
         {
           session,
@@ -127,9 +127,9 @@ const deleteAdmin = async (req, res) => {
 
   try {
     await session.withTransaction(async (session) => {
-      const deletedAdmin = await User.findByIdAndRemove(req.params.id).session(
-        session
-      );
+      const deletedAdmin = await Admins.findByIdAndRemove(
+        req.params.id
+      ).session(session);
       if (!deletedAdmin) {
         return res.status(404).send({ message: "No se encontró al usuario" });
       }
@@ -148,7 +148,7 @@ const logAdmin = async (req, res) => {
   const { email, password } = req.body;
   try {
     await session.withTransaction(async (session) => {
-      const admin = await User.findOne({ email }).session(session);
+      const admin = await Admins.findOne({ email }).session(session);
       if (!admin) {
         return res.status(404).json({
           message: `Email incorrecto.`,
@@ -178,14 +178,14 @@ const putAdmin = async (req, res) => {
     const { name, email } = req.body;
 
     await session.withTransaction(async (session) => {
-      const existAdmin = await User.findOne({ email }).session(session);
+      const existAdmin = await Admins.findOne({ email }).session(session);
       if (existAdmin && existAdmin.id !== id) {
         return res.status(409).json({
           message: `Ya existe una cuenta de administrador con el email: ${email}`,
         });
       }
 
-      const updatedAdmin = await User.findByIdAndUpdate(
+      const updatedAdmin = await Admins.findByIdAndUpdate(
         id,
         {
           name,
@@ -227,7 +227,7 @@ const resetPassword = async (req, res) => {
     const passwordHash = bcrypt.hashSync(passwordReset, 8);
 
     await session.withTransaction(async (session) => {
-      const updatedAdmin = await User.findOneAndUpdate(
+      const updatedAdmin = await Admins.findOneAndUpdate(
         { email },
         {
           password: passwordHash,
@@ -312,7 +312,7 @@ const editPassword = async (req, res) => {
     const passwordHash = bcrypt.hashSync(password, 8);
 
     await session.withTransaction(async (session) => {
-      const updatedAdmin = await User.findByIdAndUpdate(
+      const updatedAdmin = await Admins.findByIdAndUpdate(
         id,
         {
           password: passwordHash,

@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const categories = ["Novedades", "Comunidades", "Agroecología"];
 const typeMultimedia = ["Audio", "PDF"];
 
-const newsSchema = new Schema(
+const radioProgramsSchema = new Schema(
   {
     titleMain: {
       type: String,
@@ -14,24 +13,8 @@ const newsSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-      enum: categories,
-    },
-    author: {
-      type: String,
-      required: true,
-    },
-    urlAuthor: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
     introduction: {
       type: String,
-      required: true,
     },
     image: [
       {
@@ -44,11 +27,7 @@ const newsSchema = new Schema(
         },
       },
     ],
-    description: {
-      type: String,
-      required: true,
-    },
-    multimedia: [
+    audio: [
       {
         label: {
           type: String,
@@ -65,10 +44,23 @@ const newsSchema = new Schema(
         },
       },
     ],
-    visitorCounter: {
-      type: Number,
-      default: 0,
-    },
+    pdf: [
+      {
+        label: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          required: true,
+          enum: typeMultimedia,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     labels: [
       {
         label: {
@@ -89,4 +81,4 @@ const newsSchema = new Schema(
   { versionKey: false }
 );
 
-module.exports = mongoose.model("News", newsSchema);
+module.exports = mongoose.model("RadioPrograms", radioProgramsSchema);

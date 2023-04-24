@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const News = require("../models/News");
 
-
+// ---- GET *
+//Traer a todas las noticias
 const getNews = async (req, res) => {
   const session = await mongoose.startSession();
 
@@ -19,8 +20,26 @@ const getNews = async (req, res) => {
   }
 };
 
+//Traer a todas las noticias activas
+const getActiveNews = async (req, res) => {
+  const session = await mongoose.startSession();
 
-const getOneNews = async (req, res) => {
+  try {
+    await session.withTransaction(async (session) => {
+      const news = await News.find({ isDeleted: false }).session(session);
+      return res.status(200).json(news);
+    });
+  } catch (error) {
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al obtener las noticias";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+//Traer a una noticia
+const getNewsById = async (req, res) => {
   const { id } = req.params;
   const session = await mongoose.startSession();
 
@@ -42,52 +61,78 @@ const getOneNews = async (req, res) => {
   }
 };
 
-const getThreeNews = async (req, res) => {
-    const session = await mongoose.startSession();
-  
-    try {
-      await session.withTransaction(async (session) => {
-        const news = await News.find({})
-          .sort({date: -1})
-          .limit(3)
-          .session(session);
-          if (!news.length) {
-            res.status(204)
-          }
-        return res.status(200).json(news);
-      });
-    } catch (error) {
-      console.error(error);
-      const status = error.status || 500;
-      const message = error.message || "Ocurrió un error al obtener las noticias";
-      return res.status(status).json({ message });
-    } finally {
-      await session.endSession();
-    }
-  }
+//Traer una noticia activa
+const getActiveNewsById = async (req, res) => {
+  const { id } = req.params;
+  const session = await mongoose.startSession();
 
+  try {
+    await session.withTransaction(async (session) => {
+      const news = await News.findById(id).session(session);
+      if (!news || news.isDeleted) {
+        return res.status(404).json({ message: "La noticia no se encontró" });
+      }
+      return res.status(200).json(news);
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al obtener la noticia";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+//Traer las 3 noticias mas recientes
+const getThreeNews = async (req, res) => {
+  const session = await mongoose.startSession();
+
+  try {
+    await session.withTransaction(async (session) => {
+      const news = await News.find({})
+        .sort({ date: -1 })
+        .limit(3)
+        .session(session);
+      if (!news.length) {
+        res.status(204);
+      }
+      return res.status(200).json(news);
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al obtener las noticias";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+//Traer 3 de la misma categoría
 const getThreeNewsByCategory = async (req, res) => {
-    const { category } = req.params;
-    const session = await mongoose.startSession();
-    try {
-      await session.withTransaction(async (session) => {
-        const news = await News.find({ category })
-          .sort({ date: -1 })
-          .limit(3)
-          .session(session);
-        return res.status(200).json(news);
-      });
-    } catch (error) {
-      console.error(error);
-      const status = error.status || 500;
-      const message =
-        error.message || "Ocurrió un error al obtener las noticias";
-      return res.status(status).json({ message });
-    } finally {
-      await session.endSession();
-    }
-  };
-  
+  const { category } = req.params;
+  const session = await mongoose.startSession();
+  try {
+    await session.withTransaction(async (session) => {
+      const news = await News.find({ category })
+        .sort({ date: -1 })
+        .limit(3)
+        .session(session);
+      return res.status(200).json(news);
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al obtener las noticias";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+//----POST *
+//Crear una nueva noticia
 const postNews = async (req, res) => {
   const {
     titleMain,
@@ -145,6 +190,8 @@ const postNews = async (req, res) => {
   }
 };
 
+//----PUT *
+// Editar un archivo de la galería
 const putNews = async (req, res) => {
   const { id } = req.params;
   const {
@@ -160,7 +207,7 @@ const putNews = async (req, res) => {
     labels,
     multimedia,
     visitorCounter,
-    extraData
+    extraData,
   } = req.body;
   const session = await mongoose.startSession();
 
@@ -181,7 +228,7 @@ const putNews = async (req, res) => {
           labels,
           multimedia,
           visitorCounter,
-          extraData
+          extraData,
         },
         { new: true, session }
       );
@@ -205,7 +252,8 @@ const putNews = async (req, res) => {
   }
 };
 
-const removeNews = async (req, res) => {
+// Eliminar un archivo con borrado lógico
+const deactivateNews = async (req, res) => {
   const id = req.params.id;
   const session = await mongoose.startSession();
 
@@ -229,7 +277,8 @@ const removeNews = async (req, res) => {
   }
 };
 
-const reactiveNews = async (req, res) => {
+// Recuperar un archivo con borrado lógico
+const activateNews = async (req, res) => {
   const id = req.params.id;
   const session = await mongoose.startSession();
 
@@ -255,6 +304,8 @@ const reactiveNews = async (req, res) => {
   }
 };
 
+//----DELETE *
+// Borrado real
 const deleteNews = async (req, res) => {
   const { id } = req.params;
   const session = await mongoose.startSession();
@@ -283,12 +334,14 @@ const deleteNews = async (req, res) => {
 
 module.exports = {
   getNews,
-  getOneNews,
+  getActiveNews,
+  getActiveNewsById,
+  getNewsById,
   getThreeNews,
   getThreeNewsByCategory,
   postNews,
   putNews,
-  removeNews,
-  reactiveNews,
+  deactivateNews,
+  activateNews,
   deleteNews,
 };
