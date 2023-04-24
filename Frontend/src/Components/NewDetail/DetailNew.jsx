@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 
-export default function DetailNew({newDetail}) {
-
+export default function DetailNew({ newDetail }) {
   const { quill, quillRef } = useQuill({
     readOnly: true,
     modules: { toolbar: false },
@@ -19,7 +18,6 @@ export default function DetailNew({newDetail}) {
       }
     }
   }, [newDetail]);
-
 
   return (
     <div>
@@ -50,7 +48,7 @@ export default function DetailNew({newDetail}) {
       <div>
         {newDetail.multimedia
           ? newDetail.multimedia.map((deta) => (
-              <div key={deta.label} >
+              <div key={deta.label}>
                 <label>{deta.label}</label> <a href={deta.url}>Visita aquí</a>
               </div>
             ))
@@ -59,4 +57,4 @@ export default function DetailNew({newDetail}) {
       {newDetail.labels ? <p>{newDetail.labels.join(", ")}</p> : ""}
     </div>
   );
-};
+}

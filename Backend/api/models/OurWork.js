@@ -21,6 +21,10 @@ const ourWorkSchema = new Schema(
       url: {
         type: String,
         required: true
+      },
+      typeInfo: {
+        type: String,
+        required: true
       }
     }],
     isDeleted:{

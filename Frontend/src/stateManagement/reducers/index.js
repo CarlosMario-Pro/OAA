@@ -10,7 +10,7 @@ import newsReducer from "./panelAdmin/news.reducer";
 import ourProjectsReducer from "./panelAdmin/ourProjects.reducer";
 import radioProgramReducer from "./panelAdmin/radioProgram.reducer";
 import subscriptionsReducer from "./panelAdmin/subscriptions.reducer";
-import threeCategoriesReducer    from "../reducers/newsDetail/newsDetailReducer"
+import newsDetailReducer    from "../reducers/newsDetail/newsDetailReducer"
 
 const reducer = combineReducers({
   admin: adminReducer,
@@ -25,7 +25,7 @@ const reducer = combineReducers({
   radioProgram: radioProgramReducer,
   subscriptions: subscriptionsReducer,
   UserIncription: newsReducer,
-  threeCategories: threeCategoriesReducer
+  newsDetail: newsDetailReducer
 });
 
 export default reducer;

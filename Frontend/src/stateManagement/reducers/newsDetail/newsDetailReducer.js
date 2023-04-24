@@ -8,7 +8,7 @@ const initialState = {
     onlyAWork: []
 }
 
-export default function newsDetailReduce(state = initialState, action) {
+export default function newsDetailReducer(state = initialState, action) {
     switch (action.type) {
         case constants.INSCRIPTION_NEWSLETTER:
           return {
@@ -25,17 +25,16 @@ export default function newsDetailReduce(state = initialState, action) {
             ...state,
             threeRecents: action.payload
           }
-          case constants.GET_A_WORK:
+        case constants.GET_A_WORK:
             return {
               ...state,
               onlyAWork: action.payload
             }
-            case constants.GET_ALL_WORKS:
-              return {
-                ...state,
-                allWorks: action.payload
-              }
-    
+        case constants.GET_ALL_WORKS:
+          return {
+            ...state,
+            allWorks: action.payload
+            }
         default:
             return state
     }

@@ -51,6 +51,7 @@ export function getAWorkById(id) {
     return async function (dispatch) {
       try {
         const Allworks = await axios.get(`/work`);
+        console.log(Allworks.data, 'actiomns');
         return dispatch({
           type: constants.GET_ALL_WORKS,
           payload: Allworks.data,
