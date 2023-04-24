@@ -53,9 +53,11 @@ const postGallery = async (req, res) => {
     author,
     urlAuthor,
     introduction,
-    images,
+    image,
     video,
+    multimedia,
     labels,
+    extraData,
   } = req.body;
 
   const session = await mongoose.startSession();
@@ -78,9 +80,11 @@ const postGallery = async (req, res) => {
             author,
             urlAuthor,
             introduction,
-            images,
+            image,
             video,
+            multimedia,
             labels,
+            extraData,
           },
         ],
         { session }
@@ -107,9 +111,11 @@ const putGallery = async (req, res) => {
     author,
     urlAuthor,
     introduction,
-    images,
+    image,
     video,
+    multimedia,
     labels,
+    extraData,
   } = req.body;
   const session = await mongoose.startSession();
 
@@ -124,9 +130,11 @@ const putGallery = async (req, res) => {
           author,
           urlAuthor,
           introduction,
-          images,
+          image,
           video,
+          multimedia,
           labels,
+          extraData,
         },
         { new: true, session }
       );
