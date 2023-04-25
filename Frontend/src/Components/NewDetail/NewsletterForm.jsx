@@ -24,6 +24,9 @@ export default function FormNewsletter () {
     
     return (
         <form onSubmit={handleSubmit} className={Styles.formLetter} >
+            <div className={Styles['div-form']} >
+            <h4>Recibe las noticias mas destacadas</h4>
+            <br />
             <input type="text"           
             id="name"
             name="name"
@@ -41,6 +44,7 @@ export default function FormNewsletter () {
             className={Styles.inputInscription}
             />
             <input type="submit" value="Suscribete" className={Styles.submitBtn} />
+            </div>
         </form>
     );
   };

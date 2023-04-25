@@ -1,24 +1,51 @@
 .formLetter {
+    width: 30%;
+    float: right;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 2rem;
+    margin: 3rem 5rem 3rem 0;
+    box-shadow: 6px -4px 4px 4px var(--blue); 
   }
   
+  .div-form{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+  }
+
   .inputInscription {
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
-    max-width: 400px;
+    width: 62%;
+    align-self: center;
+    text-align: center;
+    background-color: rgba(177, 176, 175, 0.374);
   }
   
   .submitBtn {
-    background-color: #007bff;
+    background-color: var(--dark-green);
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
+    width: 45%;
+    align-self: center;
+    
   }
   
+  @media only screen and (max-width: 800px) {
+    .formLetter {
+      display:flex;
+      width: 80%;
+      /* height: auto; */
+      justify-content: center;
+    }
+    .div-form{
+      display: flex;
+      width: 80%;
+    }
+  }
