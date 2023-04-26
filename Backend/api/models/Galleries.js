@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const categories = ["Imagen", "Video"];
+const platformVideo = ["YouTube", "Other"];
+const typeMultimedia = ["Audio", "PDF"];
+
 const gallerySchema = new Schema(
   {
     titleMain: {
@@ -27,9 +30,9 @@ const gallerySchema = new Schema(
     introduction: {
       type: String,
     },
-    images: [
+    image: [
       {
-        label: {
+        caption: {
           type: String,
         },
         url: {
@@ -39,15 +42,47 @@ const gallerySchema = new Schema(
       },
     ],
     video: {
+      platform: {
+        type: String,
+        enum: platformVideo,
+      },
+      url: {
+        type: String,
+      },
+    },
+    multimedia: [
+      {
+        label: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          required: true,
+          enum: typeMultimedia,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    labels: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    extraData: {
       type: String,
     },
-    labels: [{ type: String }],
     isDeleted: {
       type: Boolean,
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Galleries", gallerySchema);

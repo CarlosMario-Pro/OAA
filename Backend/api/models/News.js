@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const categories = ["Novedades", "Comunidades", "Agroecología"];
+const typeMultimedia = ["Audio", "PDF"];
+
 const newsSchema = new Schema(
   {
     titleMain: {
@@ -33,27 +35,46 @@ const newsSchema = new Schema(
     },
     image: [
       {
-        type: String,
+        caption: {
+          type: String,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
       },
     ],
     description: {
       type: String,
       required: true,
     },
-    multimedia: [{
+    multimedia: [
+      {
         label: {
           type: String,
-          required: true
+          required: true,
+        },
+        type: {
+          type: String,
+          required: true,
+          enum: typeMultimedia,
         },
         url: {
           type: String,
-          required: true
-        }
-      }],
+          required: true,
+        },
+      },
+    ],
     visitorCounter: {
       type: Number,
       default: 0,
     },
+    labels: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     extraData: {
       type: String,
     },
@@ -61,8 +82,6 @@ const newsSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    labels: [{ type: String }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comments" }],
   },
   { timestamps: true },
   { versionKey: false }

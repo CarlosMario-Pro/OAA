@@ -20,8 +20,30 @@ const getGalleries = async (req, res) => {
     await session.endSession();
   }
 };
+
+//Traer a todos los datos activos de la galería
+const getActiveGalleries = async (req, res) => {
+  const session = await mongoose.startSession();
+
+  try {
+    await session.withTransaction(async (session) => {
+      const galleries = await Galleries.find({ isDeleted: false }).session(
+        session
+      );
+      return res.status(200).json(galleries);
+    });
+  } catch (error) {
+    const status = error.status || 500;
+    const message =
+      error.message || "Ocurrió un error al obtener los archivos de la galería";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
 //Traer a un dato de la galería
-const getOneGallery = async (req, res) => {
+const getGalleryById = async (req, res) => {
   const { id } = req.params;
   const session = await mongoose.startSession();
 
@@ -29,6 +51,29 @@ const getOneGallery = async (req, res) => {
     await session.withTransaction(async (session) => {
       const gallery = await Galleries.findById(id).session(session);
       if (!gallery) {
+        return res.status(404).json({ message: "La galería no se encontró" });
+      }
+      return res.status(200).json(gallery);
+    });
+  } catch (error) {
+    console.error(error);
+    const status = error.status || 500;
+    const message = error.message || "Ocurrió un error al obtener la galería";
+    return res.status(status).json({ message });
+  } finally {
+    await session.endSession();
+  }
+};
+
+//Traer a un dato activo de la galería
+const getActiveGalleryById = async (req, res) => {
+  const { id } = req.params;
+  const session = await mongoose.startSession();
+
+  try {
+    await session.withTransaction(async (session) => {
+      const gallery = await Galleries.findById(id).session(session);
+      if (!gallery || gallery.isDeleted) {
         return res.status(404).json({ message: "La galería no se encontró" });
       }
       return res.status(200).json(gallery);
@@ -53,9 +98,11 @@ const postGallery = async (req, res) => {
     author,
     urlAuthor,
     introduction,
-    images,
+    image,
     video,
+    multimedia,
     labels,
+    extraData,
   } = req.body;
 
   const session = await mongoose.startSession();
@@ -78,9 +125,11 @@ const postGallery = async (req, res) => {
             author,
             urlAuthor,
             introduction,
-            images,
+            image,
             video,
+            multimedia,
             labels,
+            extraData,
           },
         ],
         { session }
@@ -96,6 +145,7 @@ const postGallery = async (req, res) => {
     await session.endSession();
   }
 };
+
 //----PUT *
 // Editar un archivo de la galería
 const putGallery = async (req, res) => {
@@ -107,9 +157,11 @@ const putGallery = async (req, res) => {
     author,
     urlAuthor,
     introduction,
-    images,
+    image,
     video,
+    multimedia,
     labels,
+    extraData,
   } = req.body;
   const session = await mongoose.startSession();
 
@@ -124,9 +176,11 @@ const putGallery = async (req, res) => {
           author,
           urlAuthor,
           introduction,
-          images,
+          image,
           video,
+          multimedia,
           labels,
+          extraData,
         },
         { new: true, session }
       );
@@ -149,8 +203,9 @@ const putGallery = async (req, res) => {
     await session.endSession();
   }
 };
+
 // Eliminar un archivo con borrado lógico
-const removeGallery = async (req, res) => {
+const deactivateGallery = async (req, res) => {
   const id = req.params.id;
   const session = await mongoose.startSession();
 
@@ -175,7 +230,7 @@ const removeGallery = async (req, res) => {
 };
 
 // Recuperar un archivo con borrado lógico
-const reactiveGallery = async (req, res) => {
+const activateGallery = async (req, res) => {
   const id = req.params.id;
   const session = await mongoose.startSession();
 
@@ -231,10 +286,12 @@ const deleteGallery = async (req, res) => {
 
 module.exports = {
   getGalleries,
-  getOneGallery,
+  getActiveGalleries,
+  getGalleryById,
+  getActiveGalleryById,
   postGallery,
   putGallery,
-  removeGallery,
-  reactiveGallery,
+  deactivateGallery,
+  activateGallery,
   deleteGallery,
 };

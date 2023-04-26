@@ -1,21 +1,29 @@
-const { Router }        = require("express");
-const ourWorkController = require("../../controllers/ourWorkController");
-const ourWorkRouter     = Router();
+const { Router } = require("express");
+const ourWork = require("../../controllers/ourWorkController");
+const ourWorkRouter = Router();
 
-//------> http://localhost:3001/work
+// URL: http://localhost:3001/work
 
-// ---- GET
-ourWorkRouter.get("/", ourWorkController.getOurWork);
+// ---- GET *
+ourWorkRouter.get("/", ourWork.getOurWorks); //----->  Traer a todos los datos
 
-ourWorkRouter.get("/:id", ourWorkController.getOurWorkById);
+ourWorkRouter.get("/active", ourWork.getActiveOurWorks); //----->  Traer solo los datos activos
 
-// ---- POST
-ourWorkRouter.post("/", ourWorkController.postOurWork);
+ourWorkRouter.get("/active/:id", ourWork.getActiveOurWorkById); //----->  Traer a un dato activo
 
-// ---- PUT
-ourWorkRouter.put("/:id", ourWorkController.putOurWork);
+ourWorkRouter.get("/detail/:id", ourWork.getOurWorkById); //----->  Traer a un dato
 
-// ---- DELETE
-ourWorkRouter.delete("/:id", ourWorkController.deleteOurWork)
+//----POST *
+ourWorkRouter.post("/", ourWork.postOurWork); // ----> Crear un nuevo dato
+
+//----PUT *
+ourWorkRouter.put("/detail/:id", ourWork.putOurWork); //----->  Editar un dato
+
+ourWorkRouter.put("/deactivate/:id", ourWork.deactivateOurWork); //----> Eliminar un dato con borrado lógico
+
+ourWorkRouter.put("/activate/:id", ourWork.activateOurWork); // --> Recuperar un dato con borrado lógico
+
+//----DELETE *
+ourWorkRouter.delete("/:id", ourWork.deleteOurWork); // ---> Borrado real
 
 module.exports = ourWorkRouter;

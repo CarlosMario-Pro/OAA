@@ -14,13 +14,24 @@ export function addUserToNewsletter(data) {
     }
 };
 
-export function threNewsCategoty(category) {
+export function threNewsCategory(category) {
     return async function (dispatch) {
         try {
             const categoriesThree = await axios.get(`http://localhost:3001/news/category/${category}`)
-            return dispatch({type: constants.THREE_CATEGORIES, payload : categoriesThree })
+            return dispatch({type: constants.THREE_CATEGORIES, payload : categoriesThree.data })
         } catch (error) {
             console.log(error.message);
         }
     }
-}
+};
+
+export function threNewsRecentAction() {
+    return async function (dispatch) {
+        try {
+            const recentThree = await axios.get(`http://localhost:3001/news/news/recent`)
+            return dispatch({type: constants.THREE_RECENTS, payload : recentThree.data })
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+};

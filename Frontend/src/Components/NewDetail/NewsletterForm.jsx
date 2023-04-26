@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {useDispatch} from 'react-redux'
 import { addUserToNewsletter } from '../../stateManagement/actions/newsDetailActions/newsDetailActions';
-
+import Styles from './inscription.module.css'
 
 export default function FormNewsletter () {
     const dispatch = useDispatch()
@@ -23,20 +23,24 @@ export default function FormNewsletter () {
     }
     
     return (
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit} className={Styles.formLetter} >
             <input type="text"           
             id="name"
             name="name"
             value={newUser.name}
             placeholder='Nombre'
-            onChange={handleChange} />
+            onChange={handleChange} 
+            className={Styles.inputInscription}
+            />
             <input type="email"              
             id="email"
             name="email"
             value={newUser.email}
             placeholder='Correo Electronico'
-            onChange={handleChange} />
-            <input type="submit" value="Suscribete" />
+            onChange={handleChange}
+            className={Styles.inputInscription}
+            />
+            <input type="submit" value="Suscribete" className={Styles.submitBtn} />
         </form>
     );
   };

@@ -43,7 +43,7 @@ export const getNewDetail = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .get(`/news/${id}`)
+      .get(`/news/detail/${id}`)
       .then((res) => {
         dispatch({ type: NEW_DETAIL, payload: res.data });
       })
@@ -115,7 +115,7 @@ export const editNew = (id, updateData) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/news/${id}`, updateData)
+      .put(`/news/detail/${id}`, updateData)
       .then((res) => {
         dispatch({ type: EDIT_NEW, payload: res.data });
       })
@@ -150,7 +150,7 @@ export const removeNew = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/news/remove-news/${id}`)
+      .put(`/news/deactivate/${id}`)
       .then(() => {
         dispatch({ type: REMOVE_NEW, payload: id });
       })
@@ -186,7 +186,7 @@ export const reactiveNew = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/news/reactive-news/${id}`)
+      .put(`/news/activate/${id}`)
       .then(() => {
         dispatch({ type: REACTIVE_NEW, payload: id });
       })
