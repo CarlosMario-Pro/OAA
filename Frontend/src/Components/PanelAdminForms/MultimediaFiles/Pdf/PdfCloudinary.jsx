@@ -43,11 +43,11 @@ export default function PdfCloudinary({
         setLoader(true);
         const body = new FormData();
         body.append("file", file);
-        body.append("upload_preset", "pdf");
+        body.append("upload_preset", "filesPDF");
         const res = await fetch(
           `https://api.cloudinary.com/v1_1/${
             import.meta.env.VITE_CLOUDINARY_NAME
-          }/image/upload`,
+          }/upload`,
           {
             method: "POST",
             body,
