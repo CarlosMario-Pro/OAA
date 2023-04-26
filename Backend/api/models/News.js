@@ -69,10 +69,12 @@ const newsSchema = new Schema(
       type: Number,
       default: 0,
     },
-    labels: {
-      type: String,
-      required: true,
-    },
+    labels: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     extraData: {
       type: String,
     },
