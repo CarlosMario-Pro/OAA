@@ -44,7 +44,7 @@ export const getOneGallery = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .get(`/gallery/${id}`)
+      .get(`/gallery/detail/${id}`)
       .then((res) => {
         dispatch({ type: ONE_GALLERY, payload: res.data });
       })
@@ -112,7 +112,7 @@ export const editGallery = (id, updateData) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/gallery/${id}`, updateData)
+      .put(`/gallery/detail/${id}`, updateData)
       .then((res) => {
         dispatch({ type: EDIT_GALLERY, payload: res.data });
       })
@@ -153,7 +153,7 @@ export const removeGallery = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/gallery/remove/${id}`)
+      .put(`/gallery/deactivate/${id}`)
       .then(() => {
         dispatch({ type: REMOVE_GALLERY, payload: id });
       })

@@ -13,6 +13,8 @@ export const DELETE_ADMINISTRATOR = "DELETE_ADMINISTRATOR";
 
 // Donations
 export const DONATIONS = "DONATIONS";
+export const ONE_DONATION = "ONE_DONATION";
+export const CLEAR_ONE_DONATION = "CLEAR_ONE_DONATION";
 export const DONATIONS_FILTERS = "DONATIONS_FILTERS";
 export const REACTIVE_DONATION = "REACTIVE_DONATION";
 export const REMOVE_DONATION = "REMOVE_DONATION";
@@ -42,17 +44,17 @@ export const REACTIVE_NEW = "REACTIVE_NEW";
 export const REMOVE_NEW = "REMOVE_NEW";
 export const DELETE_NEW = "DELETE_NEW";
 
-// Our Projects
-export const OUR_PROJECTS = "OUR_PROJECTS";
-export const OUR_PROJECTS_FILTERS = "OUR_PROJECTS_FILTERS";
-export const ONE_PROJECT = "ONE_PROJECT";
-export const CLEAR_ONE_PROJECT = "CLEAR_ONE_PROJECT";
-export const CREATE_NEW_PROJECT = "CREATE_NEW_PROJECT";
-export const EDIT_PROJECT = "EDIT_PROJECT";
-export const EDIT_PROJECT_FORM = "EDIT_PROJECT_FORM";
-export const REACTIVE_PROJECT = "REACTIVE_PROJECT";
-export const REMOVE_PROJECT = "REMOVE_PROJECT";
-export const DELETE_PROJECT = "DELETE_PROJECT";
+// Our Works
+export const OUR_WORKS = "OUR_WORKS";
+export const OUR_WORKS_FILTERS = "OUR_WORKS_FILTERS";
+export const ONE_WORK = "ONE_WORK";
+export const CLEAR_ONE_WORK = "CLEAR_ONE_WORK";
+export const CREATE_NEW_WORK = "CREATE_NEW_WORK";
+export const EDIT_WORK = "EDIT_WORK";
+export const EDIT_WORK_FORM = "EDIT_WORK_FORM";
+export const REACTIVE_WORK = "REACTIVE_WORK";
+export const REMOVE_WORK = "REMOVE_WORK";
+export const DELETE_WORK = "DELETE_WORK";
 
 // Radio Program
 export const RADIO_PROGRAM = "RADIO_PROGRAM";

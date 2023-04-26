@@ -1,10 +1,13 @@
 import {
   RADIO_PROGRAM,
   ONE_RADIO_PROGRAM,
+  CLEAR_ONE_RADIO_PROGRAM,
   RADIO_PROGRAM_FILTERS,
   CREATE_RADIO_PROGRAM,
   EDIT_RADIO_PROGRAM,
+  EDIT_RADIO_PROGRAM_FORM,
   REMOVE_RADIO_PROGRAM,
+  REACTIVE_RADIO_PROGRAM,
   DELETE_RADIO_PROGRAM,
 } from "../../types/panelAdmin";
 
@@ -12,9 +15,12 @@ const initialState = {
   allRadioPrograms: [],
   radioProgram: [],
   oneRadioProgram: {},
+  idOneRadioProgram: null,
+  edit: false,
   filters: {
     status: "active",
-    orderDate: "latest",
+    order: "latest",
+    search: false,
   },
 };
 
@@ -29,9 +35,15 @@ export default function radioProgramReducer(state = initialState, action) {
         radioProgram: [...payload],
       };
     case ONE_RADIO_PROGRAM: // Get ID
-      return { ...state, oneRadioProgram: { ...payload } };
+      return {
+        ...state,
+        oneRadioProgram: { ...payload },
+        idOneRadioProgram: payload._id,
+      };
+    case CLEAR_ONE_RADIO_PROGRAM: //Clear get ID
+      return { ...state, oneRadioProgram: {} };
     case RADIO_PROGRAM_FILTERS: // Filters
-      const { status, orderTitle, orderDate, search } = payload;
+      const { status, order, search } = payload;
       let filteredRadio = [...state.allRadioPrograms];
 
       if (status === "active") {
@@ -40,36 +52,37 @@ export default function radioProgramReducer(state = initialState, action) {
         filteredRadio = filteredRadio.filter((a) => a["isDeleted"] === true);
       }
 
-      if (orderTitle) {
-        if (orderTitle === "az") {
-          filteredRadio.sort((a, b) => a.title.localeCompare(b.title));
-        } else {
-          filteredRadio
-            .sort((a, b) => a.title.localeCompare(b.title))
-            .reverse();
-        }
-      }
-
-      if (orderDate) {
-        if (orderDate === "latest") {
-          filteredRadio.sort(
-            (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-          );
-        } else {
-          filteredRadio
-            .sort(
-              (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-            )
-            .reverse();
-        }
-      }
-
       if (search) {
         filteredRadio = filteredRadio.filter((a) => {
-          const title = a["title"].toLowerCase();
-          return a["id"].includes(search) || title.includes(search);
+          const searchLowerCase = search.toLowerCase();
+          const titleMain = a["titleMain"].toLowerCase();
+          return (
+            a["_id"].includes(searchLowerCase) ||
+            titleMain.includes(searchLowerCase)
+          );
         });
       }
+
+      if (order === "a-z") {
+        filteredRadio.sort((a, b) => a.titleMain.localeCompare(b.titleMain));
+      } else if (order === "z-a") {
+        filteredRadio
+          .sort((a, b) => a.titleMain.localeCompare(b.titleMain))
+          .reverse();
+      } else if (order === "latest") {
+        filteredRadio.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+        );
+      } else if (order === "oldest") {
+        filteredRadio
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+          )
+          .reverse();
+      }
+
       return {
         ...state,
         radioProgram: [...filteredRadio],
@@ -78,21 +91,24 @@ export default function radioProgramReducer(state = initialState, action) {
     case CREATE_RADIO_PROGRAM: // Post
       return {
         ...state,
-        allRadioPrograms: [payload, state.allRadioPrograms],
-        radioProgram: [payload, state.radioProgram],
+        allRadioPrograms: [payload, ...state.allRadioPrograms],
+        radioProgram: [payload, ...state.radioProgram],
       };
+    case EDIT_RADIO_PROGRAM_FORM: //edit or create form
+      return { ...state, edit: payload };
     case EDIT_RADIO_PROGRAM: // Put
-      const updatedAllRadio = state.allRadioPrograms.filter(
-        (a) => a._id !== payload._id
+      const updatedAllRadio = state.allRadioPrograms.find(
+        (a) => a._id === payload._id
       );
-      const updatedRadio = state.radioProgram.filter(
-        (a) => a._id !== payload._id
+      updatedAllRadio.titleMain = payload.titleMain;
+      updatedAllRadio.category = payload.category;
+      const updatedRadio = state.radioProgram.find(
+        (a) => a._id === payload._id
       );
-
+      updatedRadio && (updatedRadio.titleMain = payload.titleMain);
+      updatedRadio && (updatedRadio.category = payload.category);
       return {
         ...state,
-        allRadioPrograms: [payload, ...updatedAllRadio],
-        radioProgram: [payload, ...updatedRadio],
       };
     case REMOVE_RADIO_PROGRAM: // Remove
       const removedAllRadio = state.allRadioPrograms.find(
@@ -103,6 +119,15 @@ export default function radioProgramReducer(state = initialState, action) {
         (admin) => admin._id !== payload
       );
       return { ...state, radioProgram: [...removedRadio] };
+    case REACTIVE_RADIO_PROGRAM: //Reactive
+      const reactiveRadioPrograms = state.allRadioPrograms.find(
+        (a) => a._id === payload
+      );
+      reactiveRadioPrograms.isDeleted = false;
+      const reactiveRadioProgram = state.radioProgram.find(
+        (a) => a._id === payload
+      );
+      reactiveRadioProgram && (reactiveRadioProgram.isDeleted = false);
     case DELETE_RADIO_PROGRAM: // Delete
       const deletedAllRadio = state.allRadioPrograms.filter(
         (admin) => admin._id !== payload

@@ -1,36 +1,62 @@
 import axios from "axios";
 import {
-  NEWS,
-  NEW_DETAIL,
-  CLEAR_NEW_DETAIL,
-  NEWS_FILTERS,
-  CREATE_NEW,
-  EDIT_NEW,
-  EDIT_NEW_FORM,
-  REMOVE_NEW,
-  REACTIVE_NEW,
-  DELETE_NEW,
+  OUR_WORKS,
+  ONE_WORK,
+  CLEAR_ONE_WORK,
+  OUR_WORKS_FILTERS,
+  CREATE_NEW_WORK,
+  EDIT_WORK,
+  EDIT_WORK_FORM,
+  REMOVE_WORK,
+  REACTIVE_WORK,
+  DELETE_WORK,
 } from "../../types/panelAdmin";
 import { NEW_MESSAGE } from "../../types/alerts";
 import { LOADER_OFF, LOADER_ON } from "../../types/loader";
 
-export const getAllNews = () => {
+export const getOurWorks = () => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .get("/news")
+      .get("/work")
       .then((res) => {
-        dispatch({ type: NEWS, payload: res.data });
+        dispatch({ type: OUR_WORKS, payload: res.data });
       })
       .then(() => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
-        console.log("Error en news.actions: ", error);
+        console.log("Error en ourWorks.actions: ", error);
+        return {
+          type: NEW_MESSAGE,
+          payload: {
+            message:
+              "Ha ocurrido un error al intentar obtener los datos de la nuestros proyectos.",
+            state: "error",
+          },
+        };
+      });
+  };
+};
+
+export const getOneWork = (id) => {
+  return function (dispatch) {
+    dispatch({ type: LOADER_ON });
+    axios
+      .get(`/work/detail/${id}`)
+      .then((res) => {
+        dispatch({ type: ONE_WORK, payload: res.data });
+      })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
+      .catch((error) => {
+        console.log("Error en ourProjects.actions: ", error);
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Ha ocurrido un error al intentar obtener las noticias.",
+            message:
+              "Ha ocurrido un error al intentar obtener los datos de un proyecto.",
             state: "error",
           },
         });
@@ -39,51 +65,26 @@ export const getAllNews = () => {
   };
 };
 
-export const getNewDetail = (id) => {
-  return function (dispatch) {
-    dispatch({ type: LOADER_ON });
-    axios
-      .get(`/news/detail/${id}`)
-      .then((res) => {
-        dispatch({ type: NEW_DETAIL, payload: res.data });
-      })
-      .then(() => {
-        dispatch({ type: LOADER_OFF });
-      })
-      .catch((error) => {
-        console.log("Error en news.actions: ", error);
-        dispatch({
-          type: NEW_MESSAGE,
-          payload: {
-            message: "Error al intentar obtener una noticia.",
-            state: "error",
-          },
-        });
-        dispatch({ type: LOADER_OFF });
-      });
-  };
-};
+export const cleaOneWork = () => ({ type: CLEAR_ONE_WORK });
 
-export const clearNewDetail = () => ({ type: CLEAR_NEW_DETAIL });
-
-export const newsFilters = (filters) => ({
-  type: NEWS_FILTERS,
+export const OurWorksFilters = (filters) => ({
+  type: OUR_WORKS_FILTERS,
   payload: filters,
 });
 
-export const createNew = (newData) => {
+export const createNewWork = (newData) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .post("/news", newData)
+      .post("/work", newData)
       .then((res) => {
-        dispatch({ type: CREATE_NEW, payload: res.data });
+        dispatch({ type: CREATE_NEW_WORK, payload: res.data });
       })
       .then(() => {
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Nueva publicación creada exitosamente.",
+            message: "Nuevo proyecto creado exitosamente.",
             state: "success",
           },
         });
@@ -92,12 +93,12 @@ export const createNew = (newData) => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
-        console.log("Error en news.actions: ", error);
+        console.log("Error en ourProjects.actions: ", error);
         dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
-              "Ha ocurrido un error al intentar crear una nueva publicación.",
+              "Ha ocurrido un error al intentar crear un nuevo proyecto.",
             state: "error",
           },
         });
@@ -106,24 +107,59 @@ export const createNew = (newData) => {
   };
 };
 
-export const editNewForm = (boolean) => ({
-  type: EDIT_NEW_FORM,
+export const editWork = (id, updateData) => {
+  return function (dispatch) {
+    dispatch({ type: LOADER_ON });
+    axios
+      .put(`/work/detail/${id}`, updateData)
+      .then((res) => {
+        dispatch({ type: EDIT_WORK, payload: res.data });
+      })
+      .then(() => {
+        dispatch({
+          type: NEW_MESSAGE,
+          payload: {
+            message: "Un proyecto fue editado exitosamente.",
+            state: "success",
+          },
+        });
+      })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
+      .catch((error) => {
+        console.log("Error en ourProjects.actions: ", error);
+        dispatch({
+          type: NEW_MESSAGE,
+          payload: {
+            message: "Ha ocurrido un error al intentar editar un proyecto.",
+            state: "error",
+          },
+        });
+        dispatch({ type: LOADER_OFF });
+      });
+  };
+};
+
+export const editWorkForm = (boolean) => ({
+  type: EDIT_WORK_FORM,
   payload: boolean,
 });
 
-export const editNew = (id, updateData) => {
+//desactivar - borrado lógico
+export const removeWork = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/news/detail/${id}`, updateData)
-      .then((res) => {
-        dispatch({ type: EDIT_NEW, payload: res.data });
+      .put(`/work/deactivate/${id}`)
+      .then(() => {
+        dispatch({ type: REMOVE_WORK, payload: id });
       })
       .then(() => {
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Una publicación fue editada exitosamente.",
+            message: "Un proyecto fue desactivado exitosamente.",
             state: "success",
           },
         });
@@ -132,11 +168,11 @@ export const editNew = (id, updateData) => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
-        console.log("Error en news.actions: ", error);
+        console.log("Error en ourProjects.actions: ", error);
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Ha ocurrido un error al intentar editar una publicación.",
+            message: "Ha ocurrido un error al intentar desactivar un proyecto.",
             state: "error",
           },
         });
@@ -145,20 +181,20 @@ export const editNew = (id, updateData) => {
   };
 };
 
-// remover - borrado lógico
-export const removeNew = (id) => {
+//reactivar - borrado lógico
+export const reactiveWork = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .put(`/news/deactivate/${id}`)
+      .put(`/work/activate/${id}`)
       .then(() => {
-        dispatch({ type: REMOVE_NEW, payload: id });
+        dispatch({ type: REACTIVE_WORK, payload: id });
       })
       .then(() => {
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Una publicación fue desactivada exitosamente.",
+            message: "Un proyecto fue reactivado exitosamente.",
             state: "success",
           },
         });
@@ -167,48 +203,11 @@ export const removeNew = (id) => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
-        console.log("Error en news.actions: ", error);
+        console.log("Error en ourProjects.actions: ", error);
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message:
-              "Ha ocurrido un error al intentar desactivar una publicación.",
-            state: "error",
-          },
-        });
-        dispatch({ type: LOADER_OFF });
-      });
-  };
-};
-
-// reactivar - borrado lógico
-export const reactiveNew = (id) => {
-  return function (dispatch) {
-    dispatch({ type: LOADER_ON });
-    axios
-      .put(`/news/activate/${id}`)
-      .then(() => {
-        dispatch({ type: REACTIVE_NEW, payload: id });
-      })
-      .then(() => {
-        dispatch({
-          type: NEW_MESSAGE,
-          payload: {
-            message: "Una publicación fue activada exitosamente.",
-            state: "success",
-          },
-        });
-      })
-      .then(() => {
-        dispatch({ type: LOADER_OFF });
-      })
-      .catch((error) => {
-        console.log("Error en news.actions: ", error);
-        dispatch({
-          type: NEW_MESSAGE,
-          payload: {
-            message:
-              "Ha ocurrido un error al intentar activar una publicación.",
+            message: "Ha ocurrido un error al intentar reactivar un proyecto.",
             state: "error",
           },
         });
@@ -218,19 +217,19 @@ export const reactiveNew = (id) => {
 };
 
 //borrado real
-export const deleteNew = (id) => {
+export const deleteWork = (id) => {
   return function (dispatch) {
     dispatch({ type: LOADER_ON });
     axios
-      .delete(`/news/${id}`)
+      .delete(`/work/${id}`)
       .then(() => {
-        dispatch({ type: DELETE_NEW, payload: id });
+        dispatch({ type: DELETE_WORK, payload: id });
       })
       .then(() => {
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Una publicación fue eliminada exitosamente.",
+            message: "Un proyecto fue eliminado exitosamente.",
             state: "success",
           },
         });
@@ -239,12 +238,11 @@ export const deleteNew = (id) => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {
-        console.log("Error en news.actions: ", error);
+        console.log("Error en ourProjects.actions: ", error);
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message:
-              "Ha ocurrido un error al intentar eliminar a una publicación.",
+            message: "Ha ocurrido un error al intentar eliminar un proyecto.",
             state: "error",
           },
         });
