@@ -61,14 +61,10 @@ const radioProgramsSchema = new Schema(
         },
       },
     ],
-    labels: [
-      {
-        label: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    labels: {
+      type: String,
+      required: true,
+    },
     extraData: {
       type: String,
     },
