@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Subscriptions from "../../Components/PanelAdmin/Subscriptions";
 import Donations from "../../Components/PanelAdmin/Donations";
 import Publications from "../../Components/PanelAdmin/Publications";
-import OurProjects from "../../Components/PanelAdmin/OurProjects";
 import RadioProgram from "../../Components/PanelAdmin/RadioProgram";
 import Gallery from "../../Components/PanelAdmin/Gallery";
 import Administrators from "../../Components/PanelAdmin/Administrators";
@@ -19,6 +18,7 @@ import {
 import { confirmationOpen } from "../../stateManagement/actions/alerts/confirmationWindow.actions";
 import { logoutAdmin } from "../../stateManagement/actions/panelAdmin/admin.actions";
 import ConfirmationWindow from "../../Components/Alerts/ConfirmationWindow";
+import OurWorks from "../../Components/PanelAdmin/OurWorks";
 
 export default function PanelAdmin() {
   const dispatch = useDispatch(),
@@ -52,7 +52,7 @@ export default function PanelAdmin() {
         <div>
           <img
             src={logo}
-            alt='Logo Organización de Ambientalistas Autoconvocados'
+            alt="Logo Organización de Ambientalistas Autoconvocados"
           />
           <h1>Panel de Administrador</h1>
         </div>
@@ -88,9 +88,9 @@ export default function PanelAdmin() {
           </li>
           <li
             className={
-              currentSection === "our-projects" ? styles["active"] : "undefined"
+              currentSection === "our-works" ? styles["active"] : "undefined"
             }
-            onClick={() => setCurrentSection("our-projects")}
+            onClick={() => setCurrentSection("our-works")}
           >
             Nuestro trabajo
           </li>
@@ -136,7 +136,7 @@ export default function PanelAdmin() {
         {currentSection === "donations" && <Donations />}
         {currentSection === "subscriptions" && <Subscriptions />}
         {currentSection === "publications" && <Publications />}
-        {currentSection === "our-projects" && <OurProjects />}
+        {currentSection === "our-works" && <OurWorks />}
         {currentSection === "radio-program" && <RadioProgram />}
         {currentSection === "gallery" && <Gallery />}
         {currentSection === "administrators" && <Administrators />}

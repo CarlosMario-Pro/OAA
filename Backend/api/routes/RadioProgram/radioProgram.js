@@ -2,7 +2,7 @@ const { Router } = require("express");
 const radioProgramRouter = Router();
 const radioProgram = require("../../controllers/radioProgramControllers");
 
-// URL: http://localhost:3001/radioProgram
+// URL: http://localhost:3001/radio-program
 
 // ---- GET *
 radioProgramRouter.get("/", radioProgram.getRadioPrograms); //----->  Traer a todos los datos
