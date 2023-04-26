@@ -138,7 +138,7 @@ export default function ourWorksReducer(state = initialState, action) {
       const reactiveWork = state.ourWorks.find((work) => work._id === payload);
       reactiveWork.isDeleted = false;
       return { ...state };
-    case DELETE_NEW: // Delete
+    case DELETE_WORK: // Delete
       const deletedallOurWorks = state.allOurWorks.filter(
         (work) => work._id !== payload
       );
