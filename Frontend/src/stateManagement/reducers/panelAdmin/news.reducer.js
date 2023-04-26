@@ -57,19 +57,7 @@ export default function newsReducer(state = initialState, action) {
       }
 
       if (category !== "all") {
-        if (category === "Novedades") {
-          filteredNews = filteredNews.filter(
-            (a) => a["category"] === "Novedades"
-          );
-        } else if (category === "Comunidades") {
-          filteredNews = filteredNews.filter(
-            (a) => a["category"] === "Comunidades"
-          );
-        } else if (category === "Agroecología") {
-          filteredNews = filteredNews.filter(
-            (a) => a["category"] === "Agroecología"
-          );
-        }
+        filteredNews = filteredNews.filter((a) => a["category"] === category);
       }
 
       if (order === "a-z") {

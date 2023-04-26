@@ -7,7 +7,6 @@ import donationsReducer from "./panelAdmin/donations.reducer";
 import galleryReducer from "./panelAdmin/gallery.reducer";
 import loaderReducer from "./loader/loader";
 import newsReducer from "./panelAdmin/news.reducer";
-import ourProjectsReducer from "./panelAdmin/ourProjects.reducer";
 import radioProgramReducer from "./panelAdmin/radioProgram.reducer";
 import subscriptionsReducer from "./panelAdmin/subscriptions.reducer";
 import newsDetailReducer    from "../reducers/newsDetail/newsDetailReducer"
@@ -19,7 +18,7 @@ const reducer = combineReducers({
   confirmation: confirmationReducer,
   donations: donationsReducer,
   gallery: galleryReducer,
-  ourProjects: ourProjectsReducer,
+  ourWorks: ourWorksReducer,
   loader: loaderReducer,
   news: newsReducer,
   radioProgram: radioProgramReducer,

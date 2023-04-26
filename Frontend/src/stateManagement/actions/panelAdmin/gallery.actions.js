@@ -3,54 +3,70 @@ import {
   GALLERY,
   ONE_GALLERY,
   GALLERY_FILTERS,
+  CLEAR_ONE_GALLERY,
   CREATE_GALLERY,
   EDIT_GALLERY,
+  EDIT_GALLERY_FORM,
+  REACTIVE_GALLERY,
   REMOVE_GALLERY,
   DELETE_GALLERY,
 } from "../../types/panelAdmin";
 import { NEW_MESSAGE } from "../../types/alerts";
+import { LOADER_OFF, LOADER_ON } from "../../types/loader";
 
-export const getGallery = () => {
+export const getGalleries = () => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
       .get("/gallery")
       .then((res) => {
         dispatch({ type: GALLERY, payload: res.data });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar obtener los datos de la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
 
-export const oneGallery = (id) => {
+export const getOneGallery = (id) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
-      .get(`/gallery/${id}`)
+      .get(`/gallery/detail/${id}`)
       .then((res) => {
         dispatch({ type: ONE_GALLERY, payload: res.data });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar obtener un archivo de la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
+
+export const clearOneGallery = () => ({ type: CLEAR_ONE_GALLERY });
 
 export const galleryFilters = (filters) => ({
   type: GALLERY_FILTERS,
@@ -59,6 +75,7 @@ export const galleryFilters = (filters) => ({
 
 export const createGallery = (newData) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
       .post("/gallery", newData)
       .then((res) => {
@@ -73,24 +90,29 @@ export const createGallery = (newData) => {
           },
         });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar añadir un nuevo archivo a la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
 
 export const editGallery = (id, updateData) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
-      .put(`/gallery/update/${id}`, updateData)
+      .put(`/gallery/detail/${id}`, updateData)
       .then((res) => {
         dispatch({ type: EDIT_GALLERY, payload: res.data });
       })
@@ -103,25 +125,35 @@ export const editGallery = (id, updateData) => {
           },
         });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar editar un archivo de la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
 
-// borrado lógico
+export const editGalleryForm = (boolean) => ({
+  type: EDIT_GALLERY_FORM,
+  payload: boolean,
+});
+
+// remover - borrado lógico
 export const removeGallery = (id) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
-      .put(`/gallery/delete/${id}`)
+      .put(`/gallery/deactivate/${id}`)
       .then(() => {
         dispatch({ type: REMOVE_GALLERY, payload: id });
       })
@@ -129,21 +161,61 @@ export const removeGallery = (id) => {
         dispatch({
           type: NEW_MESSAGE,
           payload: {
-            message: "Un archivo  de la galería fue desactivado exitosamente.",
+            message: "Un archivo de la galería fue desactivado exitosamente.",
             state: "success",
           },
         });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar desactivar a un archivo de la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
+      });
+  };
+};
+
+// reactivar - borrado lógico
+export const reactiveGallery = (id) => {
+  return function (dispatch) {
+    dispatch({ type: LOADER_ON });
+    axios
+      .put(`/gallery/reactive/${id}`)
+      .then(() => {
+        dispatch({ type: REACTIVE_GALLERY, payload: id });
+      })
+      .then(() => {
+        dispatch({
+          type: NEW_MESSAGE,
+          payload: {
+            message: "Un archivo de la galería fue activado exitosamente.",
+            state: "success",
+          },
+        });
+      })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
+      .catch((error) => {
+        console.log("Error en news.actions: ", error);
+        dispatch({
+          type: NEW_MESSAGE,
+          payload: {
+            message:
+              "Ha ocurrido un error al intentar activar un archivo de la galería.",
+            state: "error",
+          },
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };
@@ -151,6 +223,7 @@ export const removeGallery = (id) => {
 //borrado real
 export const deleteGallery = (id) => {
   return function (dispatch) {
+    dispatch({ type: LOADER_ON });
     axios
       .delete(`/gallery/${id}`)
       .then(() => {
@@ -165,16 +238,20 @@ export const deleteGallery = (id) => {
           },
         });
       })
+      .then(() => {
+        dispatch({ type: LOADER_OFF });
+      })
       .catch((error) => {
         console.log("Error en gallery.actions: ", error);
-        return {
+        dispatch({
           type: NEW_MESSAGE,
           payload: {
             message:
               "Ha ocurrido un error al intentar eliminar a un archivo de la galería.",
             state: "error",
           },
-        };
+        });
+        dispatch({ type: LOADER_OFF });
       });
   };
 };

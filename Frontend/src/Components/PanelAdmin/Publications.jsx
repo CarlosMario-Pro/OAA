@@ -199,9 +199,18 @@ export default function Publications() {
     resetHandler();
   };
 
-  //Finción para crear un elemento:
-  const createHandler = () => {
+  //Función para crear un elemento:
+  const createHandler = (event) => {
+    event.preventDefault();
     dispatch(editNewForm(false));
+    navigate("/panel-admin/publications-form");
+  };
+
+  //Función para editar un elemento:
+  const editHandler = (event, id) => {
+    event.preventDefault();
+    dispatch(getNewDetail(id));
+    dispatch(editNewForm(true));
     navigate("/panel-admin/publications-form");
   };
 
@@ -331,7 +340,7 @@ export default function Publications() {
           </tr>
         </thead>
         <tbody className={`${styles["tbody"]}`}>
-          {news.length !== 0 ? (
+          {news.length > 0 ? (
             <>
               {itemsPerPage.map(
                 ({ _id, titleMain, category, createdAt, isDeleted }) => {
@@ -353,12 +362,7 @@ export default function Publications() {
                       <td className={`${styles["actions"]}`}>
                         <button
                           className={`${styles["button"]} ${styles["button-left"]}`}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            dispatch(getNewDetail(_id));
-                            dispatch(editNewForm(true));
-                            navigate("/panel-admin/publications-form");
-                          }}
+                          onClick={(e) => editHandler(e, _id)}
                         >
                           <MdEdit className='blue-icon' size='1.5rem' />
                         </button>

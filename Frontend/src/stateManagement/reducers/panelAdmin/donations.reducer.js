@@ -1,6 +1,9 @@
 import {
   DONATIONS,
+  ONE_DONATION,
+  CLEAR_ONE_DONATION,
   DONATIONS_FILTERS,
+  REACTIVE_DONATION,
   REMOVE_DONATION,
   DELETE_DONATION,
 } from "../../types/panelAdmin";
@@ -8,10 +11,12 @@ import {
 const initialState = {
   allDonations: [],
   donations: [],
+  idDonation: null,
   filters: {
     status: "active",
-    money: "all",
-    orderDate: "latest",
+    order: "latest",
+    iso: "all",
+    search: false,
   },
 };
 
@@ -21,8 +26,12 @@ export default function donationsReducer(state = initialState, action) {
   switch (type) {
     case DONATIONS: // Get
       return { ...state, allDonations: [...payload], donations: [...payload] };
+    case ONE_DONATION: //Get ID
+      return { ...state, idDonation: payload };
+    case CLEAR_ONE_DONATION: //Clear get ID
+      return { ...state, idDonation: null };
     case DONATIONS_FILTERS: // Filters
-      const { status, iso, orderAmount, orderDate, search } = payload;
+      const { status, iso, order, search } = payload;
       let filteredDonations = [...state.allDonations];
 
       if (status === "active") {
@@ -33,6 +42,12 @@ export default function donationsReducer(state = initialState, action) {
         filteredDonations = filteredDonations.filter(
           (a) => a["isDeleted"] === true
         );
+      }
+
+      if (search) {
+        filteredNews = filteredNews.filter((a) => {
+          return a["_id"].includes(search) || a["amount"].includes(search);
+        });
       }
 
       if (iso !== "all") {
@@ -47,33 +62,24 @@ export default function donationsReducer(state = initialState, action) {
         }
       }
 
-      if (orderAmount) {
-        if (orderAmount === "lower") {
-          filteredDonations.sort((a, b) => a.amount - b.amount);
-        } else {
-          filteredDonations.sort((a, b) => a.amount - b.amount).reverse();
-        }
+      if (order === "higher") {
+        filteredDonations.sort((a, b) => a.amount - b.amount).reverse();
+      } else if (order === "lower") {
+        filteredDonations.sort((a, b) => a.amount - b.amount);
+      } else if (order === "latest") {
+        filteredDonations.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+        );
+      } else if (order === "oldest") {
+        filteredDonations
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+          )
+          .reverse();
       }
 
-      if (orderDate) {
-        if (orderDate === "latest") {
-          filteredDonations.sort(
-            (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-          );
-        } else {
-          filteredDonations
-            .sort(
-              (a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()
-            )
-            .reverse();
-        }
-      }
-
-      if (search) {
-        filteredDonations = filteredDonations.filter((a) => {
-          return a["id"].includes(search) || a["aumount"].includes(search);
-        });
-      }
       return {
         ...state,
         donations: [...filteredDonations],
@@ -81,19 +87,33 @@ export default function donationsReducer(state = initialState, action) {
       };
     case REMOVE_DONATION: // Remove
       const removedAllDonations = state.allDonations.find(
-        (admin) => admin._id === payload
+        (donation) => donation._id === payload
       );
       removedAllDonations.isDeleted = true;
+      const removedDonation = state.donations.find(
+        (donation) => donation._id === payload
+      );
+      removedDonation && (removedDonation.isDeleted = true);
       const removedDonations = state.donations.filter(
-        (admin) => admin._id !== payload
+        (donation) => donation._id !== payload
       );
       return { ...state, donations: [...removedDonations] };
+    case REACTIVE_DONATION: //Reactive
+      const reactiveDonations = state.allDonations.find(
+        (donation) => donation._id === payload
+      );
+      reactiveDonations.isDeleted = false;
+      const reactiveNew = state.donations.find(
+        (donation) => donation._id === payload
+      );
+      reactiveNew.isDeleted = false;
+      return { ...state };
     case DELETE_DONATION: // Delete
       const deletedAllDonations = state.allDonations.filter(
-        (admin) => admin._id !== payload
+        (donation) => donation._id !== payload
       );
       const deletedDonations = state.donations.filter(
-        (admin) => admin._id !== payload
+        (donation) => donation._id !== payload
       );
       return {
         ...state,

@@ -1,0 +1,43 @@
+.presentationIcons {
+    width: 100%;
+    margin: 0 auto;
+}
+.container {
+    height: 30rem;
+    background: #b8c0ff;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+.containerlinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.containerlinks h3 {
+    color: white;
+    font-size: 30px;
+}
+.containerIcons {
+    overflow: hidden;
+    border-radius: 50%;
+    background: #006d77;
+    padding: 25px;
+}
+.containerIconsDone {
+    overflow: hidden;
+    border-radius: 50%;
+    background: #e63946;
+    padding: 30px;
+}
+.icons {
+    font-size: 150px;
+    color: white;
+}
+.modalButton {
+    background: #006d77;
+}
