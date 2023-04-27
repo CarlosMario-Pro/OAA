@@ -16,10 +16,9 @@ export default function Detail () {
   dispatch = useDispatch(),
   { newDetail } = useSelector((state) => state.news);
   const { 
-    newUserCreate,
     threeCategories,
     threeRecents
-} = useSelector((state)=> state?.threeCategories)
+} = useSelector((state)=> state?.newsDetail )
 
 
   useEffect(() => {
@@ -39,14 +38,11 @@ export default function Detail () {
 
   return (
     <div>
-        <DetailNew newDetail={newDetail} />
-        
-        <FormNewsletter />
-
-        <SameCategories threeCategories={threeCategories} />
-
-        <RecentNews threeRecents={threeRecents} />
-
+      <div><DetailNew newDetail={newDetail} /></div>
+      <div><FormNewsletter /></div>
+      <div><SameCategories threeCategories={threeCategories} /></div>
+      <div><RecentNews threeRecents={threeRecents} />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-//Creación e inicialización del servidor
+//Creación e inicialización del servidor 
 require("dotenv").config();
 const app = require("./app.js");
 const { connection } = require("./db.js");

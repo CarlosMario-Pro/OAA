@@ -11,6 +11,9 @@ import LoginAdmin from "./Pages/LoginAdmin/LoginAdmin";
 import PanelAdmin from "./Pages/PanelAdmin/PanelAdmin";
 import PanelAdminForm from "./Pages/PanelAdminForm/PanelAdminForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import OurWork from "./Pages/OurWork/OurWork";
+import SocialForum from "./Pages/OurWork/SocialForum";
+import WorkDetail from "./Pages/OurWork/WorkDetail";
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -25,7 +28,10 @@ function App() {
         <Route path='/home' element={<Navigate to='/' />} />
         <Route path='/we' element={<We />} />
         <Route path='/news/:id' element={<Detail />} />
+        <Route path='/nuestro-trabajo' element={ <OurWork />} />
+        <Route path='/nuestro-trabajo/:id' element={<WorkDetail />} />
         <Route path='/login' element={<LoginAdmin />} />
+        <Route path='/foro/primer-foro-social' element={<SocialForum /> } />
         <Route element={<ProtectedRoute />}>
           <Route path='/panel-admin' element={<PanelAdmin />} />
           <Route path='/panel-admin/:form' element={<PanelAdminForm />} />

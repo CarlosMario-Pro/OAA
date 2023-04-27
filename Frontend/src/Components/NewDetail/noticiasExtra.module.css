@@ -1,0 +1,60 @@
+.container{
+    width: 30%;
+    float:right;
+    padding: 1rem;
+    margin: 0.5rem 5rem 3rem 0rem;
+    display: flex;
+    flex-direction: column;
+}
+.divContainer{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+
+}
+.titleContainer{
+    margin-bottom: 0.5rem;
+    box-shadow: -5px 0px 2px -2px #0C4B76; 
+}
+.titleNewRecomended {
+    text-align: start;
+    margin: 0.5rem;
+    font-size: large;
+    font-family: var(--family-font);
+}
+
+.container-extras{
+    display: flex;
+    padding: 1rem;
+    background-color: #0c4c7615;
+    margin: 1rem;
+}
+.link{
+    text-decoration: none;
+    display: flex;
+    font-size: 0.7rem;
+    text-align: justify;
+}
+
+.image-notiextra{
+    max-width: 6rem;
+    height: 5rem;
+    padding-right: 0.3rem;
+}
+
+@media only screen and (max-width: 800px) {
+    .container {
+      display: flex;
+      width: 80%;
+      /* height: 100%; */
+      justify-content: center;
+    }
+    .divContainer{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-content: center;
+    
+    }
+  }

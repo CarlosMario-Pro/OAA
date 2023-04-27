@@ -8,8 +8,9 @@ export default function SameCategories({threeCategories}) {
   
   return (
     <div className={Styles.container} >
-      <div>
-        <h4>Te puede interesar</h4>
+      <div className={Styles.divContainer} >
+        <div className={Styles.titleContainer} ><h4 className={Styles.titleNewRecomended} >Te puede interesar</h4></div>
+        
         <div className={Styles['map-container']} >
         {
           threeCategories?.map((category)=>{

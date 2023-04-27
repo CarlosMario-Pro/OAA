@@ -8,7 +8,10 @@ export default function RecentNews({threeRecents}) {
 
   return (
     <div className={Styles.container} >
-        <div><h4>Noticias Recientes</h4></div>
+        <div className={Styles.divContainer} >
+        <div className={Styles.titleContainer} >
+          <h4 className={Styles.titleNewRecomended} >Noticias Recientes</h4>
+          </div>
   <div className={Styles['map-container']} >
 
 
@@ -16,7 +19,7 @@ export default function RecentNews({threeRecents}) {
           return (
             <div key={recent?._id} className={Styles['container-extras']} >
             
-                  <Link to={`/news/${recent?._id}`} className={Styles['link']} >
+                  <Link to={`/news/${recent?._id}`} className={Styles['link']}  >
                     <div className={Styles['image-container']}>
 
                     <img src={recent?.image[0]?.url} alt="Imagen de la Noticia" className={Styles['image-notiextra']} />              
@@ -28,6 +31,7 @@ export default function RecentNews({threeRecents}) {
     </div>
             )
         }) }
+    </div>
     </div>
 </div>
   )
