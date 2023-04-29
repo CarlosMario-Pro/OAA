@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/forum/natSom.webp'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Style from './foro.module.css'
+import Alert from '../Alerts/AlertDevelopment'
 
 
 export default function OurWorkCards({ allWorks }) {
+
+const navigate = useNavigate()
+const [showAlert, setShowAlert] = useState(false);
+const [alertMessage, setAlertMessage] = useState("");
+
+
+const handleClick = (work)=>{
+  if (work?.isFinished) {
+    navigate(`/nuestro-trabajo/${work._id}`)
+  } else {
+    setAlertMessage(` Esta informacion se encuentra en desarrollo...`);
+    setShowAlert(true);
+  }
+};
+
+const handleCloseAlert = () => {
+  setShowAlert(false);
+};
+
+
   return (
     <div className={Style.cardContainers} >
       <div>
@@ -13,15 +34,12 @@ export default function OurWorkCards({ allWorks }) {
       {allWorks &&
         allWorks.map((work) => {
           return (
-            <div key={work._id} >
-              <Link
-                to={
-                  work.isFinished
-                    ? `/nuestro-trabajo/${work._id}`
-                    : alert(`${work.title} se encuentra en desarrollo`)
-                }
-              >
-                <h5>{work.titleMain}</h5>
+            <>
+            <div key={work?._id} >
+<button
+onClick={()=> handleClick(work)}
+>
+                <h5>{work?.titleMain}</h5>
                 <div>
                   <img
                     src={logo}
@@ -29,9 +47,13 @@ export default function OurWorkCards({ allWorks }) {
                     width='50px'
                   />
                   <p> Conoce más acerca de {work?.titleMain} </p>
+                  
                 </div>
-              </Link>
+              </button>
+              
             </div>
+            { showAlert && <Alert message={alertMessage} onClose={handleCloseAlert} />}
+            </>
           );
         })}
     </div>
