@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from './Detail.module.css';
+import styles from '../../Components/NewDetail/inscription.module.css';
 import FormNewsletter from '../../Components/NewDetail/NewsletterForm';
 import SameCategories from '../../Components/NewDetail/SameCategorie';
 import DetailNew from '../../Components/NewDetail/DetailNew';
@@ -37,12 +37,11 @@ export default function Detail () {
   
 
   return (
-    <div>
-      <div><DetailNew newDetail={newDetail} /></div>
-      <div><FormNewsletter /></div>
-      <div><SameCategories threeCategories={threeCategories} /></div>
-      <div><RecentNews threeRecents={threeRecents} />
-      </div>
+    <div className={styles['container-parent']} >
+    <DetailNew newDetail={newDetail} />
+    <FormNewsletter />
+    <SameCategories threeCategories={threeCategories} />
+    <RecentNews threeRecents={threeRecents} />
     </div>
   );
 };

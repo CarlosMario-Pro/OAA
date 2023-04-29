@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from "react-redux"
 import { getAllWorKs } from "../../stateManagement/actions/newsDetailActions/newsDetailActions";
 import OurWorkCards from "../../Components/OurWorkComponents/OurWorkCards";
 import ForoIntroduction from "../../Components/OurWorkComponents/ForoIntroduction";
+import Styles from "../../Components/OurWorkComponents/foro.module.css"
 
 
 
@@ -18,7 +19,7 @@ export default function OurWork() {
     }, []);
 
     return (
-    <div>
+    <div className={Styles.divContainerOne}>
         <ForoIntroduction />
         <OurWorkCards  allWorks={allWorks} />
     </div>

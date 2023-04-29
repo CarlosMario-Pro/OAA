@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import Styles from "./detailNews.module.css"
+import SwipeableTextMobileStepper from "./ImagesWork";
 
 export default function DetailNew({ newDetail }) {
   const { quill, quillRef } = useQuill({
@@ -37,9 +38,12 @@ export default function DetailNew({ newDetail }) {
           </a>
       </div>
       <div className={Styles.divImageDetail}  >
-        {newDetail.image && newDetail.image.map((image) => (
+
+      <SwipeableTextMobileStepper newDetail={newDetail? newDetail : 'cargando...'} />
+
+        {/* {newDetail.image && newDetail.image.map((image) => (
           <img src={image.url} alt="image" className={Styles.imageDetail} />
-        ))}
+        ))} */}
             <div>
           
           <p>{newDetail.location ? newDetail.location : ""}</p>
@@ -59,7 +63,8 @@ export default function DetailNew({ newDetail }) {
             ))
             : ""}
       </div>
-      {newDetail.labels ? <p className={Styles['labels-container']} > TEMAS: {newDetail.labels.join(", ")}</p> : ""}
+      {newDetail.labels ? <p className={Styles['labels-container']} > TEMAS: {newDetail?.labels?.join(", ").toUpperCase()}
+</p> : ""}
             </div>
     </div>
   );

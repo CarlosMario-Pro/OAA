@@ -25,7 +25,7 @@ export default function RecentNews({threeRecents}) {
                     <img src={recent?.image[0]?.url} alt="Imagen de la Noticia" className={Styles['image-notiextra']} />              
                     </div>
                     <div>
-            <p className={Styles['introduction-news']} >{recent?.introduction}</p>
+            <p className={Styles['introduction-news']} >{recent?.titleMain.length > 50 ? recent?.titleMain.substring(0,50) + "..." : recent?.titleMain}</p>
                     </div>
             </Link>
     </div>

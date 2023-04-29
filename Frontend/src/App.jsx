@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <Loader />
-      <NavBar />
+      {/* <NavBar /> */}
       <AlertWindow />
       <Routes>
         <Route path='/' element={<LandingPage />} />
