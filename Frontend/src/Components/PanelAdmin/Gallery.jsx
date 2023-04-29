@@ -233,7 +233,7 @@ export default function Gallery() {
             onBlur={changeHandler}
             onChange={changeHandler}
           />
-          {filters.search && (
+          {search && (
             <button
               className={`${styles["button"]} ${styles["clear-button"]}`}
               onClick={clearHandler}
@@ -296,7 +296,7 @@ export default function Gallery() {
                 ({ _id, titleMain, category, createdAt, isDeleted }) => {
                   const date = new Date(createdAt).toLocaleDateString();
                   return (
-                    <tr key={`admin-${_id}`}>
+                    <tr key={`gallery-${_id}`}>
                       <td className={`${styles["id"]}`} title={_id}>
                         {_id}
                       </td>

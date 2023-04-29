@@ -18,7 +18,6 @@ import {
   getAllNews,
   getNewDetail,
   newsFilters,
-  reactiveNew,
   removeNew,
 } from "../../stateManagement/actions/panelAdmin/news.actions";
 import { confirmationOpen } from "../../stateManagement/actions/alerts/confirmationWindow.actions";
@@ -70,10 +69,13 @@ export default function Publications() {
   const itemsPerPage = news.slice(initialIndex, finalIndex);
 
   //variables de estadísticas
-  const totalPublications = allNews.length;
+  const totalPublications = allNews.filter(
+    (publication) => !publication.isDeleted
+  );
   const currentMonthPublications = allNews.filter((publication) => {
     const createdAt = new Date(publication.createdAt);
     return (
+      !publication.isDeleted &&
       createdAt.getMonth() === today.getMonth() &&
       createdAt.getFullYear() === today.getFullYear()
     );
@@ -81,6 +83,7 @@ export default function Publications() {
   const lastMonthPublications = allNews.filter((publication) => {
     const createdAt = new Date(publication.createdAt);
     return (
+      !publication.isDeleted &&
       createdAt.getMonth() === lastMonth.getMonth() &&
       createdAt.getFullYear() === lastMonth.getFullYear()
     );
@@ -110,7 +113,6 @@ export default function Publications() {
   }, [status]);
 
   // Funciones de filtrado:
-
   const orderDateHandler = (event) => {
     event.preventDefault();
     if (filters.order === "latest") {
@@ -240,7 +242,7 @@ export default function Publications() {
           Crear nueva Publicación
         </button>
         <div className={`${styles["data"]}`}>
-          <p className={`${styles["value"]}`}>{totalPublications}</p>
+          <p className={`${styles["value"]}`}>{totalPublications.length}</p>
           <p className={`${styles["text"]}`}>Total de publicaciones</p>
         </div>
         <div className={`${styles["data"]}`}>
@@ -260,39 +262,39 @@ export default function Publications() {
       </section>
       <form className={`${styles["form"]}`}>
         <div className={`${styles["select-container"]}`}>
-          <label htmlFor='status'>Mostrar:</label>
+          <label htmlFor="status">Mostrar:</label>
           <select
             className={`${styles["select"]}`}
-            name='status'
+            name="status"
             onChange={changeHandler}
-            defaultValue='active'
-            id='status'
+            defaultValue="active"
+            id="status"
           >
-            <option value='active'>Publicaciones activas</option>
-            <option value='inactive'>Püblicaciones inactivas</option>
+            <option value="active">Publicaciones activas</option>
+            <option value="inactive">Publicaciones inactivas</option>
           </select>
         </div>
         <div>
           <input
-            className='search-input'
-            type='text'
-            name='search'
-            placeholder='Buscar...'
-            autoComplete='off'
+            className="search-input"
+            type="text"
+            name="search"
+            placeholder="Buscar..."
+            autoComplete="off"
             value={search}
             onBlur={changeHandler}
             onChange={changeHandler}
           />
-          {filters.search && (
+          {search && (
             <button
               className={`${styles["button"]} ${styles["clear-button"]}`}
               onClick={clearHandler}
             >
-              <MdCached className='blue-icon' size='1.25rem' />
+              <MdCached className="blue-icon" size="1.25rem" />
             </button>
           )}
           <button className={`${styles["button"]}`} onClick={searchHandler}>
-            <MdSearch className='blue-icon' size='1.25rem' />
+            <MdSearch className="blue-icon" size="1.25rem" />
           </button>
         </div>
       </form>
@@ -307,8 +309,8 @@ export default function Publications() {
                 onClick={orderDateHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -319,8 +321,8 @@ export default function Publications() {
                 onClick={orderTitleHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -331,8 +333,8 @@ export default function Publications() {
                 onClick={categoryHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -346,7 +348,7 @@ export default function Publications() {
                 ({ _id, titleMain, category, createdAt, isDeleted }) => {
                   const date = new Date(createdAt).toLocaleDateString();
                   return (
-                    <tr key={`admin-${_id}`}>
+                    <tr key={`publications-${_id}`}>
                       <td className={`${styles["id"]}`} title={_id}>
                         {_id}
                       </td>
@@ -364,7 +366,7 @@ export default function Publications() {
                           className={`${styles["button"]} ${styles["button-left"]}`}
                           onClick={(e) => editHandler(e, _id)}
                         >
-                          <MdEdit className='blue-icon' size='1.5rem' />
+                          <MdEdit className="blue-icon" size="1.5rem" />
                         </button>
 
                         <button
@@ -391,7 +393,7 @@ export default function Publications() {
                                 );
                           }}
                         >
-                          <MdDelete className='blue-icon' size='1.5rem' />
+                          <MdDelete className="blue-icon" size="1.5rem" />
                         </button>
                       </td>
                     </tr>
@@ -401,7 +403,7 @@ export default function Publications() {
             </>
           ) : (
             <tr>
-              <td colSpan='5'>No se encontró ningún dato.</td>
+              <td colSpan="5">No se encontró ningún dato.</td>
             </tr>
           )}
         </tbody>

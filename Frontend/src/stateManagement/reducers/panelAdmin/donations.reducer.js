@@ -45,7 +45,7 @@ export default function donationsReducer(state = initialState, action) {
       }
 
       if (search) {
-        filteredNews = filteredNews.filter((a) => {
+        filteredDonations = filteredDonations.filter((a) => {
           return a["_id"].includes(search) || a["amount"].includes(search);
         });
       }
@@ -107,7 +107,10 @@ export default function donationsReducer(state = initialState, action) {
         (donation) => donation._id === payload
       );
       reactiveNew.isDeleted = false;
-      return { ...state };
+      const reactiveDonation = state.donations.filter(
+        (donation) => donation._id !== payload
+      );
+      return { ...state, donations: [...reactiveDonation] };
     case DELETE_DONATION: // Delete
       const deletedAllDonations = state.allDonations.filter(
         (donation) => donation._id !== payload

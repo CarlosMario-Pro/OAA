@@ -8,7 +8,7 @@ const getRadioPrograms = async (req, res) => {
 
   try {
     await session.withTransaction(async (session) => {
-      const radioPrograms = await radioPrograms.find({}).session(session);
+      const radioPrograms = await RadioPrograms.find({}).session(session);
       return res.status(200).json(radioPrograms.reverse());
     });
   } catch (error) {
@@ -28,9 +28,9 @@ const getActiveRadioPrograms = async (req, res) => {
 
   try {
     await session.withTransaction(async (session) => {
-      const radioPrograms = await radioPrograms
-        .find({ isDeleted: false })
-        .session(session);
+      const radioPrograms = await RadioPrograms.find({
+        isDeleted: false,
+      }).session(session);
       return res.status(200).json(radioPrograms);
     });
   } catch (error) {
