@@ -34,7 +34,7 @@ export default function RadioProgram() {
   const navigate = useNavigate(),
     dispatch = useDispatch(),
     [currentPage, setCurrentPage] = useState(1),
-    { allRadioProgram, radioProgram, idOneRadioProgram, filters } = useSelector(
+    { radioProgram, idOneRadioProgram, filters } = useSelector(
       (state) => state.radioProgram
     ),
     { form, changeHandler, resetHandler } = useForm(
@@ -55,13 +55,6 @@ export default function RadioProgram() {
   // Se ejecuta cuando se monta el componente
   useEffect(() => {
     dispatch(getRadioProgram());
-    dispatch(
-      radioProgramFilters({
-        status: "active",
-        order: "latest",
-        search: false,
-      })
-    );
   }, []);
 
   // Se ejecuta cuando status cambia

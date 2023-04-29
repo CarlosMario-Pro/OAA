@@ -1,4 +1,4 @@
-export default function validationsRadioProgram(form) {
+export default function validationsOurWorks(form) {
   const errors = {};
 
   if (!form.titleMain) {

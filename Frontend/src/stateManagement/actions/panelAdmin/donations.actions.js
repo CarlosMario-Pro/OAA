@@ -20,6 +20,17 @@ export const getDonations = () => {
         dispatch({ type: DONATIONS, payload: res.data });
       })
       .then(() => {
+        dispatch({
+          type: DONATIONS_FILTERS,
+          payload: {
+            status: "active",
+            order: "latest",
+            iso: "all",
+            search: false,
+          },
+        });
+      })
+      .then(() => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {

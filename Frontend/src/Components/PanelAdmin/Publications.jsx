@@ -92,14 +92,6 @@ export default function Publications() {
   // Se ejecuta cuando se monta el componente
   useEffect(() => {
     dispatch(getAllNews());
-    dispatch(
-      newsFilters({
-        status: "active",
-        order: "latest",
-        category: "all",
-        search: false,
-      })
-    );
   }, []);
 
   // Se ejecuta cuando status cambia

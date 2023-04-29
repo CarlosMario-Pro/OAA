@@ -23,6 +23,17 @@ export const getOurWorks = () => {
         dispatch({ type: OUR_WORKS, payload: res.data });
       })
       .then(() => {
+        dispatch({
+          type: OUR_WORKS_FILTERS,
+          payload: {
+            status: "active",
+            order: "latest",
+            progress: "all",
+            search: false,
+          },
+        });
+      })
+      .then(() => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {

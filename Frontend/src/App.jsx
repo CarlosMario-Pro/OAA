@@ -21,23 +21,22 @@ function App() {
   return (
     <>
       <Loader />
-      <NavBar />
       <AlertWindow />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/home' element={<Navigate to='/' />} />
-        <Route path='/we' element={<We />} />
-        <Route path='/news/:id' element={<Detail />} />
-        <Route path='/nuestro-trabajo' element={ <OurWork />} />
-        <Route path='/nuestro-trabajo/:id' element={<WorkDetail />} />
-        <Route path='/login' element={<LoginAdmin />} />
-        <Route path='/foro/primer-foro-social' element={<SocialForum /> } />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Navigate to="/" />} />
+        <Route path="/we" element={<We />} />
+        <Route path="/news/:id" element={<Detail />} />
+        <Route path="/nuestro-trabajo" element={<OurWork />} />
+        <Route path="/nuestro-trabajo/:id" element={<WorkDetail />} />
+        <Route path="/login" element={<LoginAdmin />} />
+        <Route path="/foro/primer-foro-social" element={<SocialForum />} />
         <Route element={<ProtectedRoute />}>
-          <Route path='/panel-admin' element={<PanelAdmin />} />
-          <Route path='/panel-admin/:form' element={<PanelAdminForm />} />
+          <Route path="/panel-admin" element={<PanelAdmin />} />
+          <Route path="/panel-admin/:form" element={<PanelAdminForm />} />
         </Route>
-        <Route path='/login' element={<LoginAdmin />} />
-        <Route path='*' element={<Error404 />} />
+        <Route path="/login" element={<LoginAdmin />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </>
   );

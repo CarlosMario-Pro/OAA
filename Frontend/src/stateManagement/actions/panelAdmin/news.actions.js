@@ -23,6 +23,17 @@ export const getAllNews = () => {
         dispatch({ type: NEWS, payload: res.data });
       })
       .then(() => {
+        dispatch({
+          type: NEWS_FILTERS,
+          payload: {
+            status: "active",
+            order: "latest",
+            category: "all",
+            search: false,
+          },
+        });
+      })
+      .then(() => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {

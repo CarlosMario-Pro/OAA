@@ -3,25 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuill } from "react-quilljs";
 import useForm from "../../utils/customHooks/useForm";
+import useSessionStorage from "../../utils/customHooks/useLocalStorage";
+
 import {
   clearNewDetail,
   createNew,
   editNew,
   reactiveNew,
 } from "../../stateManagement/actions/panelAdmin/news.actions";
-import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
-import ViewImages from "./MultimediaFiles/Images/ViewImages";
-import "quill/dist/quill.snow.css";
 import validationsPublications from "../../utils/helpers/validationsPublications";
+
+import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
 import ImageCloudinary from "./MultimediaFiles/Images/ImageCloudinary";
-import useSessionStorage from "../../utils/customHooks/useLocalStorage";
-import styles from "./PublicationsForm.module.css";
-import ViewAudio from "./MultimediaFiles/Audio/ViewAudio";
-import AudioCloudinary from "./MultimediaFiles/Audio/AudioCloudinary";
+import ViewImages from "./MultimediaFiles/Images/ViewImages";
 import AudioUrl from "./MultimediaFiles/Audio/AudioUrl";
-import ViewPdf from "./MultimediaFiles/Pdf/ViewPdf";
+import AudioCloudinary from "./MultimediaFiles/Audio/AudioCloudinary";
+import ViewAudio from "./MultimediaFiles/Audio/ViewAudio";
 import PdfCloudinary from "./MultimediaFiles/Pdf/PdfCloudinary";
 import PdfUrl from "./MultimediaFiles/Pdf/PdfUrl";
+import ViewPdf from "./MultimediaFiles/Pdf/ViewPdf";
+
+import styles from "./PublicationsForm.module.css";
+import "quill/dist/quill.snow.css";
 
 const toolbar = [
   ["bold", "italic", "underline", "strike"],
@@ -48,8 +51,8 @@ export default function PublicationsForm() {
     dispatch = useDispatch(),
     [labels, setLabels] = useSessionStorage("labelsPublications", []),
     [image, setImage] = useSessionStorage("imagesPublications", []),
-    [pdf, setPdf] = useSessionStorage("pdfPublicationd", []),
-    [audio, setAudio] = useSessionStorage("audioPublicationd", []),
+    [pdf, setPdf] = useSessionStorage("pdfPublications", []),
+    [audio, setAudio] = useSessionStorage("audioPublications", []),
     [urlImageOpen, setUrlImageOpen] = useState(false),
     [urlPdfOpen, setUrlPdfOpen] = useState(false),
     [urlAudioOpen, setUrlAudioOpen] = useState(false),
@@ -84,6 +87,7 @@ export default function PublicationsForm() {
         (file) => file.type === "Audio"
       );
       setForm({
+        ...form,
         titleMain: newDetail.titleMain,
         category: newDetail.category,
         date: newDetail.date,
@@ -96,7 +100,9 @@ export default function PublicationsForm() {
       setImage(newDetail.image);
       setPdf(pdfDetail);
       setAudio(audioDetail);
-      quill && quill.setContents(JSON.parse(newDetail.description));
+      !!newDetail.description &&
+        quill &&
+        quill.setContents(JSON.parse(newDetail.description));
     } else {
       setForm(initialForm);
       setLabels([]);
@@ -302,7 +308,7 @@ export default function PublicationsForm() {
       />
       {errors.introduction && <p className="error">{errors.introduction}</p>}
 
-      <label htmlFor="image">Imágenes *</label>
+      <label>Imágenes *</label>
       {errors.image && <p className="error">{errors.image}</p>}
       <ViewImages images={image} setImages={setImage} />
       <ImageCloudinary
@@ -330,8 +336,9 @@ export default function PublicationsForm() {
 
       <label htmlFor="description">Contenido *</label>
       <div ref={quillRef}></div>
+
       <label>Información extra:</label>
-      <label htmlFor="image">Audios</label>
+      <label>Audios</label>
       <ViewAudio audio={audio} setAudio={setAudio} />
       <AudioCloudinary
         open={cloudinaryAudioOpen}
@@ -355,7 +362,7 @@ export default function PublicationsForm() {
           Añadir URL de multimedia
         </button>
       </div>
-      <label htmlFor="image">PDF</label>
+      <label>PDF</label>
       <ViewPdf pdf={pdf} setPdf={setPdf} />
       <PdfCloudinary
         open={cloudinaryPdfOpen}

@@ -139,14 +139,6 @@ export default function Donations() {
   // Se ejecuta cuando se monta el componente
   useEffect(() => {
     dispatch(getDonations());
-    dispatch(
-      donationsFilter({
-        status: "active",
-        order: "latest",
-        iso: "all",
-        search: false,
-      })
-    );
   }, []);
 
   // Se ejecuta cuando status cambia

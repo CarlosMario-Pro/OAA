@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useQuill } from "react-quilljs";
 import useForm from "../../utils/customHooks/useForm";
-import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
-import ViewImages from "./MultimediaFiles/Images/ViewImages";
-import ImageCloudinary from "./MultimediaFiles/Images/ImageCloudinary";
 import useSessionStorage from "../../utils/customHooks/useLocalStorage";
-import styles from "./GalleryImageForm.module.css";
+
 import {
   clearOneGallery,
   createGallery,
@@ -14,6 +12,21 @@ import {
   reactiveGallery,
 } from "../../stateManagement/actions/panelAdmin/gallery.actions";
 import validationsGallery from "../../utils/helpers/validationsGallery";
+
+import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
+import ImageCloudinary from "./MultimediaFiles/Images/ImageCloudinary";
+import ViewImages from "./MultimediaFiles/Images/ViewImages";
+
+import styles from "./GalleryImageForm.module.css";
+import "quill/dist/quill.snow.css";
+
+const toolbar = [
+  ["bold", "italic", "underline", "strike"],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ header: [2, 3, false] }],
+  ["link", "image", "video"],
+  ["clean"],
+];
 
 const initialForm = {
   titleMain: "",
@@ -33,17 +46,20 @@ export default function GalleryImageForm() {
     [image, setImage] = useSessionStorage("imageGalleryImage", []),
     [urlImageOpen, setUrlImageOpen] = useState(false),
     [cloudinaryImageOpen, setCloudinaryImageOpen] = useState(false),
+    { quill, quillRef } = useQuill({ modules: { toolbar } }),
     { oneGallery, idOneGallery, edit } = useSelector((state) => state.gallery),
     { form, errors, setForm, setErrors, changeHandler, resetHandler } = useForm(
-      "publicationsForm",
+      "galeryImageForm",
       initialForm,
       validationsGallery
     ),
     { titleMain, date, author, urlAuthor, introduction, label } = form;
-  //Se ejecuta cuando newDetail cambia
+
+  //Se ejecuta cuando oneGallery cambia
   useEffect(() => {
     if (Object.keys(oneGallery).length > 0 && edit) {
       setForm({
+        ...form,
         titleMain: oneGallery.titleMain,
         date: oneGallery.date,
         author: oneGallery.author,
@@ -52,6 +68,9 @@ export default function GalleryImageForm() {
       });
       setLabels(oneGallery.labels);
       setImage(oneGallery.image);
+      !!oneGallery.description &&
+        quill &&
+        quill.setContents(JSON.parse(oneGallery.description));
     } else {
       setForm(initialForm);
       setLabels([]);
@@ -90,6 +109,7 @@ export default function GalleryImageForm() {
           ...form,
           labels,
           image,
+          description: JSON.stringify(quill.getContents()),
         })
       );
       resetHandler();
@@ -110,6 +130,7 @@ export default function GalleryImageForm() {
           ...form,
           labels,
           image,
+          description: JSON.stringify(quill.getContents()),
         })
       );
       dispatch(clearOneGallery());
@@ -226,6 +247,9 @@ export default function GalleryImageForm() {
           Añadir URL de multimedia
         </button>
       </div>
+
+      <label htmlFor="description">Contenido *</label>
+      <div ref={quillRef}></div>
 
       <label htmlFor="label">Etiquetas</label>
       {labels && labels.length > 0 && (
