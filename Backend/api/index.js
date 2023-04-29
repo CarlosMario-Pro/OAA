@@ -9,7 +9,7 @@ const { PORT } = process.env;
 connection
   .syncIndexes({ force: true })
   .then(async () => {
-    await loadedNews();
+    // await loadedNews();
     await transport.verify();
     console.log("nodemailer conectado exitosamente.");
   })

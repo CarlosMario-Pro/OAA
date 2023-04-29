@@ -51,32 +51,32 @@ export default function AdministratorsForm({ edit, setEdit }) {
   return (
     <form className={`${styles["form"]}`}>
       <input
-        className='text-input'
-        type='text'
-        name='name'
+        className="text-input"
+        type="text"
+        name="name"
         onBlur={changeHandler}
         onChange={changeHandler}
         value={name}
         required
-        placeholder='Nombre completo'
-        autoComplete='off'
+        placeholder="Nombre completo"
+        autoComplete="off"
       />
-      {errors.name && <p className='error'>{errors.name}</p>}
+      {errors.name && <p className="error">{errors.name}</p>}
       <input
-        className='text-input'
-        type='email'
-        name='email'
+        className="text-input"
+        type="email"
+        name="email"
         onBlur={changeHandler}
         onChange={changeHandler}
         value={email}
         required
-        placeholder='Correo electrónico'
-        autoComplete='off'
+        placeholder="Correo electrónico"
+        autoComplete="off"
       />
-      {errors.email && <p className='error'>{errors.email}</p>}
+      {errors.email && <p className="error">{errors.email}</p>}
       <button
         className={`button yellow-button ${styles["button"]}`}
-        type='submit'
+        type="submit"
         onClick={(event) => {
           event.preventDefault();
           validationsHandler();

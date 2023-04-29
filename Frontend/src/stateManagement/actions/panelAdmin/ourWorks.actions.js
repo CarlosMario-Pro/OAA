@@ -65,9 +65,9 @@ export const getOneWork = (id) => {
   };
 };
 
-export const cleaOneWork = () => ({ type: CLEAR_ONE_WORK });
+export const clearOneWork = () => ({ type: CLEAR_ONE_WORK });
 
-export const OurWorksFilters = (filters) => ({
+export const ourWorksFilters = (filters) => ({
   type: OUR_WORKS_FILTERS,
   payload: filters,
 });

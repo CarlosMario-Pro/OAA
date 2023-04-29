@@ -101,25 +101,25 @@ export default function Administrators() {
         <AdministratorsForm edit={edit} setEdit={setEdit} />
         <form className={`${styles["form"]}`}>
           <input
-            className='search-input'
-            type='text'
-            name='search'
-            placeholder='Buscar...'
-            autoComplete='off'
+            className="search-input"
+            type="text"
+            name="search"
+            placeholder="Buscar..."
+            autoComplete="off"
             value={search}
             onBlur={changeHandler}
             onChange={changeHandler}
           />
-          {filters.search && (
+          {search && (
             <button
               className={`${styles["button"]} ${styles["clear-button"]}`}
               onClick={clearHandler}
             >
-              <MdCached className='blue-icon' size='1.25rem' />
+              <MdCached className="blue-icon" size="1.25rem" />
             </button>
           )}
           <button className={`${styles["button"]}`} onClick={searchHandler}>
-            <MdSearch className='blue-icon' size='1.25rem' />
+            <MdSearch className="blue-icon" size="1.25rem" />
           </button>
         </form>
       </div>
@@ -134,8 +134,8 @@ export default function Administrators() {
                 onClick={orderDateHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -146,8 +146,8 @@ export default function Administrators() {
                 onClick={orderNameHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -183,7 +183,7 @@ export default function Administrators() {
                           setEdit(true);
                         }}
                       >
-                        <MdEdit className='blue-icon' size='1.5rem' />
+                        <MdEdit className="blue-icon" size="1.5rem" />
                       </button>
                       {_id !== admin._id && (
                         <button
@@ -200,7 +200,7 @@ export default function Administrators() {
                             );
                           }}
                         >
-                          <MdDelete className='blue-icon' size='1.5rem' />
+                          <MdDelete className="blue-icon" size="1.5rem" />
                         </button>
                       )}
                     </td>
@@ -210,7 +210,7 @@ export default function Administrators() {
             </>
           ) : (
             <tr>
-              <td colSpan='5'>No se encontró ningún dato.</td>
+              <td colSpan="5">No se encontró ningún dato.</td>
             </tr>
           )}
         </tbody>

@@ -165,25 +165,25 @@ export default function Subscriptions() {
       </section>
       <form className={`${styles["form"]}`}>
         <input
-          className='search-input'
-          type='text'
-          name='search'
-          placeholder='Buscar...'
-          autoComplete='off'
+          className="search-input"
+          type="text"
+          name="search"
+          placeholder="Buscar..."
+          autoComplete="off"
           value={search}
           onBlur={changeHandler}
           onChange={changeHandler}
         />
-        {filters.search && (
+        {search && (
           <button
             className={`${styles["button"]} ${styles["clear-button"]}`}
             onClick={clearHandler}
           >
-            <MdCached className='blue-icon' size='1.25rem' />
+            <MdCached className="blue-icon" size="1.25rem" />
           </button>
         )}
         <button className={`${styles["button"]}`} onClick={searchHandler}>
-          <MdSearch className='blue-icon' size='1.25rem' />
+          <MdSearch className="blue-icon" size="1.25rem" />
         </button>
       </form>
       <table className={`${styles["table"]}`}>
@@ -197,8 +197,8 @@ export default function Subscriptions() {
                 onClick={orderDateHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -209,8 +209,8 @@ export default function Subscriptions() {
                 onClick={orderNameHandler}
               >
                 <MdOutlineKeyboardArrowDown
-                  className='white-icon'
-                  size='1.45rem'
+                  className="white-icon"
+                  size="1.45rem"
                 />
               </button>
             </th>
@@ -261,7 +261,7 @@ export default function Subscriptions() {
             </>
           ) : (
             <tr>
-              <td colSpan='5'>No se encontró ningún dato.</td>
+              <td colSpan="5">No se encontró ningún dato.</td>
             </tr>
           )}
         </tbody>
