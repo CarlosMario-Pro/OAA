@@ -1,29 +1,43 @@
 import React from 'react'
+import SwipeableTextMobileStepper from '../NewDetail/ImagesWork'
+import Styles from './detailWork.module.css'
 
 export default function WorkDetailComponent({onlyAWork}) {
   return (
+    <div className={Styles.containerWork} >
+      <div className={Styles.titleWork} ><h3>{onlyAWork?.titleMain}</h3></div>
+    
+    <SwipeableTextMobileStepper  newDetail={onlyAWork} />
     <div>
-    <h3>{onlyAWork?.titleMain}</h3>
-    <div>
+
     </div>
-    <div>
+    <div className={Styles.contentWork} >
       {
         onlyAWork?.content && onlyAWork?.content.charAt(0) === "{" ? (
-          <article ref={quillRef} ></article>
+          <article ref={quillRef} className={Styles.textT} ></article>
         ) : (
-          <p>{onlyAWork.content}</p>
+          <p className={Styles.textT} >{onlyAWork?.content}</p>
         )
       }
-    </div>
-      <div>
-        {
-          onlyAWork?.information ?
-          onlyAWork.information.map((work)=>(
-          <div key={work.url} >
-            <a href={work.url} target='_blank' ><h6>{work.label}</h6></a>
-          </div>
-            )) :''}
+    </div> 
+    {onlyAWork?.multimedia && ( <div><h4>Publicaciones y mas información relacionada...</h4></div> ) }
+      <div className={Styles.multimediaWork} >
+  {onlyAWork?.multimedia ?
+    onlyAWork.multimedia.map((work) => (
+      <div key={work?.url} className={Styles.typeWork} >
+        {work?.type === "PDF" ? (
+          <a href={work?.url} target="_blank">
+            <h6>{work?.label}</h6>
+          </a>
+        ) : work?.type === "Audio" ? (
+          <audio controls>
+            <source src={work?.url} type="audio/mpeg" />
+          </audio>
+        ) : null}
       </div>
+    ))
+  : ""}
+</div>
 </div>
   )
 }

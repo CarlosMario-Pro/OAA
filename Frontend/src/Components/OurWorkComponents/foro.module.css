@@ -87,12 +87,16 @@
   margin: 2rem 0 auto 4rem;
   width: 100%;
   max-width: 800px;
+  
 }
 
 .cardContainers h2 {
   text-align: center;
   font-size: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  animation: pulse 3s infinite;
+  box-shadow: 3px 2px 8px rgba(22, 157, 24, 0.638);
+  margin-left: 25%;
 }
 
 .cardContainers div {
@@ -131,17 +135,6 @@
   cursor: pointer;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 
 @media screen and (max-width: 900px) {
   .divContainerOne {
@@ -161,5 +154,9 @@
   margin: 2rem 0 auto ;
   width: 100%;
   max-width: 800px;
+}
+.cardContainers h2 {
+
+  margin-left: 8%;
 }
 }

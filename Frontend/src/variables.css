@@ -22,4 +22,17 @@
     brightness(110%) contrast(98%);
   --blue-filter: invert(25%) sepia(19%) saturate(3679%) hue-rotate(173deg)
     brightness(86%) contrast(94%);
+
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

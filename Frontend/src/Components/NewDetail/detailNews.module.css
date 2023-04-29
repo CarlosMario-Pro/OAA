@@ -20,6 +20,8 @@
     text-align: center;
     font-size: 2rem;
     padding-bottom: 0.8rem;
+    animation: pulse 5s infinite;
+    box-shadow: 3px 2px 8px rgba(22, 157, 24, 0.638);
 }
 
 .introduction-div{
