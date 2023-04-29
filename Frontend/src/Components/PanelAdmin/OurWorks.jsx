@@ -21,6 +21,7 @@ import {
   getOneWork,
   removeWork,
   clearOneWork,
+  deleteWork,
 } from "../../stateManagement/actions/panelAdmin/ourWorks.actions";
 
 const initialForm = {
@@ -33,9 +34,7 @@ export default function OurWorks() {
   const navigate = useNavigate(),
     dispatch = useDispatch(),
     [currentPage, setCurrentPage] = useState(1),
-    { allOurWorks, ourWorks, idOneWork, filters } = useSelector(
-      (state) => state.ourWorks
-    ),
+    { ourWorks, idOneWork, filters } = useSelector((state) => state.ourWorks),
     { form, changeHandler, resetHandler } = useForm(
       "searchOurWorks",
       initialForm,
@@ -54,14 +53,6 @@ export default function OurWorks() {
   // Se ejecuta cuando se monta el componente
   useEffect(() => {
     dispatch(getOurWorks());
-    dispatch(
-      ourWorksFilters({
-        status: "active",
-        order: "latest",
-        progress: "all",
-        search: false,
-      })
-    );
   }, []);
 
   // Se ejecuta cuando status cambia
@@ -179,7 +170,7 @@ export default function OurWorks() {
 
   //Funcion para eliminar un elemento:
   const deleteHandler = (id) => {
-    dispatch(deleteNew(id));
+    dispatch(deleteWork(id));
     dispatch(clearOneWork());
   };
   const cancelHandler = () => {
@@ -292,9 +283,9 @@ export default function OurWorks() {
                       </td>
                       <td
                         className={`${styles["progress"]}`}
-                        title={isFinished}
+                        title={isFinished ? "Finalizado" : "En Desarrollo"}
                       >
-                        {isFinished}
+                        {isFinished ? "Finalizado" : "En Desarrollo"}
                       </td>
                       <td className={`${styles["actions"]}`}>
                         <button

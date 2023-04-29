@@ -54,14 +54,6 @@ export default function Gallery() {
   // Se ejecuta cuando se monta el componente
   useEffect(() => {
     dispatch(getGalleries());
-    dispatch(
-      galleryFilters({
-        status: "active",
-        order: "latest",
-        category: "all",
-        search: false,
-      })
-    );
   }, []);
 
   // Se ejecuta cuando status cambia

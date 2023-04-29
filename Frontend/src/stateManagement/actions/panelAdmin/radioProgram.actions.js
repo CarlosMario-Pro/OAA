@@ -23,6 +23,16 @@ export const getRadioProgram = () => {
         dispatch({ type: RADIO_PROGRAM, payload: res.data });
       })
       .then(() => {
+        dispatch({
+          type: RADIO_PROGRAM_FILTERS,
+          payload: {
+            status: "active",
+            order: "latest",
+            search: false,
+          },
+        });
+      })
+      .then(() => {
         dispatch({ type: LOADER_OFF });
       })
       .catch((error) => {

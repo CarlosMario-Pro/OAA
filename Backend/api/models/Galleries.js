@@ -30,6 +30,9 @@ const gallerySchema = new Schema(
     introduction: {
       type: String,
     },
+    description: {
+      type: String,
+    },
     image: [
       {
         caption: {

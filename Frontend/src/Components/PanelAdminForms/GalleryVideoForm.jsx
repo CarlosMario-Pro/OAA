@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useQuill } from "react-quilljs";
 import useForm from "../../utils/customHooks/useForm";
-import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
-import ViewImages from "./MultimediaFiles/Images/ViewImages";
-import ImageCloudinary from "./MultimediaFiles/Images/ImageCloudinary";
 import useSessionStorage from "../../utils/customHooks/useLocalStorage";
-import styles from "./GalleryVideoForm.module.css";
+
 import {
   clearOneGallery,
   createGallery,
   editGallery,
   reactiveGallery,
 } from "../../stateManagement/actions/panelAdmin/gallery.actions";
-import VideoCloudinary from "./MultimediaFiles/Video/VideoCloudinary";
-import VideoUrl from "./MultimediaFiles/Video/VideoUrl";
 import validationsGallery from "../../utils/helpers/validationsGallery";
+
+import ImageUrl from "./MultimediaFiles/Images/ImageUrl";
+import ImageCloudinary from "./MultimediaFiles/Images/ImageCloudinary";
+import ViewImages from "./MultimediaFiles/Images/ViewImages";
+import VideoUrl from "./MultimediaFiles/Video/VideoUrl";
+import VideoCloudinary from "./MultimediaFiles/Video/VideoCloudinary";
 import ViewVideo from "./MultimediaFiles/Video/ViewVideo";
+
+import styles from "./GalleryVideoForm.module.css";
+import "quill/dist/quill.snow.css";
+
+const toolbar = [
+  ["bold", "italic", "underline", "strike"],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ header: [2, 3, false] }],
+  ["link", "image", "video"],
+  ["clean"],
+];
 
 const initialForm = {
   titleMain: "",
@@ -43,17 +56,20 @@ export default function GalleryVideoForm() {
     [urlVideoOpen, setUrlVideoOpen] = useState(false),
     [cloudinaryImageOpen, setCloudinaryImageOpen] = useState(false),
     [cloudinaryVideoOpen, setCloudinaryVideoOpen] = useState(false),
+    { quill, quillRef } = useQuill({ modules: { toolbar } }),
     { oneGallery, idOneGallery, edit } = useSelector((state) => state.gallery),
     { form, errors, setForm, setErrors, changeHandler, resetHandler } = useForm(
-      "publicationsForm",
+      "gelleryVideoForm",
       initialForm,
       validationsGallery
     ),
     { titleMain, date, author, urlAuthor, introduction, label } = form;
-  //Se ejecuta cuando newDetail cambia
+
+  //Se ejecuta cuando oneGallery cambia
   useEffect(() => {
     if (Object.keys(oneGallery).length > 0 && edit) {
       setForm({
+        ...form,
         titleMain: oneGallery.titleMain,
         date: oneGallery.date,
         author: oneGallery.author,
@@ -63,6 +79,9 @@ export default function GalleryVideoForm() {
       setLabels(oneGallery.labels);
       setImage(oneGallery.image);
       setVideo(oneGallery.video);
+      !!oneGallery.description &&
+        quill &&
+        quill.setContents(JSON.parse(oneGallery.description));
     } else {
       setForm(initialForm);
       setLabels([]);
@@ -106,6 +125,7 @@ export default function GalleryVideoForm() {
           labels,
           image,
           video,
+          description: JSON.stringify(quill.getContents()),
         })
       );
       resetHandler();
@@ -131,6 +151,7 @@ export default function GalleryVideoForm() {
           labels,
           image,
           video,
+          description: JSON.stringify(quill.getContents()),
         })
       );
       dispatch(clearOneGallery());
@@ -286,6 +307,9 @@ export default function GalleryVideoForm() {
           Añadir URL de multimedia
         </button>
       </div>
+
+      <label htmlFor="description">Contenido *</label>
+      <div ref={quillRef}></div>
 
       <label htmlFor="label">Etiquetas</label>
       {labels && labels.length > 0 && (

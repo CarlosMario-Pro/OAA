@@ -11,7 +11,6 @@ const radioProgramsSchema = new Schema(
     },
     date: {
       type: String,
-      required: true,
     },
     introduction: {
       type: String,
@@ -31,7 +30,6 @@ const radioProgramsSchema = new Schema(
       {
         label: {
           type: String,
-          required: true,
         },
         type: {
           type: String,
