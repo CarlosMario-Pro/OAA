@@ -11,7 +11,6 @@ const ourWorksSchema = new Schema(
     },
     date: {
       type: String,
-      // required: true,
     },
     location: {
       type: String,
