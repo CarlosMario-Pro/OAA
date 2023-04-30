@@ -19,7 +19,7 @@ const reducer = combineReducers({
   confirmation: confirmationReducer,
   donations: donationsReducer,
   gallery: galleryReducer,
-  ourWorks: ourWorksReducer,
+  //ourWorks: ourWorksReducer,
   loader: loaderReducer,
   news: newsReducer,
   radioProgram: radioProgramReducer,

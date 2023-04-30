@@ -1,13 +1,13 @@
 @import "../../variables.css";
 
+
 .container-detail {
     display: flex;
     justify-content: center;
     width: 58%;
     float:left;
     height: 100vw;
-    padding-top: 2rem;
-    padding-right: 2rem;
+    padding: 2rem 2rem 0 0;
 }
 
 .sec-container {
@@ -20,6 +20,8 @@
     text-align: center;
     font-size: 2rem;
     padding-bottom: 0.8rem;
+    animation: pulse 5s infinite;
+    box-shadow: 3px 2px 8px rgba(22, 157, 24, 0.638);
 }
 
 .introduction-div{
@@ -60,18 +62,12 @@
 .labels-container{
     padding: 2rem 0;
     justify-content:space-between;
-}
+} 
 
-@media only screen and (max-width: 800px) {
-    .container-detail {
-    display: flex;
-    width: 90%;
-    height: 100%;
-    }
-    .p-content{
-        padding-top: 1rem;
-        text-align: justify;
-        padding-bottom: 4rem;
-        font-size: 1rem;
-    }
+@media screen and (max-width: 900px) {
+  .container-detail {
+      width: 90%;
+      height: 100%;
+      float: none;
   }
+}

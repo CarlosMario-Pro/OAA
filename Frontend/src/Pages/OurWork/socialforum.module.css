@@ -1,0 +1,48 @@
+@import url('../../variables.css');
+
+.containerSocial {
+  width: 80%;
+  max-width: 800px; /* Máximo de ancho */
+  margin: 0 auto; /* Para centrar horizontalmente */
+  text-align: justify;
+}
+
+.titleSocial {
+  font-size: 2rem; /* Tamaño de fuente */
+  text-align: center; /* Alineación de texto */
+  margin: 2rem; /* Margen inferior */
+  animation: pulse 8s infinite;
+  box-shadow: 3px 2px 8px rgba(22, 157, 24, 0.638);
+}
+
+.containerSec {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 2rem 0 2rem;
+  }
+  
+  .imageSocial {
+    max-width: 100%;
+    width: 50%; /* ajusta este valor según el ancho que desees */
+    margin-right: 2rem;
+    height: 600px;
+  }
+  
+  p {
+    flex: 1;
+    font-size: 1.5rem;
+    margin: 1rem;
+  }
+  
+
+  @media (max-width: 900px) {
+    .containerSec {
+      flex-direction: column;
+    }
+    .imageSocial {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }

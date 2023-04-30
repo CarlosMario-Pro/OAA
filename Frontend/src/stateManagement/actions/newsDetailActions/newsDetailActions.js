@@ -39,7 +39,7 @@ export function threNewsRecentAction() {
 export function getAWorkById(id) {
     return async function (dispatch) {
       try {
-        const Awork = await axios.get(`/work/${id}`);
+        const Awork = await axios.get(`/work/active/${id}`);
         return dispatch({ type: constants.GET_A_WORK, payload: Awork.data });
       } catch (error) {
         console.log(error);
