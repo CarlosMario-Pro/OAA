@@ -3,6 +3,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AlertWindow from "./Components/Alerts/AlertWindow";
 import LandingPage from "./Pages/LadingPage/LandingPage";
 import AboutUs from "./Pages/AboutUs/AboutUs";
+import Novelties from "./Pages/Novelties/Novelties";
+import Communities from "./Pages/Communities/Communities";
+import Galery from "./Pages/Galery/Galery";
+import NaturalezaSomos from "./Pages/NaturalezaSomos/NaturalezaSomos";
+import Done from "./Pages/Done/Done";
+import ActiveCases from "./Pages/ActiveCases/ActiveCases";
+import Honorific from "./Pages/Honorific/Honorific";
 import NavBar from "./Components/NavBar/NavBar";
 import Detail from "./Pages/Detail/Detail";
 import Error404 from "./Pages/Error404/Error404";
@@ -28,6 +35,13 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/aboutUs" element={<AboutUs />} />
+        <Route path="/novelties" element={<Novelties />} />
+        <Route path="/communities" element={<Communities />} />
+        <Route path="/galery" element={<Galery />} />
+        <Route path="/naturalezaSomos" element={<NaturalezaSomos />} />
+        <Route path="/done" element={<Done />} />
+        <Route path="/activeCases" element={<ActiveCases />} />
+        <Route path="/honorific" element={<Honorific />} />
         <Route path="/news/:id" element={<Detail />} />
         <Route path="/nuestro-trabajo" element={<OurWork />} />
         <Route path="/nuestro-trabajo/:id" element={<WorkDetail />} />

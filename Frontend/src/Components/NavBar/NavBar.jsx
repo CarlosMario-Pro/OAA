@@ -10,12 +10,12 @@ export default function NavBar () {
             <div className={`${styles.container} `}>
                 <div className={`${styles.container__logo} `}>Logo</div>
                 <div className={`${styles.container__items} `}>
-                    <Link className={`${styles.item} `} to={'#'}>NOSOTROS</Link>
-                    <Link className={`${styles.item} `} to={'#'}>NOVEDADES</Link>
-                    <Link className={`${styles.item} `} to={'#'}>COMUNIDADES</Link>
-                    <Link className={`${styles.item} `} to={'#'}>GALERIA</Link>
-                    <Link className={`${styles.item} `} to={'#'}>NATURALEZA SOMOS</Link>
-                    <Link className={`${styles.donate} `} to={'#'}>DONA</Link>
+                    <Link className={`${styles.item} `} to={'/aboutUs'}>NOSOTROS</Link>
+                    <Link className={`${styles.item} `} to={'/novelties'}>NOVEDADES</Link>
+                    <Link className={`${styles.item} `} to={'/communities'}>COMUNIDADES</Link>
+                    <Link className={`${styles.item} `} to={'/galery'}>GALERIA</Link>
+                    <Link className={`${styles.item} `} to={'/naturalezaSomos'}>NATURALEZA SOMOS</Link>
+                    <Link className={`${styles.donate} `} to={'/done'}>DONA</Link>
                 </div>
             </div>
         </div>

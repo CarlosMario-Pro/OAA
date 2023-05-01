@@ -42,7 +42,7 @@ export default function PresentationIcons () {
       <div className={styles.container}>
         <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
-            <Link className={styles.we} to={'/#'} target="_blank" rel="noreferrer">
+            <Link className={styles.we} to={'/activeCases'} target="_blank" rel="noreferrer">
               <GoLaw className={styles.icons}/>
             </Link>
           </div>
@@ -51,14 +51,18 @@ export default function PresentationIcons () {
 
         <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
-            <AiOutlineHeart className={styles.icons}/>
+            <Link className={styles.we} to={'/honorific'} target="_blank" rel="noreferrer">
+              <AiOutlineHeart className={styles.icons}/>
+            </Link>
           </div>
             <h3>Mención honorífica</h3>
         </div>
 
         <div className={styles.containerlinks}>
           <div className={styles.containerIconsDone}>
-            <BiDonateHeart className={styles.icons}/>
+            <Link className={styles.we} to={'/done'} target="_blank" rel="noreferrer">
+              <BiDonateHeart className={styles.icons}/>
+            </Link>
           </div>
           <h3>Donar</h3>
         </div>
@@ -76,20 +80,6 @@ export default function PresentationIcons () {
           <h3>Suscríbete</h3>
         </div>
       </div>
-      {/* <div className={`${styles.socialNetworks} AIflexEnd`}>
-        <div className={`${styles.borderSocialNetworks} center`}>
-            <a className={`links`} href='https://www.facebook.com/WankayoSaborPeruano' target="_blank" rel="noreferrer noopener"><FaFacebookF className={styles.iconSocialNetworks} /></a>
-        </div>
-        <div className={`${styles.borderSocialNetworks} center`}>
-            <a className={`links`} href='https://www.instagram.com/wankayosaborperuano/?hl=es-la' target="_blank" rel="noreferrer noopener"><AiFillInstagram className={styles.iconSocialNetworks} /></a>
-        </div>
-        <div className={`${styles.borderSocialNetworks} center`}>
-            <a className={`links`} href='https://www.tiktok.com/@wankayosaborperuano' target="_blank" rel="noreferrer noopener"><FaTiktok className={styles.iconSocialNetworks} /></a>
-        </div>
-        <div className={`${styles.borderSocialNetworks} center`}>
-            <a className={`links`} href='https://web.whatsapp.com/send?phone=51902140618&text' target="_blank" rel="noreferrer noopener"><RiWhatsappFill className={styles.iconSocialNetworks} /></a>
-        </div>
-    </div> */}
     </div>
   );
 };
