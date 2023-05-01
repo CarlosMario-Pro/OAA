@@ -2,12 +2,13 @@ import axios from "axios";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AlertWindow from "./Components/Alerts/AlertWindow";
 import LandingPage from "./Pages/LadingPage/LandingPage";
-import We from "./Pages/We/We";
+import We from "./Pages/AboutUs/AboutUs";
 import NavBar from "./Components/NavBar/NavBar";
 import Detail from "./Pages/Detail/Detail";
 import Error404 from "./Pages/Error404/Error404";
 import Loader from "./Components/Loader/Loader";
 import LoginAdmin from "./Pages/LoginAdmin/LoginAdmin";
+import NavBar from "./Components/NavBar/NavBar";
 import PanelAdmin from "./Pages/PanelAdmin/PanelAdmin";
 import PanelAdminForm from "./Pages/PanelAdminForm/PanelAdminForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <Loader />
+      <NavBar />
       <AlertWindow />
       <Routes>
         <Route path="/" element={<LandingPage />} />
