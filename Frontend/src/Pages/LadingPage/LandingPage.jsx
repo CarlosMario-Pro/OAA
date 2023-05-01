@@ -4,6 +4,7 @@ import PresentationIcons from "../../Components/LandingPage/PresentationIcons/Pr
 import Novelty from "../../Components/LandingPage/Novelty/Novelty";
 import Communities from "../../Components/LandingPage/Communities/Communities";
 import Galery from "../../Components/LandingPage/Galery/Galery";
+import MostReadNews from "../../Components/LandingPage/MostReadNews/MostReadNews";
 import styles from './LandingPage.module.css';
 
 
@@ -16,6 +17,7 @@ export default function LandingPage () {
             <Novelty />
             <Communities />
             <Galery />
+            <MostReadNews />
         </div>
     );
 };
