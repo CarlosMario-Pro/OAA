@@ -27,9 +27,8 @@ export default function NewsOAA () {
         <div className={styles.containerText}>
           <h2>Título de imagen</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolorum omnis libero laudantium velit enim earum dignissimos minima nisi est.</p>
-          <Link className={styles.linkText} to={'/#'} target="_blank" rel="noreferrer">
-            Saber más
-        </Link>
+          <h4>Mayo 20 de 2023</h4>
+          <Link className={styles.linkText} to={'/#'} target="_blank" rel="noreferrer">Saber más</Link>
         </div>
       </div>
     </div>

@@ -32,10 +32,10 @@
     overflow: hidden;
     border-radius: 50%;
     background: #e63946;
-    padding: 30px;
+    padding: 25px;
 }
 .icons {
-    font-size: 120px;
+    font-size: 100px;
     color: white;
 }
 .modalButton {

@@ -9,13 +9,14 @@ export default function Communities () {
     return (
         <div className={styles.communities}>
             <div className={styles.containerCommunities}>
-                <div className={styles.major}>
+                <div>
                     <div className={styles.containerImage}>
                         <img src={NewsONG} className={styles.image} alt="Image" />
                     </div>
                     <div className={styles.containerText}>
                         <h2>Título de Noticia</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolorum omnis libero laudantium velit enim earum dignissimos minima nisi est.</p>
+                        <h4>Mayo 20 de 2023</h4>
                         <div className={styles.labels}>
                             <Link className={styles.linkText} to={'/#'} target="_blank" rel="noreferrer">
                                 Etiqueta
@@ -31,16 +32,17 @@ export default function Communities () {
                 </div>
 
                 <div className={styles.secondary}>
-                    <div className={styles.secondaryTop}>
-                        <div className={styles.dfdfdfdfdf}>
+                    <div>
+                        <div className={styles.containerSecondary}>
                             <div className={styles.containerImageSecondary}>
                                 <img src={NewsONG} className={styles.imageSecondary} alt="Image" />
                             </div>
 
-                            <div className={styles.aaaaaa}>
-                                <div className={styles.bbbbb}>
+                            <div className={styles.textSecundary}>
+                                <div className={styles.textNews}>
                                     <h2>Título de Noticia</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolorum omnis libero laudantium velit.</p>
+                                    <h4>Mayo 20 de 2023</h4>
                                 </div>
                                 <div className={styles.labels}>
                                     <Link className={styles.linkText} to={'/#'} target="_blank" rel="noreferrer">
@@ -54,16 +56,17 @@ export default function Communities () {
                         </div>
                     </div>
 
-                    <div className={styles.secondaryTop}>
-                        <div className={styles.dfdfdfdfdf}>
+                    <div>
+                        <div className={styles.containerSecondary}>
                             <div className={styles.containerImageSecondary}>
                                 <img src={NewsONG} className={styles.imageSecondary} alt="Image" />
                             </div>
 
-                            <div className={styles.aaaaaa}>
-                                <div className={styles.bbbbb}>
+                            <div className={styles.textSecundary}>
+                                <div className={styles.textNews}>
                                     <h2>Título de Noticia</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolorum omnis libero laudantium velit.</p>
+                                    <h4>Mayo 20 de 2023</h4>
                                 </div>
                                 <div className={styles.labels}>
                                     <Link className={styles.linkText} to={'/#'} target="_blank" rel="noreferrer">

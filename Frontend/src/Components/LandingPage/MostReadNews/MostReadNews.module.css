@@ -1,8 +1,9 @@
 .mostReadNews {
     width: 1000px;
-    margin: 60px auto;
+    margin: 0 auto;
     display: flex;
     gap: 20px;
+    padding: 50px 0;
 }
 .readNews {
     width: 100%;
@@ -49,15 +50,9 @@
     border-radius: 10px;
 }
 
-
-
-
-
-
 /*Agenda*/
 .agenda {
     width: 400px;
-    /* height: 550px; */
     border-radius: 20px;
     gap: 10px;
 }
