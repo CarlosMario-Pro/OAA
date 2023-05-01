@@ -2,7 +2,7 @@ import axios from "axios";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AlertWindow from "./Components/Alerts/AlertWindow";
 import LandingPage from "./Pages/LadingPage/LandingPage";
-import We from "./Pages/AboutUs/AboutUs";
+import AboutUs from "./Pages/AboutUs/AboutUs";
 import NavBar from "./Components/NavBar/NavBar";
 import Detail from "./Pages/Detail/Detail";
 import Error404 from "./Pages/Error404/Error404";
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Navigate to="/" />} />
-        <Route path="/we" element={<We />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/news/:id" element={<Detail />} />
         <Route path="/nuestro-trabajo" element={<OurWork />} />
         <Route path="/nuestro-trabajo/:id" element={<WorkDetail />} />

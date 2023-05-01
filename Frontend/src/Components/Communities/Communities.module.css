@@ -1,0 +1,92 @@
+.communities {
+    padding: 40px;
+}
+.containerCommunities {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    border-radius: 15px;
+    background: #a8dadc;
+}
+
+/*Contenedor noticia principal*/
+.major {
+    height: 100%;
+    width: 500px;
+    
+}
+.containerImage {
+    height: 450px;
+    width: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.image {
+    height: 450px;
+    width: 450px;
+}
+.containerText {
+    height: 200px;
+    width: 450px;
+    padding: 10px;
+    gap: 20px;
+}
+.labels {
+    margin: 20px 0 0 0;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.linkText {
+    padding: 10px 15px;
+    text-decoration: none;
+    background: #2a9d8f;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+/*Contenedor noticias secundarias*/
+.secondary {
+    height: 640px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.secondaryTop {
+    width: 450px;
+    border-radius: 10px;
+}
+.dfdfdfdfdf {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+}
+.containerImageSecondary {
+    height: 240px;
+    width: 240px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.imageSecondary {
+    height: 240px;
+    width: 240px;
+}
+.aaaaaa {
+    height: 240px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
