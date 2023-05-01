@@ -1,7 +1,7 @@
 import React from 'react';
 import Hero from "../../Components/LandingPage/Hero/Hero";
 import PresentationIcons from "../../Components/LandingPage/PresentationIcons/PresentationIcons";
-import NewsOAA from "../../Components/LandingPage/NewsOAA/NewsOAA";
+import Novelty from "../../Components/LandingPage/Novelty/Novelty";
 import styles from './LandingPage.module.css';
 
 
@@ -11,7 +11,7 @@ export default function LandingPage () {
         <div>
             <Hero />
             <PresentationIcons />
-            <NewsOAA />
+            <Novelty />
         </div>
     );
 };

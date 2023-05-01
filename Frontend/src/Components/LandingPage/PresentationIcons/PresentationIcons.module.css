@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 .container {
-    height: 30rem;
+    height: 20rem;
     background: #b8c0ff;
     width: 100%;
     margin: 0 auto;
@@ -35,9 +35,10 @@
     padding: 30px;
 }
 .icons {
-    font-size: 150px;
+    font-size: 120px;
     color: white;
 }
 .modalButton {
     background: #006d77;
 }
+

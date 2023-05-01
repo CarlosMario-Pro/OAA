@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NewsONG from '../../../assets/NewsONG.jpg';
-import styles from './NewsOAA.module.css';
+import styles from './Novelty.module.css';
 
 
 export default function NewsOAA () {
