@@ -1,0 +1,19 @@
+.galery {
+    width: 1000px;
+    height: 550px;
+    margin: 30px auto;
+    display: flex;
+    gap: 20px;
+}
+.video {
+    border: 1px solid red;
+    width: 100%;
+    height: 550px;
+    border-radius: 20px;
+}
+.images {
+    border: 1px solid red;
+    width: 100%;
+    height: 550px;
+    border-radius: 20px;
+}
