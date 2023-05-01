@@ -15,7 +15,8 @@ export default function MostReadNews () {
                             <img src={NewsONG} className={styles.image} alt="Image" />
                         </div>
                         <h2>Title news</h2>
-                        <p>Description news</p>
+                        <p>Description news. lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
+                        <h4>Mayo 20 de 2023</h4>
                     </div>
 
                     <div className={styles.labels}>
@@ -34,7 +35,8 @@ export default function MostReadNews () {
                             <img src={NewsONG} className={styles.image} alt="Image" />
                         </div>
                         <h2>Title news</h2>
-                        <p>Description news</p>
+                        <p>Description news. lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
+                        <h4>Mayo 20 de 2023</h4>
                     </div>
 
                     <div className={styles.labels}>

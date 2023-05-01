@@ -1,0 +1,48 @@
+.footer {
+    width: 100%;
+    background: #83c5be;
+    margin: 50px 0 0 0;
+}
+.footer__container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 10px 0;    
+}
+.logo__container {
+    margin: 0 auto;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dates {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.socialNetwork {
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}
+.footer__contact {
+    padding: 0 0 0 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.copyRight {
+    text-align: center;
+}
+.footer__iconContact {
+    font-size: 15px;
+    margin: 0 5px 0 0;
+}
+.henryProjects {
+    text-decoration: none;
+    color: #4361ee;
+    font-weight: bold;
+}
