@@ -15,7 +15,6 @@ import Detail from "./Pages/Detail/Detail";
 import Error404 from "./Pages/Error404/Error404";
 import Loader from "./Components/Loader/Loader";
 import LoginAdmin from "./Pages/LoginAdmin/LoginAdmin";
-import NavBar from "./Components/NavBar/NavBar";
 import PanelAdmin from "./Pages/PanelAdmin/PanelAdmin";
 import PanelAdminForm from "./Pages/PanelAdminForm/PanelAdminForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
