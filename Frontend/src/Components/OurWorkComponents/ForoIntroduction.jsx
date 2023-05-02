@@ -14,12 +14,13 @@ export default function ForoIntroduction() {
           </h2>
         </Link>
         <div className={Styles["texto-foro"]}>
+        <Link to="/foro/primer-foro-social">
           <img
             src={imageSomos}
             alt="cabecera"
             className={`${Styles.imageForum} ${Styles.right}`}
-          />
-          <p>
+          /></Link>
+          <p className={Styles.ptextoforo} >
             Nuestra Asociación organizó el Primer foro ambiental “Naturaleza
             somos” que se llevó a cabo en Villa Rosa, Pilar, el 5 de octubre de
             2019, con la concurrencia de más de 100 personas, tanto

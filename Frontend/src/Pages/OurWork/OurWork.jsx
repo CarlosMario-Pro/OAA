@@ -16,8 +16,10 @@ export default function OurWork() {
 
   return (
     <div className={Styles.divContainerOne}>
+      <div  >
       <ForoIntroduction />
       <OurWorkCards allWorks={allWorks} />
+      </div>
     </div>
   );
 }

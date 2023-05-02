@@ -55,5 +55,6 @@
   .container {
       width: 60%;
       float: none;
+      height: 100vh;
   }
 }

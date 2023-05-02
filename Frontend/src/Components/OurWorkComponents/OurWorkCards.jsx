@@ -24,28 +24,28 @@ export default function OurWorkCards({ allWorks }) {
 
   return (
     <div className={Style.cardContainers}>
-      <div>
-        <h2>Conflictos y causas ambientales:</h2>
-      </div>
+      <span>
+        <h2 className={Style.h2cardContainers } >Conflictos y causas ambientales:</h2>
+      </span>
       {allWorks &&
         allWorks.map((work) => {
           return (
             <>
-              <div key={work?._id}>
-                <button onClick={() => handleClick(work)}>
-                  <h5>{work?.titleMain}</h5>
-                  <div>
-                    <img src={logo} alt="imagen" width="50px" />
-                    <p> Conoce más acerca de {work?.titleMain} </p>
+              <div key={work?._id} className={Style.divContainerC}  >
+                <button onClick={() => handleClick(work)} className={Style.buttoncardContainers} >
+                  <h5 className={Style.h5cardContainers } >{work?.titleMain}</h5>
+                  <div className={Style.divSecondCard} >
+                    <img src={logo} alt="imagen" width="50px" className={Style.imgdivContainerC} />
+                    <p className={Style.textcardContainers} > Conoce más acerca de {work?.titleMain} </p>
                   </div>
-                </button>
-              </div>
-              {showAlert && (
+                </button> 
+                {showAlert && !work.isFinished  && (
                 <Alert message={alertMessage} onClose={handleCloseAlert} />
               )}
+              </div>
             </>
           );
-        })}
+        })} 
     </div>
   );
 }
