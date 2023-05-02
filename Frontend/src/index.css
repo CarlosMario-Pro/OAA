@@ -4,28 +4,49 @@ html {
   font-family: var(--font-family);
   margin: 0;
   padding: 0;
-  border-width: 0;
+  border: none;
   border-radius: 0;
   overflow-x: hidden;
   box-sizing: border-box;
   background-color: var(--white);
 }
 
-*,
-*:before,
-*:after {
+html *,
+html *::before,
+html *::after {
+  flex: none;
+  font-size: 1rem;
   color: var(--black);
   margin: 0;
   padding: 0;
-  border-width: 0;
+  border: none;
   border-radius: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 html,
 body,
 #root {
   min-width: 100vw;
   min-height: 100vh;
+}
+
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.17rem;
+}
+h4 {
+  font-size: 1rem;
+}
+h5 {
+  font-size: 0.83rem;
+}
+h6 {
+  font-size: 0.67rem;
 }
 
 *::-webkit-scrollbar {
