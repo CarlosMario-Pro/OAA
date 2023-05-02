@@ -11,7 +11,7 @@ export default function SocialForum() {
         FORO SOCIAL Y AMBIENTAL “NATURALEZA SOMOS”
       </h2>
       <div className={Styles.containerSec}>
-        <p>
+        <p className={Styles.containerSecp} >
           Nuestra Asociación organizó el Primer foro ambiental “Naturaleza
           somos” que se llevó a cabo en Villa Rosa, Pilar, el 5 de octubre de
           2019, con la concurrencia de más de 100 personas, tanto representantes
@@ -21,7 +21,7 @@ export default function SocialForum() {
       </div>
       <div className={Styles.containerSec}>
         <img src={image2} alt="" className={Styles.imageSocial} />
-        <p>
+        <p className={Styles.containerSecp} >
           El encuentro se desarrolló con diversas actividades de formación y
           debate: Se realizaron mesas de trabajo sobre áreas protegidas,
           termoeléctricas e industrias peligrosas, acceso al agua segura,
@@ -32,7 +32,7 @@ export default function SocialForum() {
         </p>
       </div>
       <div className={Styles.containerSec}>
-        <p>
+        <p className={Styles.containerSecp} >
           Entre las organizaciones que apoyaron y concurrieron a la actividad se
           encuentran: Servicio de Paz y Justicia (SerPaJ) Asamblea Permanente
           por los Derechos Humanos (APDH) Defensoría del Pueblo de Pilar

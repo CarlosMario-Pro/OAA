@@ -10,7 +10,6 @@ import NaturalezaSomos from "./Pages/NaturalezaSomos/NaturalezaSomos";
 import Done from "./Pages/Done/Done";
 import ActiveCases from "./Pages/ActiveCases/ActiveCases";
 import Honorific from "./Pages/Honorific/Honorific";
-import NavBar from "./Components/NavBar/NavBar";
 import Detail from "./Pages/Detail/Detail";
 import Error404 from "./Pages/Error404/Error404";
 import Loader from "./Components/Loader/Loader";
