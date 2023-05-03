@@ -10,6 +10,8 @@ export default function DetailNew({ newDetail }) {
     modules: { toolbar: false },
   });
 
+console.log(newDetail);
+
   useEffect(() => {
     try {
       const parsedDescription = JSON.parse(newDetail.description);
@@ -39,10 +41,6 @@ export default function DetailNew({ newDetail }) {
           <SwipeableTextMobileStepper
             newDetail={newDetail ? newDetail : "cargando..."}
           />
-
-          {/* {newDetail.image && newDetail.image.map((image) => (
-          <img src={image.url} alt="image" className={Styles.imageDetail} />
-        ))} */}
           <div>
             <p>{newDetail.location ? newDetail.location : ""}</p>
           </div>
