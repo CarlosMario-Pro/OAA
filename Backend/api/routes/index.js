@@ -1,12 +1,14 @@
 const { Router } = require("express");
 const route = Router();
-const newsRouter = require("../routes/News/NewsRoutes");
-const newsletterRouter = require("./Newsletter/newsletterRoutes");
 const adminRouter = require("./Admin/adminRoutes");
-const ourWorkRouter = require("./OurWork/ourWork");
-const galleryRouter = require("./Gallery/gallery");
 const donationsRouter = require("./Donations/donations");
+const galleryRouter = require("./Gallery/gallery");
+const newsRouter = require("./News/NewsRoutes");
+const newsletterRouter = require("./Newsletter/newsletterRoutes");
+const ourWorkRouter = require("./OurWork/ourWork");
 const radioProgramRouter = require("./RadioProgram/radioProgram");
+const subscribersRouter = require("./Subscribers/subscribers");
+
 
 /*--------------Rutas--------------*/
 route.use("/admin", adminRouter); // Endpoint para los admin
@@ -16,5 +18,6 @@ route.use("/news", newsRouter); // Endpoint para las News
 route.use("/newsletter", newsletterRouter); // Endpoint para las Newsletter
 route.use("/work", ourWorkRouter); // Endpoint para OurWork
 route.use("/radio-program", radioProgramRouter); // Endpoint para programa de radio
+route.use("/subscribers", subscribersRouter); // Endpoint para suscriptores
 
 module.exports = route;
