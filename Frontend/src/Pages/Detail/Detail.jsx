@@ -32,6 +32,7 @@ export default function Detail() {
       dispatch(threNewsRecentAction());
     }
   }, [dispatch, newDetail.category]);
+  
 
   return (
     <div className={styles["container-parent"]}>

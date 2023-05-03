@@ -1,108 +1,46 @@
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import SwipeableViews from "react-swipeable-views";
-import { autoPlay } from "react-swipeable-views-utils";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+import React, { useRef } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function SwipeableTextMobileStepper({ newDetail }) {
   const images = newDetail?.image;
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images?.length;
+  const sliderRef = useRef(null);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep === maxSteps - 1 ? 0 : prevActiveStep + 1
-    );
+    sliderRef.current.slickNext();
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep === 0 ? maxSteps - 1 : prevActiveStep - 1
-    );
-  };
-
-  const handleStepChange = (step) => {
-    setActiveStep(step);
+    sliderRef.current.slickPrev();
   };
 
   return (
-    <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: 50,
-          pl: 2,
-          bgcolor: "background.default",
-        }}
-      ></Paper>
-      <AutoPlaySwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-      >
+    <div>
+      <Slider {...settings} ref={sliderRef}>
         {images?.map((step, index) => (
           <div key={step?.label}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <>
-                <Box
-                  component="img"
-                  sx={{
-                    height: "auto",
-                    display: "block",
-                    overflow: "hidden",
-                    width: "100%",
-                  }}
-                  src={step?.url}
-                  alt={step?.label}
-                />
-                <Typography>{step?.caption}</Typography>{" "}
-              </>
-            ) : null}
+            <img src={step?.url} alt={step?.label} width='100%' />
+            <p>{step?.caption}</p>
           </div>
         ))}
-      </AutoPlaySwipeableViews>
-      <MobileStepper
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
-      />
-    </Box>
+      </Slider>
+      <div style={{ display: 'flex' }}>
+        <button onClick={handleBack}  > </button>
+        <button onClick={handleNext}> </button>
+        <br />
+      </div>
+    </div>
   );
 }
