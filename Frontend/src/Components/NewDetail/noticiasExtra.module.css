@@ -10,7 +10,7 @@
 }
 
 .divContainer{
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center; 
@@ -28,8 +28,7 @@
   font-family: var(--family-font);
 }
 
-.container-extras{
-  display: flex;
+/* .container-extras{
   padding: 1rem;
   background-color: #0c4c7615;
   margin: 1rem;
@@ -37,9 +36,8 @@
 
 .link{
   text-decoration: none;
-  display: flex;
   font-size: 0.5rem;
-  text-align: justify;
+  background-color: #000000;
 }
 
 .image-notiextra{
@@ -49,11 +47,52 @@
 }
 .introduction-news{
   font-size: 0.8rem;
+} */
+
+.container-extras {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0c4c7615;
+  margin: 1rem;
 }
+
+.link {
+  text-decoration: none;
+  width: 100%;
+  font-size: 0.5rem;
+  background-color: #00000018;
+  display: flex;
+  flex-direction: row; 
+  
+}
+
+.image-container{
+  width: 40%;
+}
+
+.image-notiextra {
+  max-width: 100%;
+  height: auto;
+  padding-right: 0.3rem;
+}
+
+.introduction-container{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.introduction-news {
+  font-size: 0.8rem;
+  margin-left: 1rem;
+}
+
 
 @media screen and (max-width: 900px) {
   .container {
       float: none;
       height: 100vh;
+      width: 80%;
   }
 }

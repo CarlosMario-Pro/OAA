@@ -28,8 +28,8 @@ export default function WorkDetailComponent({ onlyAWork }) {
           ? onlyAWork.multimedia.map((work) => (
               <div key={work?.url} className={Styles.typeWork}>
                 {work?.type === "PDF" ? (
-                  <a href={work?.url} target="_blank">
-                    <h6>{work?.label}</h6>
+                  <a href={work?.url} target="_blank" className={Styles.typeWorkh6} >
+                    <h6 className={Styles.typeWorkh6} >{work?.label}</h6>
                   </a>
                 ) : work?.type === "Audio" ? (
                   <audio controls>
