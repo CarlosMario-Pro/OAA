@@ -21,11 +21,13 @@ export default function SameCategories({ threeCategories }) {
                       className={Styles["image-notiextra"]}
                     />
                   </div>
+                  <div className={Styles["introduction-container"]} >
                   <p className={Styles["introduction-news"]}>
                     {category?.titleMain.length > 50
                       ? category?.titleMain.substring(0, 50) + "..."
                       : category?.titleMain}
                   </p>
+                  </div>
                 </Link>
               </div>
             );

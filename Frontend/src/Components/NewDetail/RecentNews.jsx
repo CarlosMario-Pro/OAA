@@ -21,7 +21,7 @@ export default function RecentNews({ threeRecents }) {
                       className={Styles["image-notiextra"]}
                     />
                   </div>
-                  <div>
+                  <div className={Styles["introduction-container"]} >
                     <p className={Styles["introduction-news"]}>
                       {recent?.titleMain.length > 50
                         ? recent?.titleMain.substring(0, 50) + "..."

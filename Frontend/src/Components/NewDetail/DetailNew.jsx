@@ -3,6 +3,7 @@ import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import Styles from "./detailNews.module.css";
 import SwipeableTextMobileStepper from "./ImagesWork";
+import ShareButtons from "./Share";
 
 export default function DetailNew({ newDetail }) {
   const { quill, quillRef } = useQuill({
@@ -28,12 +29,12 @@ console.log(newDetail);
       <div className={Styles["sec-container"]}>
         <h1 className={Styles["h1-title"]}>{newDetail.titleMain}</h1>
         <div className={Styles["introduction-div"]}>
-          <span>{newDetail.introduction}</span>
+          <span className={Styles["introduction-div"]} >{newDetail.introduction}</span>
         </div>
         <div className={Styles["span-div"]}>
-          <span>{newDetail.category}</span>
-          <span> {newDetail.date}</span>
-          <a href={newDetail.urlAuthor ? newDetail.urlAuthor : ""}>
+          <span className={Styles["span-divspan"]} >{newDetail.category}</span>
+          <span className={Styles["span-divspan"]} > {newDetail.date}</span>
+          <a href={newDetail.urlAuthor ? newDetail.urlAuthor : ""} className={Styles["span-diva"]} >
             Por: {newDetail.author}
           </a>
         </div>
@@ -41,6 +42,8 @@ console.log(newDetail);
           <SwipeableTextMobileStepper
             newDetail={newDetail ? newDetail : "cargando..."}
           />
+
+                  <ShareButtons />
           <div>
             <p>{newDetail.location ? newDetail.location : ""}</p>
           </div>
