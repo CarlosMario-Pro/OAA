@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 export default function SwipeableTextMobileStepper({ newDetail }) {
-  console.log(newDetail);
   const images = newDetail?.image;
   const sliderRef = useRef(null);
 

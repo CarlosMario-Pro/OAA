@@ -23,9 +23,7 @@ export default function Agroecology () {
             >
             {data.map((item) => (
                 <div key={data}>
-                    <img className={styles.images} src={item} alt="Imágenes" style={{ width: "100%", 
-                    // width: "433"
-                    }} />
+                    <img className={styles.images} src={item} alt="Imágenes" />
                 </div>
             ))}
             </Slider>

@@ -16,7 +16,7 @@ html *::before,
 html *::after {
   flex: none;
   font-size: 1rem;
-  color: var(--black);
+  /* color: var(--black); */
   margin: 0;
   padding: 0;
   border: none;
