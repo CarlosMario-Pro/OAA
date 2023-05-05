@@ -72,7 +72,7 @@
   
   .divImageDetail  {
     height: auto;
-    width: 600px;
+    max-width: 600px;
   }
   
   .p-content {

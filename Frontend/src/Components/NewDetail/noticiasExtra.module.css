@@ -92,7 +92,8 @@
 @media screen and (max-width: 900px) {
   .container {
       float: none;
-      height: 100vh;
+      height: 50vh;
       width: 80%;
+      margin-top: 0;
   }
 }
