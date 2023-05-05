@@ -1,15 +1,16 @@
 import React, { useState, useEffect  } from 'react';
 import Newsletter from '../Newsletter/Newsletter';
 import { Link } from 'react-router-dom';
-import { GoLaw } from 'react-icons/go';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { BiDonateHeart } from 'react-icons/bi';
-import { FaNewspaper } from 'react-icons/fa';
+import Heart from '../../../assets/Heart.png';
+import Justicia from '../../../assets/Justicia.png';
+import Done from '../../../assets/Done.png';
+import News from '../../../assets/News.png';
 import styles from './PresentationIcons.module.css';
 
 
 export default function PresentationIcons () {
   const [showModal, setShowModal] = useState(false);
+  const [bodyClass, setBodyClass] = useState('');
 
   const openModal = () => {
     setShowModal(true);
@@ -42,8 +43,8 @@ export default function PresentationIcons () {
       <div className={styles.container}>
         <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
-            <Link className={styles.we} to={'/activeCases'} target="_blank" rel="noreferrer">
-              <GoLaw className={styles.icons}/>
+            <Link to={'/activeCases'} target="_blank" rel="noreferrer">
+              <img src={Justicia} alt="Justicia" className={styles.image}/>
             </Link>
           </div>
           <h3>Casos activos</h3>
@@ -51,8 +52,8 @@ export default function PresentationIcons () {
 
         <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
-            <Link className={styles.we} to={'/honorific'} target="_blank" rel="noreferrer">
-              <AiOutlineHeart className={styles.icons}/>
+            <Link to={'/honorific'} target="_blank" rel="noreferrer">
+              <img src={Heart} alt="Heart" className={styles.image}/>
             </Link>
           </div>
             <h3>Mención honorífica</h3>
@@ -60,25 +61,38 @@ export default function PresentationIcons () {
 
         <div className={styles.containerlinks}>
           <div className={styles.containerIconsDone}>
-            <Link className={styles.we} to={'/done'} target="_blank" rel="noreferrer">
-              <BiDonateHeart className={styles.icons}/>
+            <Link to={'/done'} target="_blank" rel="noreferrer">
+              <img src={Done} alt="Done" className={styles.image}/>
             </Link>
           </div>
-          <h3>Donar</h3>
+          <h3>Apoyar</h3>
         </div>
 
-        {/* Ventana modal */}                
-        <div className={styles.containerlinks}>
+        {/* Ventana modal */}    
+        {/* <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
             <div className={styles.modal}>
-              <button className={styles.modalButton} onClick={openModal}><FaNewspaper className={styles.icons}/></button>
+              <button className={styles.modalButton} onClick={openModal}>
+                <img src={News} alt="News" className={styles.imageNews}/>
+              </button>
               {showModal ? (
-                <Newsletter closeModal={closeModal} />
+                  <Newsletter closeModal={closeModal} />
               ) : null}
+              <div className={bodyClass}><h3>Suscríbete</h3></div>
             </div>
+          </div>            
+        </div> */}
+
+        <div>
+          <div className={styles.modal}>
+            <button className={styles.modalButton} onClick={openModal}><img src={News} alt="News" className={styles.imageNews}/></button>
+            {showModal ? (
+                <Newsletter closeModal={closeModal} />
+            ) : null}
           </div>
-          <h3>Suscríbete</h3>
+            <div className={bodyClass}><h3>Suscríbete</h3></div>
         </div>
+
       </div>
     </div>
   );

@@ -4,18 +4,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 390px;
+    width: 450px;
+}
+.logoImage {
+    width: 60px;
 }
 .links {
     text-decoration: none;
 }
-.logoFirts {
+.logoFirts div {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 12px;
     font-weight: 400;
     color: #52796f;
 }
-.logoSecond {
+.logoSecond div {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 35px;
     font-weight: bold;

@@ -11,8 +11,6 @@ export default function DetailNew({ newDetail }) {
     modules: { toolbar: false },
   });
 
-console.log(newDetail);
-
   useEffect(() => {
     try {
       const parsedDescription = JSON.parse(newDetail.description);

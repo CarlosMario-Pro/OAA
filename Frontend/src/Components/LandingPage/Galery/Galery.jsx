@@ -22,10 +22,3 @@ export default function Galery () {
         </div>
     );
 };
-
-/*
-        <div className={styles.galery}>
-            <div className={styles.video}>Uno</div>
-            <div className={styles.images}>Dos</div>
-        </div>
-*/

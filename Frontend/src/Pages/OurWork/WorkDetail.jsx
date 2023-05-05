@@ -20,7 +20,6 @@ export default function WorkDetail() {
     dispatch(getAWorkById(id));
   }, [id]);
 
-  console.log(onlyAWork);
   return (
     <div>
       <WorkDetailComponent onlyAWork={onlyAWork} quillRef={quillRef} />

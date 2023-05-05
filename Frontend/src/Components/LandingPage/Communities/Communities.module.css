@@ -13,6 +13,7 @@
     background: #a8dadc;
 }
 
+
 /*Contenedor noticia principal*/
 .containerImage {
     width: 450px;
@@ -47,7 +48,7 @@
 
 /*Contenedor noticias secundarias*/
 .secondary {
-    height: 640px;
+    height: 630px;
     display: flex;
     align-items: center;
     justify-content: space-between;

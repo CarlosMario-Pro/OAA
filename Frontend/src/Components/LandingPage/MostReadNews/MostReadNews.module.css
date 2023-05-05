@@ -2,36 +2,28 @@
     width: 1000px;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
+    gap: 30px;
     padding: 50px 0;
 }
 .readNews {
-    width: 100%;
+    width: 700px;
     border-radius: 20px;
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 .newsOne {
-    width: 100%;
-    width: 100%;
+    width: 50%;
 }
-
 .containerImage {
     border-radius: 15px;
-    overflow: hidden;
-}
-
-.containerImage {
-    height: 280px;  
     width: 100%;
+    overflow: hidden;
 }
 .image {
     height: 280px;
     width: 100%;
     object-fit: cover;
 }
-
-
 .labels {
     margin: 20px 0 0 0;
     gap: 20px;
@@ -52,7 +44,7 @@
 
 /*Agenda*/
 .agenda {
-    width: 400px;
+    width: 300px;
     border-radius: 20px;
     gap: 10px;
 }
