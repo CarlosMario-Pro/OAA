@@ -1,7 +1,15 @@
 .newsOAA {
     padding: 50px 0;
 }
-.container {    
+
+.text {
+    text-align: center;
+    margin: 0 0 10px 0;
+    margin: 0 auto 10px auto;
+    width: 850px;
+}
+.container {
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,9 +19,16 @@
 .link {
     text-decoration: none;
     font-size: 30px;
+    padding: 10px 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    background: #0C4B76;
+    color: white;
 }
 .link:hover {
-    color: #3a86ff;
+    background: #1a659e;
+    color: white;
+    border-radius: 15px;
 }
 .containerNews {
     width: 1000px;
@@ -47,8 +62,9 @@
     gap: 20px;
 }
 .linkText {
-    height: 60px;
-    width: 100px;
+    padding: 10px 15px;
+    color: #f8f9fa;
+    letter-spacing: 1px;
     text-decoration: none;
     background: #0ead69;
     display: flex;

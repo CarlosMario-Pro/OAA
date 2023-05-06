@@ -4,7 +4,7 @@
     margin: 0 auto;
 }
 .container {
-    height: 20rem;
+    height: 17rem;
     background: #b8c0ff;
     width: 100%;
     margin: 0 auto;
@@ -20,6 +20,11 @@
     flex-direction: column;
 }
 .containerlinks h3 {
+    color: white;
+    font-size: 30px;
+}
+
+.subscribe {
     color: white;
     font-size: 30px;
 }
@@ -48,8 +53,10 @@
     color: white;
 }
 .modal {
-    border: 1px solid red;
-    margin-top: -20px;
+    transition: 300ms all ease;
+}
+.modal:hover {
+    transform: scale(1.1);
 }
 .modalButton {
     padding: 30px;

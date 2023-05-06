@@ -9,6 +9,7 @@ export default function Agroecology () {
 
     return (
         <div className={styles.agroecology}>
+            <p>Siempre tenemos espacio para la vida y la naturaleza, ingresa y conoce cómo puedes ayudar</p>
             <div className={styles.landing}>
                 <div className={styles.paragraph}>
                     <p>Agroecología</p>

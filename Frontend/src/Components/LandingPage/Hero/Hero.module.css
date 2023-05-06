@@ -3,7 +3,7 @@
   position: relative;
   /* border: 1px solid red; */
 }
-.carousel:before {
+/* .carousel:before {
   content: '';
   width: 100%;
   height: 100%;
@@ -12,7 +12,7 @@
   right: 0;
   z-index: 1;
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 1));
-}
+} */
 
 /*----------Landing----------*/
 .landing {

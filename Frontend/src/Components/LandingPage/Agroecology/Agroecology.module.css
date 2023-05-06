@@ -1,9 +1,12 @@
 .agroecology {
-  /* height: 333px; */
   width: 1000px;
   position: relative;
   margin: 0 auto;
   padding: 50px 0;
+}
+.agroecology p {
+  text-align: center;
+  margin: 0 0 10px 0;
 }
 
 /*----------Landing----------*/
@@ -16,19 +19,7 @@
   justify-content: center;
   z-index: 1;
 }
-/* .paragraph {
-  padding: 5px 20px;
-  background: #219ebc;
-  border-radius: 10px;
-  margin: 30px auto;
-  width: 200px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 .landing p {
-  /* text-align: center; */
   padding: 10px 20px;
   background: #219ebc;
   margin: 30px;

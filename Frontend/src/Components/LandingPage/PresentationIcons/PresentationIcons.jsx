@@ -1,9 +1,8 @@
 import React, { useState, useEffect  } from 'react';
 import Newsletter from '../Newsletter/Newsletter';
 import { Link } from 'react-router-dom';
-import Heart from '../../../assets/Heart.png';
 import Justicia from '../../../assets/Justicia.png';
-import Done from '../../../assets/Done.png';
+import Team from '../../../assets/Team.png';
 import News from '../../../assets/News.png';
 import styles from './PresentationIcons.module.css';
 
@@ -53,45 +52,29 @@ export default function PresentationIcons () {
         <div className={styles.containerlinks}>
           <div className={styles.containerIcons}>
             <Link to={'/honorific'} target="_blank" rel="noreferrer">
-              <img src={Heart} alt="Heart" className={styles.image}/>
+              <img src={Team} alt="Team" className={styles.image}/>
             </Link>
           </div>
-            <h3>Mención honorífica</h3>
+            <h3>Equipo</h3>
         </div>
 
         <div className={styles.containerlinks}>
-          <div className={styles.containerIconsDone}>
-            <Link to={'/done'} target="_blank" rel="noreferrer">
-              <img src={Done} alt="Done" className={styles.image}/>
+          <div className={styles.containerIcons}>
+            <Link to={'/newsletter'} target="_blank" rel="noreferrer">
+            <img src={News} alt="News" className={styles.imageNews}/>
             </Link>
           </div>
-          <h3>Apoyar</h3>
+            <h3>Equipo</h3>
         </div>
-
-        {/* Ventana modal */}    
-        {/* <div className={styles.containerlinks}>
-          <div className={styles.containerIcons}>
-            <div className={styles.modal}>
-              <button className={styles.modalButton} onClick={openModal}>
-                <img src={News} alt="News" className={styles.imageNews}/>
-              </button>
-              {showModal ? (
-                  <Newsletter closeModal={closeModal} />
-              ) : null}
-              <div className={bodyClass}><h3>Suscríbete</h3></div>
-            </div>
-          </div>            
-        </div> */}
-
-        <div>
+        {/* <div>
           <div className={styles.modal}>
             <button className={styles.modalButton} onClick={openModal}><img src={News} alt="News" className={styles.imageNews}/></button>
             {showModal ? (
                 <Newsletter closeModal={closeModal} />
             ) : null}
           </div>
-            <div className={bodyClass}><h3>Suscríbete</h3></div>
-        </div>
+            <div className={bodyClass}><h3 className={styles.subscribe}>Suscríbete</h3></div>
+        </div> */}
 
       </div>
     </div>
