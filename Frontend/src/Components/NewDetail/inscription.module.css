@@ -36,17 +36,24 @@
     align-self: center;
     
   }
+  .container-parent-pric{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .container-parent{
+    max-width: 1200px;
+    
+  }
 
   @media screen and (max-width: 900px) {
     .container-parent {
-      display: flex;
-      flex-direction:column;
-      overflow-y: scroll;
+    width: 100%;
       
     }
     
     .formLetter {
-      width: 80%;
+     width: 80%;
       margin: 1rem auto;
     }
   }

@@ -35,11 +35,14 @@ export default function Detail() {
   
 
   return (
+  <div className={styles["container-parent-pric"]}>
     <div className={styles["container-parent"]}>
+      
       <DetailNew newDetail={newDetail} />
       <FormNewsletter />
       <SameCategories threeCategories={threeCategories} />
       <RecentNews threeRecents={threeRecents} />
+    </div>
     </div>
   );
 }
