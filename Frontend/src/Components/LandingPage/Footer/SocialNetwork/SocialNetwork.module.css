@@ -1,9 +1,8 @@
 .socialNetworks {
-    gap: 10px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     border-right: 1px solid #ced4da;
     padding: 0 20px 0 0;
 }
@@ -11,16 +10,16 @@
     letter-spacing: 2px;
 }
 .socialNetworks__container {
-    gap: 20px;
+    gap: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .borderSocialNetworks {
-    height: 55px;
-    width: 55px;
+    height: 65px;
+    width: 65px;
     padding: 3px 0 0 0;
-    border: 1px solid #0d3b66;
+    border: 1px solid #f8f9fa;
     border-radius: 50%;
     transition: 100ms all ease;
     display: flex;
@@ -31,7 +30,6 @@
     transform: scale(1.1);
 }
 .iconSocialNetworks {
-    font-size: 30px;
-    color: #0d3b66;
-
+    font-size: 35px;
+    color: #f8f9fa;
 }

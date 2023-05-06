@@ -6,7 +6,6 @@ import Communities from "../../Components/LandingPage/Communities/Communities";
 import Agroecology from "../../Components/LandingPage/Agroecology/Agroecology";
 import MostReadNews from "../../Components/LandingPage/MostReadNews/MostReadNews";
 import Galery from "../../Components/LandingPage/Galery/Galery";
-import Metrics from "../../Components/LandingPage/Metrics/Metrics";
 import Footer from "../../Components/LandingPage/Footer/Footer";
 import styles from './LandingPage.module.css';
 
@@ -22,7 +21,6 @@ export default function LandingPage () {
             <Agroecology />
             <MostReadNews />
             <Galery />
-            <Metrics />
             <Footer />
         </div>
     );

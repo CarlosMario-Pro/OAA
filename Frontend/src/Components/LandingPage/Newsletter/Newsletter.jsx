@@ -19,11 +19,6 @@ function validate (input) {
   } else if(!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
       errors.email = "Tu email debe ser válido";
   }
-  if(!input.phone) {
-      errors.phone = "El telefono es requerido.";
-  } else if (!/^\d{10,15}$/.test(input.phone)) {
-      errors.phone = "Tu número telefónico no es válido";
-  }
   return errors;
 };
 
@@ -35,7 +30,6 @@ export default function Modal ({ closeModal }) {
   const [ input, setInput ] = useState({
       name: '',
       email: '',
-      phone: ''
   });
 
   function handleChange(e) {
@@ -54,7 +48,7 @@ export default function Modal ({ closeModal }) {
     const { email } = input;
     try {
       const searchResult = await axios.get(`http://localhost:3001/subscribers/members/1b8c4df414/${email}`);
-      setInput({ name: '', email: '', phone: '' });
+      setInput({ name: '', email: ''});
       setFormError(true);
       setTimeout(() => {
         setFormError(false);
@@ -64,7 +58,7 @@ export default function Modal ({ closeModal }) {
       if (error instanceof Error && error.response.status === 404) {
         try {
           const response = await axios.post(`http://localhost:3001/subscribers/members/1b8c4df414`, input);
-          setInput({ name: '', email: '', phone: '' });
+          setInput({ name: '', email: ''});
           setFormSubmitted(true);  
           setTimeout(() => {
             setFormSubmitted(false);
@@ -97,14 +91,11 @@ export default function Modal ({ closeModal }) {
                 <input type="email" name='email' value={ input.email } placeholder='Email' onChange={(e) => handleChange(e)} />
                 {errors.email && <p className={styles.danger}>{ errors.email }</p>}
 
-                <input type="text" name='phone' value={ input.phone } placeholder='Phone' onChange={(e) => handleChange(e)} />
-                {errors.phone && <p className={styles.danger}>{ errors.phone }</p>}
                 {formError ? <p className={styles.danger}>Ya existe un suscriptor con este correo electrónico</p> : null}
 
                 {
                     !errors.name && input.name.length > 0 &&
-                    !errors.email && input.email.length > 0 &&
-                    !errors.phone && input.phone.length > 0 ?
+                    !errors.email && input.email.length > 0 ?
                     <button className={styles.siteBtn} type="submit">SEND MESSAGE</button> : <button className={styles.siteBtnDesaprobated} type="submit" disabled>SEND MESSAGE</button>
                 }
               </form>

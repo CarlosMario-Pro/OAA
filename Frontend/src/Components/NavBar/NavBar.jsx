@@ -18,9 +18,9 @@ export default function NavBar() {
           <Logo />
         </div>
         <div className={`${styles.container__items} `}>
-          <Link className={`${styles.item} `} to={"/aboutUs"}>
+          {/* <Link className={`${styles.item} `} to={"/aboutUs"}>
             NOSOTROS
-          </Link>
+          </Link> */}
           <Link className={`${styles.item} `} to={"/novelties"}>
             NOVEDADES
           </Link>
