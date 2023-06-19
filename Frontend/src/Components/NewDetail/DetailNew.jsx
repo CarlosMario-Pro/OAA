@@ -13,7 +13,7 @@ export default function DetailNew({ newDetail }) {
 
   useEffect(() => {
     try {
-      const parsedDescription = JSON.parse(newDetail.description);
+      const parsedDescription = JSON.parse(newDetail?.description);
       quill && quill.setContents(parsedDescription);
     } catch (error) {
       {
@@ -46,7 +46,7 @@ export default function DetailNew({ newDetail }) {
             <p>{newDetail.location ? newDetail.location : ""}</p>
           </div>
         </div>
-        {newDetail?.description && newDetail.description.charAt(0) === "{" ? (
+        {newDetail?.description && newDetail.description.charAt(0) === "{" ? ( 
           <article ref={quillRef}></article>
         ) : (
           <p className={Styles["p-content"]}>{newDetail?.description}</p>
