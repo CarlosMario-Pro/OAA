@@ -8,13 +8,27 @@ import MostReadNews from "../../Components/LandingPage/MostReadNews/MostReadNews
 import Galery from "../../Components/LandingPage/Galery/Galery";
 import Footer from "../../Components/LandingPage/Footer/Footer";
 import styles from './LandingPage.module.css';
-
-
+import Chat from '../../Components/Chat/Chat'
+import { useState } from "react";
 export default function LandingPage () {
-    
+    const [chatStatus,setChatStatus] =useState(false);
     return (
         <div>
             <Hero />
+            <div id={styles.ChatSectionContainer}>
+                {chatStatus?(<div id={styles.chatContainer}>
+                    <p onClick={()=>setChatStatus(false)}>x</p>
+                    <div>
+                        <Chat/>
+                    </div>
+                </div>):(<div id={styles.openChat} onClick={()=>setChatStatus(true)}><p>Chat</p></div>)}
+                
+                
+            </div>
+                 
+
+
+
             <PresentationIcons />
             <Novelty />
             <Communities />
@@ -22,6 +36,14 @@ export default function LandingPage () {
             <MostReadNews />
             <Galery />
             <Footer />
+
+
+
+
+
         </div>
+        
     );
+    
+   
 };
